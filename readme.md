@@ -24,7 +24,7 @@
 
 - Custom Carousel
 
-- HTML5 Notification<sup>updating</sup>, GCM<sup>updating</sup>
+- HTML5 Notification<sup>updating</sup>, GCM<sup>depreciated</sup>
 
 ## Download all app images
 
@@ -327,7 +327,7 @@ config/app.php
 
 In CLI: `php artisan migrate`, `php artisan passport:install`
 
-Make the `App\User` model use the `Laravel\Passport\HasApiTokens` trait.
+Make the `App\Models\User` model use the `Laravel\Passport\HasApiTokens` trait.
 
 App\Providers\AuthServiceProvider:
 ```php
@@ -612,7 +612,7 @@ public function getUserEntityByUserCredentials($username, $password, $type /* AD
 
 #### Models
 
-App\User.php
+App\Models\User.php
 ```php
 class User extends Authenticatable{
 ...
@@ -944,5 +944,6 @@ AJAX here is done by
 
 ## To Do
 
-- Update Laravel version, FB login, Google login, Android app, GCM
+- Update Laravel version, FB login, Google login, Android app
+- GCM <sup>depreciated</sup> . Use FireBase notifications now https://developers.google.com/cloud-messaging
 - vue 
