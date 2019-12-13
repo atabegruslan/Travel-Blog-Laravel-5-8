@@ -669,7 +669,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 });
 ```
 
-#### User creation by API
+### User creation by API
 
 `php artisan make:controller Api/UserController --resource`
 
@@ -687,7 +687,7 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function () {
 
 Then complete the store method, like in: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Http/Controllers/Web/SocialController.php
 
-#### Tweek for Socialite Plugin Update (Early-Mid 2017) :
+### Tweek for Socialite Plugin Update (Early-Mid 2017) :
 
 This is not a problem in Laravel 5.8
 
@@ -700,17 +700,14 @@ https://stackoverflow.com/questions/43053871/socialite-laravel-5-4-facebook-prov
 
 ### Useful tutorials:
 
-https://github.com/laravel/socialite
-
-https://www.youtube.com/watch?v=D3oLLz8bFp0
-
-http://devartisans.com/articles/complete-laravel5-socialite-tuorial
+- https://github.com/laravel/socialite
+- https://www.youtube.com/watch?v=D3oLLz8bFp0
+- http://devartisans.com/articles/complete-laravel5-socialite-tuorial
 
 
 ## Contact form with emailing ability
 
-In .env
-
+.env
 ```
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.gmail.com
@@ -722,56 +719,9 @@ MAIL_ENCRYPTION=tls
 
 Create contact form view, connect it to route then to controller.
 
-In controller:
-
-```php
-use Mail;
-
-class EmailController extends Controller
-{
-    public function send(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|max:40',
-            'email' => 'required|email|max:40',
-            'subject' => 'required|max:40',
-            'body' => 'required|max:200'
-        ]); 
-
-        $data = array(
-            'name' => $request->name,
-            'email' => $request->email,
-            'subject' => $request->subject,
-            'body' => $request->body
-        );
-
-        Mail::send(
-            'email.admin',
-            $data, 
-            function($message) use ($data) {
-                $message->from( $data['email'] );
-                $message->to('ruslan_aliyev_@hotmail.com')->subject( $data['body'] );
-            }
-        );
-
-        Mail::send(
-            'email.enquirer',
-            $data, 
-            function($message) use ($data) {
-                $message->from('ruslan_aliyev_@hotmail.com');
-                $message->to( $data['email'] )->subject( $data['body'] );
-            }
-        );
-
-        \Session::flash('success', 'Email Sent');
-
-        return Redirect::to('/contact');
-    }
-}
-```
+Write the controller like this: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Http/Controllers/Web/EmailController.php
 
 In view, for HTML email template. Here I just show the HTML email that Admin receives:
-
 ```html
 <p style="font-size: 100%;">Dear Administrator, You got new mail from Travel Blog</p>
 
@@ -821,11 +771,11 @@ $slider1.slider
 
 - https://code.tutsplus.com/tutorials/how-to-register-use-laravel-service-providers--cms-28966
 - Then watch these tutorials:
- - https://www.youtube.com/watch?v=urycXvTEnF8&t=1m
- - https://www.youtube.com/watch?v=GqVdt6OWN-Y&list=PL_HVsP_TO8z7aeylCMe64BIx3VEfvPdn&index=34
+    - https://www.youtube.com/watch?v=urycXvTEnF8&t=1m
+    - https://www.youtube.com/watch?v=GqVdt6OWN-Y&list=PL_HVsP_TO8z7aeylCMe64BIx3VEfvPdn&index=34
 - Then watch these tutorials:
- - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
- - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
+    - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
+    - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
 
 ## Different ways of writting things
 
@@ -989,5 +939,6 @@ AJAX here is done by
 
 ## To Do
 
-- Update Laravel version, FB login, Google login, Android app, Notification, GCM
+- Update Laravel version, FB login, Google login, Android app, GCM
 - vue 
+- logs

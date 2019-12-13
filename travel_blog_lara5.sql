@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 12 2019 г., 18:37
+-- Время создания: Дек 13 2019 г., 02:52
 -- Версия сервера: 10.4.8-MariaDB
 -- Версия PHP: 7.3.11
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- База данных: `travel_blog_lara5`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `action_log`
+--
+
+CREATE TABLE `action_log` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  `table_name` varchar(100) NOT NULL,
+  `method` varchar(100) NOT NULL,
+  `record_key_name` varchar(50) NOT NULL,
+  `record_id` int(10) UNSIGNED NOT NULL,
+  `params` mediumtext NOT NULL,
+  `is_restored` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -239,6 +259,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 
 --
+-- Индексы таблицы `action_log`
+--
+ALTER TABLE `action_log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `entries`
 --
 ALTER TABLE `entries`
@@ -300,6 +326,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `action_log`
+--
+ALTER TABLE `action_log`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `entries`

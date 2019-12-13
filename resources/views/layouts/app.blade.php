@@ -52,6 +52,8 @@
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
     
     <script src="{{ PUB_URL }}js/browser_detection.js?v={{ rand() }}"></script>
+    
+    <script src="{{ PUB_URL }}js/notification.js?v={{ rand() }}"></script>
 
     <script>
         window.Laravel = { csrfToken: '{{ csrf_token() }}' }
