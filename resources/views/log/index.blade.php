@@ -39,8 +39,13 @@
 								@foreach ($log['params']['before'] as $initLabel => $initValue)
 									@if (!in_array($initLabel, $skips))
 										<tr>
-											<th>{!! $initLabel !!}</th>
-											<td>{!! $initValue !!}</td>
+											@if ($initLabel === 'img_url')
+												<th>Image</th>
+												<td><img class="log_img" src="{{ $initValue }}" /></td>
+											@else
+												<th>{!! $initLabel !!}</th>
+												<td>{!! $initValue !!}</td>
+											@endif;
 										</tr>
 									@endif
 								@endforeach
@@ -66,8 +71,13 @@
 								@foreach ($log['params']['after'] as $modLabel => $modValue)
 									@if (!in_array($modLabel, $skips))
 										<tr>
-											<th>{!! $modLabel !!}</th>
-											<td>{!! $modValue !!}</td>
+											@if ($modLabel === 'img_url')
+												<th>Image</th>
+												<td><img class="log_img" src="{{ $modValue }}" /></td>
+											@else
+												<th>{!! $modLabel !!}</th>
+												<td>{!! $modValue !!}</td>
+											@endif;
 										</tr>
 									@endif
 								@endforeach

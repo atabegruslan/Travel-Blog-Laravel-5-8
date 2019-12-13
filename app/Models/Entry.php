@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Traits\LogTrait;
+
 class Entry extends Base
 {
+    use LogTrait;
+    
     public $timestamps = false;
     
     protected $table = 'entries';

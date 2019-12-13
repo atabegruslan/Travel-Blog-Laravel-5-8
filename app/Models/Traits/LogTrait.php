@@ -15,22 +15,22 @@ trait LogTrait
      * @param  array  $attributes
      * @return void
      */
-    // protected function insertAndSetId(\Illuminate\Database\Eloquent\Builder $query, $attributes)
-    // {
-    //     $keyName              = $this->getKeyName();
-    //     $id                   = $query->insertGetId($attributes, $keyName);
-    //     $attributes[$keyName] = $id;
-    //     $table                = $this->getTable();
-    //     $model                = static::class;
-    //     $params               = [
-    //                                 'before' => [], 
-    //                                 'after'  => $attributes
-    //                             ];
+    protected function insertAndSetId(\Illuminate\Database\Eloquent\Builder $query, $attributes)
+    {
+        $keyName              = $this->getKeyName();
+        $id                   = $query->insertGetId($attributes, $keyName);
+        $attributes[$keyName] = $id;
+        $table                = $this->getTable();
+        $model                = static::class;
+        $params               = [
+                                    'before' => [], 
+                                    'after'  => $attributes
+                                ];
 
-    //     event(new ActionLogEvent($model, $table, 'create', $keyName, $id, $params));
+        event(new ActionLogEvent($model, $table, 'create', $keyName, $id, $params));
 
-    //     $this->setAttribute($keyName, $id);
-    // } 
+        $this->setAttribute($keyName, $id);
+    } 
 
     /**
      * Perform a model update operation.
@@ -38,34 +38,34 @@ trait LogTrait
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return bool
      */
-    // protected function performUpdate(\Illuminate\Database\Eloquent\Builder $query)
-    // {
-    //     $keyName      = $this->getKeyName();
-    //     $afterStates  = $this->getAttributes();
-    //     $id           = $afterStates[$keyName];
-    //     $table        = $this->getTable();
-    //     $model        = static::class;
-    //     $beforeStates = $this->getPreviousState($table, $keyName, $id);
-    //     $result       = parent::performUpdate($query);
-    //     $params       = [
-    //                         'before' => $beforeStates,
-    //                         'after'  => $afterStates
-    //                     ];
+    protected function performUpdate(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        $keyName      = $this->getKeyName();
+        $afterStates  = $this->getAttributes();
+        $id           = $afterStates[$keyName];
+        $table        = $this->getTable();
+        $model        = static::class;
+        $beforeStates = $this->getPreviousState($table, $keyName, $id);
+        $result       = parent::performUpdate($query);
+        $params       = [
+                            'before' => $beforeStates,
+                            'after'  => $afterStates
+                        ];
 
-    //     if ($result)
-    //     {
-    //         event(new ActionLogEvent($model, $table, 'update', $keyName, $id, $params));
-    //     }
+        if ($result)
+        {
+            event(new ActionLogEvent($model, $table, 'update', $keyName, $id, $params));
+        }
 
-    //     return $result;
-    // }
+        return $result;
+    }
 
-    // private function getPreviousState($table, $keyName, $keyValue)
-    // {
-    //     $beforeStates = DB::table($table)->where($keyName, $keyValue)->first();
+    private function getPreviousState($table, $keyName, $keyValue)
+    {
+        $beforeStates = DB::table($table)->where($keyName, $keyValue)->first();
 
-    //     return (array) $beforeStates;
-    // }
+        return (array) $beforeStates;
+    }
 
     /**
      * Delete the model from the database.
@@ -74,30 +74,30 @@ trait LogTrait
      *
      * @throws \Exception
      */
-    // public function delete()
-    // {
-    //     $uses         = class_uses(static::class);
-    //     $softDelete   = 'Illuminate\Database\Eloquent\SoftDeletes';
-    //     $isSoftDelete = $uses[$softDelete] === $softDelete;
-    //     $method       = $isSoftDelete ? 'soft_delete' : 'delete';
-    //     $keyName      = $this->getKeyName();
-    //     $state        = $this->getAttributes();
-    //     $id           = $state[$keyName];
-    //     $table        = $this->getTable();
-    //     $beforeStates = $softDelete ? DB::table($table)->where($keyName, $id)->first() : $state;
-    //     $model        = static::class;
-    //     $result       = parent::delete();
-    //     $afterStates  = $softDelete ? DB::table($table)->where($keyName, $id)->first() : [];
-    //     $params       = [
-    //                         'before' => $beforeStates, 
-    //                         'after'  => $afterStates
-    //                     ];
+    public function delete()
+    {
+        $uses         = class_uses(static::class);
+        $softDelete   = 'Illuminate\Database\Eloquent\SoftDeletes';
+        $isSoftDelete = $uses[$softDelete] === $softDelete;
+        $method       = $isSoftDelete ? 'soft_delete' : 'delete';
+        $keyName      = $this->getKeyName();
+        $state        = $this->getAttributes();
+        $id           = $state[$keyName];
+        $table        = $this->getTable();
+        $beforeStates = $softDelete ? DB::table($table)->where($keyName, $id)->first() : $state;
+        $model        = static::class;
+        $result       = parent::delete();
+        $afterStates  = $softDelete ? DB::table($table)->where($keyName, $id)->first() : [];
+        $params       = [
+                            'before' => $beforeStates, 
+                            'after'  => $afterStates
+                        ];
 
-    //     if ($result)
-    //     {
-    //         event(new ActionLogEvent($model, $table, $method, $keyName, $id, $params));
-    //     }
+        if ($result)
+        {
+            event(new ActionLogEvent($model, $table, $method, $keyName, $id, $params));
+        }
 
-    //     return $result;
-    // }
+        return $result;
+    }
 }

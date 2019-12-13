@@ -13,113 +13,113 @@ class ActionLogController extends Controller
 {
     public function index()
     {
-        // $logs = ActionLog::orderBy('time', 'ASC')->get()->all();
+        $logs = ActionLog::orderBy('time', 'ASC')->get()->all();
 
-        // foreach($logs as $log)
-        // {
-        //     $log['params'] = unserialize($log['params']);
-        // }
+        foreach($logs as $log)
+        {
+            $log['params'] = unserialize($log['params']);
+        }
 
-        // return view('log.index', ['logs' => $logs]);
+        return view('log.index', ['logs' => $logs]);
     }
 
     public function restore(Request $request)
     {
-        // $logId         = $request->input('log_id');
-        // $log           = ActionLog::where('id', $logId)->first()->getAttributes();
-        // $log['params'] = unserialize($log['params']);
+        $logId         = $request->input('log_id');
+        $log           = ActionLog::where('id', $logId)->first()->getAttributes();
+        $log['params'] = unserialize($log['params']);
 
-        // switch ($log['method']) 
-        // {
-        //     case 'update_pivot':
-        //         $entry    = $log['model']::where($log['params']['parent_key_name'], $log['record_id'])->first();
-        //         $syncData = [];
+        switch ($log['method']) 
+        {
+            case 'update_pivot':
+                $entry    = $log['model']::where($log['params']['parent_key_name'], $log['record_id'])->first();
+                $syncData = [];
 
-        //         foreach ($log['params']['before'] as $relation) 
-        //         {
-        //             $relatedKeyName       = $log['params']['related_key_name'];
-        //             $relatedId            = $relation->$relatedKeyName;
-        //             $syncData[$relatedId] = (array) $relation;
-        //         }
+                foreach ($log['params']['before'] as $relation) 
+                {
+                    $relatedKeyName       = $log['params']['related_key_name'];
+                    $relatedId            = $relation->$relatedKeyName;
+                    $syncData[$relatedId] = (array) $relation;
+                }
 
-        //         $relation = $log['params']['relation'];
-        //         $entry->$relation()->sync($syncData);
+                $relation = $log['params']['relation'];
+                $entry->$relation()->sync($syncData);
 
-        //         $newBefore               = $log['params']['after'];
-        //         $newAfter                = $log['params']['before'];
-        //         $log['params']['before'] = $newBefore;
-        //         $log['params']['after']  = $newAfter;
-        //         $entry                   = new ActionLog;
-        //         $entry->user_id          = $log['user_id'];
-        //         $entry->user_name        = $log['user_name'];
-        //         $entry->model            = $log['model'];
-        //         $entry->table_name       = $log['table_name'];
-        //         $entry->method           = $log['method'];
-        //         $entry->record_key_name  = $log['record_key_name'];
-        //         $entry->record_id        = $log['record_id'];
-        //         $entry->params           = serialize($log['params']);
+                $newBefore               = $log['params']['after'];
+                $newAfter                = $log['params']['before'];
+                $log['params']['before'] = $newBefore;
+                $log['params']['after']  = $newAfter;
+                $entry                   = new ActionLog;
+                $entry->user_id          = $log['user_id'];
+                $entry->user_name        = $log['user_name'];
+                $entry->model            = $log['model'];
+                $entry->table_name       = $log['table_name'];
+                $entry->method           = $log['method'];
+                $entry->record_key_name  = $log['record_key_name'];
+                $entry->record_id        = $log['record_id'];
+                $entry->params           = serialize($log['params']);
 
-        //         $entry->save();
+                $entry->save();
 
-        //         break;
-        //     case 'create':
-        //         $entry = $log['model']::where($log['record_key_name'], $log['record_id'])->first();
+                break;
+            case 'create':
+                $entry = $log['model']::where($log['record_key_name'], $log['record_id'])->first();
 
-        //         $entry->delete();
+                $entry->delete();
 
-        //         break;
-        //     case 'update':
-        //         $entry   = $log['model']::where($log['record_key_name'], $log['record_id'])->first();
-        //         $updates = array();
+                break;
+            case 'update':
+                $entry   = $log['model']::where($log['record_key_name'], $log['record_id'])->first();
+                $updates = array();
 
-        //         foreach ($log['params']['before'] as $key => $value) 
-        //         {
-        //             if ($key !== $log['record_key_name'])
-        //             {
-        //                 $updates[$key] = $value;
-        //             }
-        //         }
+                foreach ($log['params']['before'] as $key => $value) 
+                {
+                    if ($key !== $log['record_key_name'])
+                    {
+                        $updates[$key] = $value;
+                    }
+                }
 
-        //         $entry->update($updates);
+                $entry->update($updates);
 
-        //         break;
-        //     case 'delete':
-        //         $entry = new $log['model'];
+                break;
+            case 'delete':
+                $entry = new $log['model'];
 
-        //         foreach ($log['params']['before'] as $key => $value) 
-        //         {
-        //             if ($key !== $log['record_key_name'])
-        //             {
-        //                 $entry->$key = $value;
-        //             }
-        //         }
+                foreach ($log['params']['before'] as $key => $value) 
+                {
+                    if ($key !== $log['record_key_name'])
+                    {
+                        $entry->$key = $value;
+                    }
+                }
 
-        //         $entry->save();
+                $entry->save();
 
-        //         break;
-        //     case 'soft_delete':
-        //         $entry = $log['model']::onlyTrashed()->where($log['record_key_name'], $log['record_id'])->first();
+                break;
+            case 'soft_delete':
+                $entry = $log['model']::onlyTrashed()->where($log['record_key_name'], $log['record_id'])->first();
 
-        //         DB::table($log['table_name'])
-        //             ->where($log['record_key_name'], $log['record_id'])
-        //             ->update([$entry->getDeletedAtColumn() => null]);
+                DB::table($log['table_name'])
+                    ->where($log['record_key_name'], $log['record_id'])
+                    ->update([$entry->getDeletedAtColumn() => null]);
 
-        //         $newBefore               = $log['params']['after'];
-        //         $newAfter                = $log['params']['before'];
-        //         $log['params']['before'] = $newBefore;
-        //         $log['params']['after']  = $newAfter;
+                $newBefore               = $log['params']['after'];
+                $newAfter                = $log['params']['before'];
+                $log['params']['before'] = $newBefore;
+                $log['params']['after']  = $newAfter;
 
-        //         event(new ActionLogEvent($log['model'], $log['table_name'], 'create', $log['record_key_name'], $log['record_id'], $log['params']));
+                event(new ActionLogEvent($log['model'], $log['table_name'], 'create', $log['record_key_name'], $log['record_id'], $log['params']));
 
-        //         break;
-        //     default:
+                break;
+            default:
                 
-        // }
+        }
 
-        // DB::table('action_log')
-        //     ->where('id', $logId)
-        //     ->update(['is_restored' => 1]);
+        DB::table('action_log')
+            ->where('id', $logId)
+            ->update(['is_restored' => 1]);
 
-        // return redirect('log');
+        return redirect('log');
     }
 }

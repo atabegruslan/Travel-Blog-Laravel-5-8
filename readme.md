@@ -929,11 +929,16 @@ AJAX here is done by
 
 - https://stackoverflow.com/questions/40844297/what-is-difference-between-axios-and-fetch
 - https://www.sitepoint.com/introduction-to-the-fetch-api/
+- https://www.youtube.com/playlist?list=PLyuRouwmQCjkWu63mHksI9EA4fN-vwGs7
+
 
 ## Notes
 
 - `fsevents` warnings when running `npm install`? Never mind it, it's not needed on Windows. https://stackoverflow.com/questions/40226745/npm-warn-notsup-skipping-optional-dependency-unsupported-platform-for-fsevents
-- what if your APIs are protected by access token ? https://justlaravel.com/vuejs-consumer-app-laravel-api-passport/
+- what if your APIs are protected by access token ? 
+    - https://justlaravel.com/vuejs-consumer-app-laravel-api-passport/
+    - https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
+    - https://learn.co/lessons/javascript-fetch
 
 ---
 
@@ -941,4 +946,3 @@ AJAX here is done by
 
 - Update Laravel version, FB login, Google login, Android app, GCM
 - vue 
-- logs

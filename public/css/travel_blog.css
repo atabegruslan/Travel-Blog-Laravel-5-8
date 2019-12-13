@@ -55,3 +55,7 @@ h1 {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+img.log_img {
+    max-width: 200px;
+}
