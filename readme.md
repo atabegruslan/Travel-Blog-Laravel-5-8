@@ -4,7 +4,7 @@
 
 - Tester account: ruslan_aliyev_@hotmail / ruslan12
 
-- Note: FB, Google and Android integrations are outdated. 
+- Note: FB, Google and Android integrations: Update in progress. 
 
 - Updates for https://github.com/atabegruslan/Travel-Blog-Laravel-5 are in progress.
 
@@ -48,9 +48,9 @@ POST `http://ruslan-website.com/laravel5/travel_blog/oauth/token`
 
 | Post Form Data Name | Post Form Data Value |
 | --- | --- |
-| client_id | (from oauth_clients table) |
+| client_id | (from oauth_clients table. 1 is Personal, 2 is password) |
 | client_secret | (from oauth_clients table) |
-| grant_type | password |
+| grant_type | (personal or password) |
 | username | (user email) |
 | password | (user password) |
 | type | 'normal' or 'facebook' or 'google' |
@@ -217,7 +217,9 @@ public function index(){
 - 1 - many or many - 1
     - `->belongsTo` 
 - Many to many
-    - Pivot tables: https://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+    - Pivot tables. `Illuminate\Database\Eloquent\Relations\Concerns\InteractsWithPivotTable::sync()` is especially useful: https://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/pivot-sync.png)
 
 ### Create Controller Inside a Subfolder
 
@@ -363,7 +365,7 @@ config/auth.php:
 ],
 ```
 
-Now you can get access token: POST `.../oauth/token`
+Now you can get access token: POST `.../oauth/token` https://github.com/atabegruslan/Travel-Blog-Laravel-5#get-access-token
 
 routes/api.php: 
 ```php
@@ -372,7 +374,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 ```
 
-Now you can get user data: GET `.../api/user`
+Now you can get user data: GET `.../api/user` https://github.com/atabegruslan/Travel-Blog-Laravel-5#get-user-data
 
 routes/api.php: 
 ```php
@@ -381,7 +383,7 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function () {
 });
 ```
 
-Now you must do Entry CRUDs with access token
+Now you must do Entry CRUDs with access token https://github.com/atabegruslan/Travel-Blog-Laravel-5#entries
 
 Good Tutorial: https://www.sitepoint.com/build-rest-resources-laravel/
 
@@ -686,17 +688,6 @@ Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function () {
 ```
 
 Then complete the store method, like in: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Http/Controllers/Web/SocialController.php
-
-### Tweek for Socialite Plugin Update (Early-Mid 2017) :
-
-This is not a problem in Laravel 5.8
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/socialite_tweek_1.PNG)
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/socialite_tweek_2.PNG)
-
-https://stackoverflow.com/questions/43053871/socialite-laravel-5-4-facebook-provider
-
 
 ### Useful tutorials:
 
