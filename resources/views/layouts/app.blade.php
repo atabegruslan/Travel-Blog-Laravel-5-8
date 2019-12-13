@@ -16,7 +16,7 @@
 
     <!-- Styles -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
-    <link href="{{ PUB_URL }}css/app.css?v={{ rand() }}" rel="stylesheet">
+    <!-- <link href="{{ PUB_URL }}css/app.css?v={{ rand() }}" rel="stylesheet"> -->
     <link href="{{ PUB_URL }}css/travel_blog.css?v={{ rand() }}" rel="stylesheet">
     <link href="{{ PUB_URL }}css/browser_detection.css?v={{ rand() }}" rel="stylesheet">
     @if(Route::currentRouteName() == '')
@@ -47,7 +47,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.js"></script>
     
     <script src="{{ PUB_URL }}js/app.js?v={{ rand() }}"></script>
-
     <!-- Laravel 5.8 dont have /assets anymore -->
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
     

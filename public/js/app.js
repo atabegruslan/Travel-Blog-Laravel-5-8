@@ -1860,6 +1860,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Blogs mounted.');
@@ -1885,44 +1915,73 @@ __webpack_require__.r(__webpack_exports__);
         return res.json();
       }).then(function (res) {
         _this.blogs = res;
+      })["catch"](function (err) {
+        return console.log(err);
       });
     },
-    updateBlog: function updateBlog(id) {},
-    deleteBlog: function deleteBlog(id) {
+    updateBlog: function updateBlog(ev) {
       var _this2 = this;
 
+      var id = $(ev.target).parent('form').find('._id').val();
+      this.blog.place = $(ev.target).parent('form').find('#place').val();
+      this.blog.comments = $(ev.target).parent('form').find('#comments').val();
+      this.blog.img_url = $(ev.target).parent('form').find('#img_url').val();
+      this.blog.user_id = $(ev.target).parent('form').find('#user_id').val();
+      fetch('api/entry/' + id, {
+        method: 'put',
+        body: JSON.stringify(this.blog),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this2.blog.place = '';
+        _this2.blog.comments = '';
+        alert('Blog update');
+
+        _this2.fetchBlogs();
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    deleteBlog: function deleteBlog(id) {
+      var _this3 = this;
+
       if (confirm('Are you sure?')) {
-        fetch('api/entry/${id}', {
+        fetch('api/entry/' + id, {
           method: 'delete'
         }).then(function (res) {
           return res.json();
         }).then(function (res) {
           alert('Blog removed');
 
-          _this2.fetchBlogs();
+          _this3.fetchBlogs();
+        })["catch"](function (err) {
+          return console.log(err);
         });
       }
     },
     createBlog: function createBlog() {
-      var _this3 = this;
+      var _this4 = this;
 
-      if (this.edit === false) {
-        fetch('api/entry', {
-          method: 'post',
-          body: JSON.stringify(this.blog),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (res) {
-          _this3.blog.place = '';
-          _this3.blog.comments = '';
-          alert('Blog created');
+      fetch('api/entry', {
+        method: 'post',
+        body: JSON.stringify(this.blog),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this4.blog.place = '';
+        _this4.blog.comments = '';
+        alert('Blog created');
 
-          _this3.fetchBlogs();
-        });
-      }
+        _this4.fetchBlogs();
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
   }
 });
@@ -37345,103 +37404,300 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-md-8 col-md-offset-2" },
-      [
-        _c("h2", [_vm._v("Blogs")]),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.createBlog($event)
-              }
-            }
-          },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.blog.place,
-                  expression: "blog.place"
-                }
-              ],
-              attrs: { type: "text" },
-              domProps: { value: _vm.blog.place },
+  return _c("div", { staticClass: "container", attrs: { id: "home_vue" } }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        [
+          _c("h2", [_vm._v("Blogs")]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              staticClass: "form-inline",
               on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.blog, "place", $event.target.value)
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.createBlog($event)
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.blog.comments,
-                  expression: "blog.comments"
-                }
-              ],
-              domProps: { value: _vm.blog.comments },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "place" } }, [_vm._v("Place:")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.blog.place,
+                      expression: "blog.place"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "place", type: "text" },
+                  domProps: { value: _vm.blog.place },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.blog, "place", $event.target.value)
+                    }
                   }
-                  _vm.$set(_vm.blog, "comments", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [_vm._v("Create")])
-          ]
-        ),
-        _vm._v(" "),
-        _vm._l(_vm.blogs, function(blog) {
-          return _c("div", { key: blog.id }, [
-            _c("h3", [_vm._v(_vm._s(blog.place))]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(blog.comments))]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "comments" } }, [
+                  _vm._v("Comments:")
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.blog.comments,
+                      expression: "blog.comments"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "comments" },
+                  domProps: { value: _vm.blog.comments },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.blog, "comments", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.blog.img_url,
+                    expression: "blog.img_url"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "hidden", name: "img_url", value: "" },
+                domProps: { value: _vm.blog.img_url },
                 on: {
-                  click: function($event) {
-                    return _vm.updateBlog(blog.id)
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.blog, "img_url", $event.target.value)
                   }
                 }
-              },
-              [_vm._v("Update")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
+              }),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.blog.user_id,
+                    expression: "blog.user_id"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "hidden", name: "user_id", value: "2" },
+                domProps: { value: _vm.blog.user_id },
                 on: {
-                  click: function($event) {
-                    return _vm.deleteBlog(blog.id)
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.blog, "user_id", $event.target.value)
                   }
                 }
-              },
-              [_vm._v("Delete")]
-            )
-          ])
-        })
-      ],
-      2
-    )
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-default", attrs: { type: "submit" } },
+                [_vm._v("Create")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.blogs, function(blog) {
+            return _c("div", { key: blog.id }, [
+              _c("form", { staticClass: "form-inline" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: blog.id,
+                      expression: "blog.id"
+                    }
+                  ],
+                  staticClass: "_id form-control",
+                  attrs: { type: "hidden" },
+                  domProps: { value: blog.id },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(blog, "id", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "place" } }, [_vm._v("Place:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: blog.place,
+                        expression: "blog.place"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "place", type: "text" },
+                    domProps: { value: blog.place },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(blog, "place", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "comments" } }, [
+                    _vm._v("Comments:")
+                  ]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: blog.comments,
+                        expression: "blog.comments"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "comments" },
+                    domProps: { value: blog.comments },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(blog, "comments", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: blog.img_url,
+                      expression: "blog.img_url"
+                    }
+                  ],
+                  ref: "img_url",
+                  refInFor: true,
+                  attrs: {
+                    id: "img_url form-control",
+                    type: "hidden",
+                    name: "img_url",
+                    value: ""
+                  },
+                  domProps: { value: blog.img_url },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(blog, "img_url", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: blog.user_id,
+                      expression: "blog.user_id"
+                    }
+                  ],
+                  ref: "user_id",
+                  refInFor: true,
+                  attrs: {
+                    id: "user_id form-control",
+                    type: "hidden",
+                    name: "user_id",
+                    value: "2"
+                  },
+                  domProps: { value: blog.user_id },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(blog, "user_id", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateBlog($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Update")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-error",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteBlog(blog.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            ])
+          })
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = []

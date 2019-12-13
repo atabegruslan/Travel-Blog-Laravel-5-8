@@ -59,3 +59,14 @@ h1 {
 img.log_img {
     max-width: 200px;
 }
+
+#home_vue form {
+    border: 1px solid black;
+    margin: 10px;
+}
+
+#home_vue form .form-group, 
+#home_vue form input, 
+#home_vue form button {
+    margin: 10px;
+} 

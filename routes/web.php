@@ -30,11 +30,15 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 
 	Route::post('/email', 'EmailController@send');
 	
-	Route::get('auth/{provider}', ['uses' => 'SocialController@redirectToProvider', 'as' => 'social.login']);
-	Route::get('auth/{provider}/callback', 'SocialController@handleProviderCallback');
-
 	Route::get('/log', 'ActionLogController@index');
 	Route::post('/log/restore', 'ActionLogController@restore');
+
+});
+
+Route::group(['namespace' => 'Web'], function () {
+
+	Route::get('auth/{provider}', ['uses' => 'SocialController@redirectToProvider', 'as' => 'social.login']);
+	Route::get('auth/{provider}/callback', 'SocialController@handleProviderCallback');
 
 });
 

@@ -4,7 +4,7 @@
 
 - Tester account: ruslan_aliyev_@hotmail / ruslan12
 
-- Note: FB, Google and Android integrations: Update in progress. 
+- Note: Android integration: Update in progress. 
 
 - Updates for https://github.com/atabegruslan/Travel-Blog-Laravel-5 are in progress.
 
@@ -935,6 +935,6 @@ AJAX here is done by
 
 ## To Do
 
-- Update Laravel version, FB login, Google login, Android app
+- Update Android app
 - GCM <sup>depreciated</sup> . Use FireBase notifications now https://developers.google.com/cloud-messaging
 - vue 

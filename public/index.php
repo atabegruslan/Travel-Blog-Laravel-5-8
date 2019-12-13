@@ -33,7 +33,7 @@ switch ($_SERVER['HTTP_HOST'])
         break;
     default:
 
-        define("BTSP_DIR", "/../laravel_5_travel_blog_base/bootstrap/");
+        define("BTSP_DIR", "/../laravel5_travel_blog_base/bootstrap/");
         define("PUB_URL", $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/laravel5/travel_blog/');
         define("IMG_DIR", $_SERVER['DOCUMENT_ROOT'].'/laravel5/travel_blog/images' );
 }
@@ -52,7 +52,7 @@ switch ($_SERVER['HTTP_HOST'])
 */
 
 //require __DIR__.'/../vendor/autoload.php';
-require $_SERVER['DOCUMENT_ROOT'].BTSP_DIR.'/../vendor/autoload.php';
+require $_SERVER['DOCUMENT_ROOT'].BTSP_DIR.'../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
