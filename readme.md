@@ -820,6 +820,7 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 ## Useful notes:
 
 - Clear cache: https://tecadmin.net/clear-cache-laravel-5/
+    - On top of the above `php artisan config:cache` is also an useful command
 
 ## Upload to server
 
