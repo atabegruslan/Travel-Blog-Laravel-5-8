@@ -173,6 +173,11 @@ Return OK or Error response
 
 - [Github - bradtraversy/lsapp](https://github.com/bradtraversy/lsapp)
 
+- https://github.com/mrakodol/Laravel-5-Bootstrap-3-Starter-Site
+- Testing https://www.youtube.com/playlist?list=PLrIm-p2rpV0Hu9EvTidyYG1vsX0LWIM7Q
+- Socket https://www.youtube.com/playlist?list=PLwAKR305CRO9rlj-U9oOi4m2sQaWN6XA8
+- Socket https://www.youtube.com/playlist?list=PLXsbBbd36_uVjOFH_P25__XAyGsohXWlv
+
 In CLI: `composer create-project --prefer-dist laravel/laravel travel_blog`
 
 .env : 
@@ -812,6 +817,10 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
     ->get();
 ```
 
+## Useful notes:
+
+- Clear cache: https://tecadmin.net/clear-cache-laravel-5/
+
 ## Upload to server
 
 - public folder to server's public folder
@@ -827,6 +836,8 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 
 - https://www.youtube.com/watch?v=DJ6PD_jBtU0&feature=share&fbclid=IwAR0-NOMr-b1Eu6v-Ks5c7lnUfnKiwOrCbk2y3ues-1NGrKGLz5B1FTksI6o
 - https://vuejsdevelopers.com/2018/02/05/vue-laravel-crud/
+- https://www.youtube.com/playlist?list=PLVThfwUGtbI9sxI1zPcvQ9Qfx8Yjgxj7C
+- https://www.youtube.com/playlist?list=PLB4AdipoHpxaHDLIaMdtro1eXnQtl_UvE
 
 ## Setup
 
