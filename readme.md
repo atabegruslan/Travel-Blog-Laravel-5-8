@@ -948,5 +948,12 @@ AJAX here is done by
 ## To Do
 
 - Update Android app
-- GCM <sup>depreciated</sup> . Use FireBase notifications now https://developers.google.com/cloud-messaging
+- GCM <sup>depreciated</sup> . Use FCM now:
+    - https://developers.google.com/cloud-messaging
+    - https://laravel.com/docs/5.8/notifications#specifying-delivery-channels
+    - https://github.com/laravel-notification-channels/webpush
+    - https://laravel-notification-channels.com/webpush/#installation
+    - https://github.com/cretueusebiu/laravel-web-push-demo
+    - https://medium.com/@sagarmaheshwary31/push-notifications-with-laravel-and-webpush-446884265aaa
+    - https://www.youtube.com/watch?v=WshDno7igKA
 - vue 
