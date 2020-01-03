@@ -11,10 +11,10 @@ td{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-#search, #auth{
+#search, #auth, #notices{
 	float:right;
 }
-#auth button {
+#auth button, #notices button{
     color: blue;
 }
 h1 {

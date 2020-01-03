@@ -78,7 +78,7 @@ trait LogTrait
     {
         $uses         = class_uses(static::class);
         $softDelete   = 'Illuminate\Database\Eloquent\SoftDeletes';
-        $isSoftDelete = $uses[$softDelete] === $softDelete;
+        $isSoftDelete = isset($uses[$softDelete]) && $uses[$softDelete] === $softDelete;
         $method       = $isSoftDelete ? 'soft_delete' : 'delete';
         $keyName      = $this->getKeyName();
         $state        = $this->getAttributes();

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Entry;
+use App\Models\User;
+use App\Notifications\NewEntry;
 
 class EntryController extends Controller
 {
@@ -55,6 +57,20 @@ class EntryController extends Controller
         $entry->save();
 
         \Session::flash('success', 'New Entry Created');
+
+        $users = User::all();
+
+        // foreach ($users as $user) 
+        // {
+        //     $user->notify(new NewEntry);
+        // }
+
+        $notice = array(
+            'url'  => url('/entry/' . $entry->id), //PUB_URL . 'entry/' . $entry->id,
+            'name' => $entry->place,
+        );
+
+        \Notification::send($users, new NewEntry($notice));
 
         return redirect('entry');
     }
