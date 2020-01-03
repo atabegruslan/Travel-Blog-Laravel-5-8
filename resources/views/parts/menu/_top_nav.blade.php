@@ -16,16 +16,28 @@
 			<a class="btn btn-link" href="{{ url('contact') }}">Contact</a>
 		</li>
 
-		<li id="notices">
-			<div class="dropdown">
-				<button class="dropbtn btn btn-link"><span class="glyphicon glyphicon-globe"></span> Notifications <span class="badge">{{ count(auth()->user()->unreadNotifications) }}</span></button>
-				<div class="dropdown-content">
-					@foreach(auth()->user()->unreadNotifications as $notification)
-					<a href="{{ $notification->data['url'] }}">{{ $notification->data['name'] }}</a>
-					@endforeach
-				</div>
-			</div>     
-		</li>
+		@auth
+			<li id="notices">
+				<div class="dropdown">
+
+					<button 
+						class="dropbtn btn btn-link" 
+						onclick="markNotificationsAsRead('{{ count(auth()->user()->unreadNotifications) }}')"
+					>
+						<span class="glyphicon glyphicon-globe"></span> 
+						Notifications 
+						<span class="badge">{{ count(auth()->user()->unreadNotifications) }}</span>
+					</button>
+
+					<div class="dropdown-content">
+						@foreach(auth()->user()->unreadNotifications as $notification)
+							<a href="{{ $notification->data['url'] }}">{{ $notification->data['name'] }}</a>
+						@endforeach
+					</div>
+					
+				</div>     
+			</li>
+		@endauth
 
 		<li id="auth">
             @if (Auth::guest())

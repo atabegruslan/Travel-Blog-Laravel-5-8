@@ -42,4 +42,5 @@ Route::group(['namespace' => 'Web'], function () {
 
 });
 
-Route::get('/notification', 'NotificationController@index');
+Route::post('/notification', 'NotificationController@store');
+Route::get('/markAsRead', 'NotificationController@markAsRead');

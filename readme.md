@@ -24,8 +24,6 @@
 
 - Custom Carousel
 
-- HTML5 Notification<sup>updating</sup>, GCM<sup>depreciated</sup>
-
 ## Download all app images
 
 `./download_all_travel_blog_images.sh` <sup>updating</sup>
@@ -819,7 +817,12 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 
 ## Notifications
 
+https://developers.google.com/cloud-messaging
+https://laravel.com/docs/5.8/notifications
+
 ### Default mail notification:
+
+https://www.youtube.com/watch?v=WshDno7igKA
 
 1. `php artisan make:notification NewEntry`
 2. User model use `Illuminate\Notifications\Notifiable`
@@ -836,6 +839,8 @@ public function via($notifiable)
 5. Do your email message.
 
 ### Default database notification:
+
+https://www.youtube.com/watch?v=Tkq0H-McErE
 
 1. `php artisan notifications:table`
 2. `php artisan migrate`
@@ -858,13 +863,45 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
 
 ### 3rd party notifications - WebPush
 
-- https://laravel.com/docs/5.8/notifications#specifying-delivery-channels
-- https://github.com/laravel-notification-channels/webpush
-- https://laravel-notification-channels.com/webpush/#installation
-- https://github.com/cretueusebiu/laravel-web-push-demo
-- https://medium.com/@sagarmaheshwary31/push-notifications-with-laravel-and-webpush-446884265aaa
-- https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN
-- https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key
+- Documentations
+    - https://laravel.com/docs/5.8/notifications#specifying-delivery-channels
+    - https://github.com/laravel-notification-channels/webpush
+    - https://laravel-notification-channels.com/webpush/#installation
+- Tutorials
+    - https://github.com/cretueusebiu/laravel-web-push-demo
+    - https://medium.com/@sagarmaheshwary31/push-notifications-with-laravel-and-webpush-446884265aaa <sup>very helpful</sup>
+- Related
+    - https://developer.mozilla.org/en-US/docs/Web/API/Notification/onclick
+    - https://www.sitepoint.com/introduction-web-notifications-api/
+    - https://www.youtube.com/watch?v=EEhohSp0if4
+    - https://www.youtube.com/watch?v=ggUY0Q4f5ok
+    - https://www.youtube.com/watch?v=HlYFW2zaYQM
+    - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN
+    - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
+    - https://firebase.google.com/docs/cloud-messaging/js/client
+
+1. `composer require laravel-notification-channels/webpush`
+2. User model use `NotificationChannels\WebPush\HasPushSubscriptions;`
+3. `php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
+`
+4. `php artisan migrate`
+5. Generate VAPID public and private keys in `.env`: `php artisan webpush:vapid`
+6. See `enable-push` & `service-worker` js files.
+7. See `NotificationController` and its route.
+8. `NewEntry` Notification class:
+
+```php
+public function via($notifiable)
+{
+    return ['mail', 'database', WebPushChannel::class];
+}
+```
+
+and complete `toWebPush` function.
+
+9. `Notification::send($users, new NewEntry);`
+
+Note: If you only do steps 1-5, this is NOT complete!
 
 ## Useful notes:
 
@@ -997,3 +1034,4 @@ AJAX here is done by
 ## To Do
 
 - Update Android app
+- FCM

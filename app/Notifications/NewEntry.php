@@ -7,6 +7,8 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Carbon\Carbon;
+use NotificationChannels\WebPush\WebPushMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class NewEntry extends Notification
 {
@@ -34,7 +36,7 @@ class NewEntry extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', WebPushChannel::class];
     }
 
     /**
@@ -57,6 +59,24 @@ class NewEntry extends Notification
             'url'  => $this->url,
             'name' => $this->name,
         ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('New Travel Blog entry!')
+            ->icon('/approved-icon.png')
+            ->body('A new Travel Blog entry about ' . $this->name . ' was added')
+            ->action('View entry', $this->url);
+            // ->data(['id' => $notification->id])
+            // ->badge()
+            // ->dir()
+            // ->image()
+            // ->lang()
+            // ->renotify()
+            // ->requireInteraction()
+            // ->tag()
+            // ->vibrate()
     }
 
     /**

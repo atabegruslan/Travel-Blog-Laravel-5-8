@@ -52,6 +52,10 @@
     
     <script src="{{ PUB_URL }}js/browser_detection.js?v={{ rand() }}"></script>
     
+    @auth
+        <script src="{{ PUB_URL }}js/enable-push.js?v={{ rand() }}"></script>
+    @endauth
+
     <script src="{{ PUB_URL }}js/notification.js?v={{ rand() }}"></script>
 
     <script>

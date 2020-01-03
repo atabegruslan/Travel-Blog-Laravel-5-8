@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Entry;
 use App\Models\User;
 use App\Notifications\NewEntry;
+use Notification;
 
 class EntryController extends Controller
 {
@@ -70,7 +71,7 @@ class EntryController extends Controller
             'name' => $entry->place,
         );
 
-        \Notification::send($users, new NewEntry($notice));
+        Notification::send($users, new NewEntry($notice));
 
         return redirect('entry');
     }
