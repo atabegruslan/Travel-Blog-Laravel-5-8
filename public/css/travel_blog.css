@@ -33,6 +33,7 @@ h1 {
     font-size: 16px;
     border: none;
     cursor: pointer;
+    text-decoration: none !important;
 }
 .dropdown {
     position: relative;

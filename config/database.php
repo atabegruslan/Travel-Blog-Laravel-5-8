@@ -2,11 +2,19 @@
 
 use Illuminate\Support\Str;
 
-switch ($_SERVER['HTTP_HOST']) {
+switch ($_SERVER['HTTP_HOST']) 
+{
     case 'localhost':
         define("DB_NAME", env('DEVELOPMENT_DB_NAME'));
         define("DB_UN", env('DEVELOPMENT_DB_USERNAME'));
         define("DB_PW", env('DEVELOPMENT_DB_PASSWORD'));
+
+        break;
+    case null: // From Console
+        define("DB_NAME", env('DEVELOPMENT_DB_NAME'));
+        define("DB_UN", env('DEVELOPMENT_DB_USERNAME'));
+        define("DB_PW", env('DEVELOPMENT_DB_PASSWORD'));
+        
         break;
     default:
         define("DB_NAME", env('PRODUCTION_DB_NAME'));

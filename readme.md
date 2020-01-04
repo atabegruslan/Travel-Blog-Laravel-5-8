@@ -859,7 +859,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
 5. But here we create a `toDatabase` method, which corresponds to `return [..., 'database']`. It should have the same form as the `toArray` method. Now the order is: `toMail` & `toDatabase`, then `toArray`.
 6. Notify user in controller.
 7. Create a new entry. Notification entries (one DB entry for each notified user) should appear in the `notifications` DB table. If it works, we then create the interface to show these notifications.
-8. When displaying notifications, the key line of code to use is: `auth()->user()->unreadNotifications` & `auth()->user()->unreadNotifications->markAsRead()`.
+8. When displaying notifications, the key line of code to use is: `auth()->user()->unreadNotifications`.
 
 ### 3rd party notifications - WebPush
 
@@ -879,6 +879,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
     - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN
     - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
     - https://firebase.google.com/docs/cloud-messaging/js/client
+    - https://www.izooto.com/web-push-notifications-explained
 
 1. `composer require laravel-notification-channels/webpush`
 2. User model use `NotificationChannels\WebPush\HasPushSubscriptions;`
@@ -902,6 +903,17 @@ and complete `toWebPush` function.
 9. `Notification::send($users, new NewEntry);`
 
 Note: If you only do steps 1-5, this is NOT complete!
+
+## Scheduling tasks
+
+- https://laravel.com/docs/5.8/scheduling
+- https://www.youtube.com/watch?v=fUqrE9ZBH_Q
+
+1. Add a command: `php artisan make:command minutely`
+2. Do `app/Console/Commands/minutely.php`
+3. Do `app/Console/Kernel.php`
+4. When testing in console: `php artisan minutely:demonotice`. When put on server: `php artisan schedule:run`. `schedule:run` actually calls `minutely:demonotice` (and whatever other tasks are there). If you run them from console, they will run immediately. But on the server, the latter will run to schedule.
+5. Do ONE minutely cronjob on the server for Laravel, and let Laravel's Scheduler handle the rest of its jobs. On linux, do the cron like this: `* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`. On Windows, use Task Scheduler like this: https://quantizd.com/how-to-use-laravel-task-scheduler-on-windows-10/
 
 ## Useful notes:
 
