@@ -915,6 +915,149 @@ Note: If you only do steps 1-5, this is NOT complete!
 4. When testing in console: `php artisan minutely:demonotice`. When put on server: `php artisan schedule:run`. `schedule:run` actually calls `minutely:demonotice` (and whatever other tasks are there). If you run them from console, they will run immediately. But on the server, the latter will run to schedule.
 5. Do ONE minutely cronjob on the server for Laravel, and let Laravel's Scheduler handle the rest of its jobs. On linux, do the cron like this: `* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`. On Windows, use Task Scheduler like this: https://quantizd.com/how-to-use-laravel-task-scheduler-on-windows-10/
 
+## Helper
+
+### Method 1
+
+https://laravel-news.com/creating-helpers
+
+1. Make `app/XxxHelper.php`
+```php
+use ...\...;
+
+if (! function_exists('helperFunction')) {
+    function helperFunction() 
+    {
+
+    }
+}
+```
+
+2. `composer.json`
+```
+"autoload": {
+    "files": [
+        "app/XxxHelper.php"
+    ],
+```
+
+3. `composer dump-autoload`
+
+### Method 2
+
+https://www.youtube.com/watch?v=PCiqqLXTya4
+
+1. Make `app/Helpers/XxxHelper.php`
+```php
+namespace App\Helpers;
+
+use ...\...;
+
+class XxxHelper
+{
+    public static function helperFunction()
+    {
+
+    }
+}
+```
+
+2. `config/app.php`
+```php
+'aliases' => [
+    'XxxHelper' => App\Helpers\XxxHelper::class,
+]
+```
+
+3. `composer dump-autoload`
+
+## At user (@user) autosuggest:
+
+1. Make a text input field and an user autosuggest list:
+```html
+<textarea class="text-input-field"></textarea>
+
+<select id="autosuggest" @change="choseUser" size="5"></select>
+```
+
+2. Add onkeyup event listener to the text input field, with the handler function:
+
+Before the actual code, need to debounce:
+```js
+var displayUserList;
+
+$("textarea.text-input-field").keyup(function() {
+    clearTimeout(displayUserList);
+
+    displayUserList = setTimeout(function() {
+        // The actual code
+    }, 500);
+
+});
+```
+
+The actual code:
+```js
+var selection = window.getSelection();
+var currPos   = selection.anchorOffset;
+var currInput = selection.focusNode.wholeText;
+
+if (currPos)
+{
+    var currPart  = currInput.substring(0, currPos);
+    var currWord  = currPart.substring(currPart.lastIndexOf(" ") + 1);
+
+    if (currWord.charAt(0) === '@')
+    {
+        var username = currWord.replace("@", "");
+
+        if (username)
+        {
+            // AJAX get user list to populate select#autosuggest
+
+```
+
+3. On user select `choserUser`
+```js
+choseUser(event) 
+{
+    var id    = event.target.value;
+    var label = $(event.target).find("option:selected").text();
+
+    var commentText = $("textarea.text-input-field").html();
+    var replaced    = commentText.replace('@user', '<a href="link/xx/yy/'+ id +'">'+ label +'</a>');
+
+    $("textarea.text-input-field").html('replaced');
+}
+```
+
+But for this to work well, the text input field will need to be a WYSIWYG editor ...
+
+## WYSIWYG Editor:
+
+### CKEditor
+
+#### Normally we use CDNs:
+
+- https://cdn.ckeditor.com/ <sup>Good Doc</sup>
+- https://www.jsdelivr.com/package/npm/@ckeditor/ckeditor5-editor-classic?path=src
+    - https://cdn.jsdelivr.net/npm/@ckeditor/ckeditor5-editor-classic@16.0.0/src/classiceditor.js
+- https://stackoverflow.com/questions/49714473/modifying-capturing-key-press-with-ckeditor5  <sup>Usage</sup>
+
+#### Setup in Laravel/Vue:
+
+- https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html
+
+1. `npm install --save @ckeditor/ckeditor5-vue @ckeditor/ckeditor5-build-classic
+`
+2. In `.vue`, at the beginning of `<script>` tag: `import ClassicEditor from '@ckeditor/ckeditor5-build-classic';`
+3. Now you can use 
+```
+ClassicEditor
+  .create( document.querySelector( "textarea.text-input-field" ) )
+  .then( editor => { ...
+```
+
 ## Useful notes:
 
 - Clear cache: https://tecadmin.net/clear-cache-laravel-5/
