@@ -1076,7 +1076,8 @@ ClassicEditor
 
 ## Tutorials
 
-- https://www.youtube.com/watch?v=DJ6PD_jBtU0&feature=share&fbclid=IwAR0-NOMr-b1Eu6v-Ks5c7lnUfnKiwOrCbk2y3ues-1NGrKGLz5B1FTksI6o
+- https://www.youtube.com/playlist?list=PL4cUxeGkcC9gQcYgjhBoeQH7wiAyZNrYa <sup>Only Vue, Very good</sup>
+- https://www.youtube.com/watch?v=DJ6PD_jBtU0 <sup>Vue in Laravel, Very good</sup>
 - https://vuejsdevelopers.com/2018/02/05/vue-laravel-crud/
 - https://www.youtube.com/playlist?list=PLVThfwUGtbI9sxI1zPcvQ9Qfx8Yjgxj7C
 - https://www.youtube.com/playlist?list=PLB4AdipoHpxaHDLIaMdtro1eXnQtl_UvE
@@ -1183,6 +1184,30 @@ AJAX here is done by
     - https://justlaravel.com/vuejs-consumer-app-laravel-api-passport/
     - https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
     - https://learn.co/lessons/javascript-fetch
+
+## Draggable and Droppable Hierachy Tree in FrontEnd
+
+### jQuery UI (But no provision for trees)
+
+- https://jqueryui.com/droppable/
+    - https://jsfiddle.net/atabegaslan/j7web6yp/
+
+### JSTree (Have provision for trees. Draggable and Droppable provided for in its DnD plugin)
+
+- https://www.jstree.com/
+    - https://jsfiddle.net/atabegaslan/my9q02sf/
+
+### Recursion (Needed because the nested data can be infinitely deep)
+
+- https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/ 
+    - https://jsfiddle.net/atabegaslan/mhf58zg9/
+
+### JSTree for Vue (Fortunately the ability of recursion for infinitely-deep nested-data is already here)
+
+- https://www.npmjs.com/package/vue-jstree
+- https://www.vuescript.com/tag/tree-view/
+    - https://www.vuescript.com/interactive-tree-view-vue-js-2-vjstree/
+        - https://zdy1988.github.io/vue-jstree/
 
 ---
 
