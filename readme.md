@@ -869,7 +869,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
     - https://laravel-notification-channels.com/webpush/#installation
 - Tutorials
     - https://github.com/cretueusebiu/laravel-web-push-demo
-    - https://medium.com/@sagarmaheshwary31/push-notifications-with-laravel-and-webpush-446884265aaa <sup>very helpful</sup>
+    - https://medium.com/@sagarmaheshwary31/push-notifications-with-laravel-and-webpush-446884265aaa <sup>Very helpful</sup>
 - Theory
     - Web Notification API
         - https://www.sitepoint.com/introduction-web-notifications-api/
@@ -881,15 +881,15 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
         - https://www.youtube.com/watch?v=ggUY0Q4f5ok 
         - https://www.youtube.com/watch?v=HlYFW2zaYQM
     - FireBase
-        - https://developers.google.com/web/fundamentals/push-notifications/how-push-works
-        - https://www.youtube.com/playlist?list=PLCakfctNSHkGLCs9az_9PKqW1NY1C5HIU
+        - https://www.youtube.com/playlist?list=PLCakfctNSHkGLCs9az_9PKqW1NY1C5HIU <sup>Web, PHP. Very helpful</sup>
+            - https://developers.google.com/web/fundamentals/push-notifications/how-push-works
+            - https://firebase.google.com/docs/cloud-messaging/js/client
+            - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
         - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
         - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
-        - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
-        - https://firebase.google.com/docs/cloud-messaging/js/client
         - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
-        - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
-    
+        - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
+        
 1. `composer require laravel-notification-channels/webpush`
 2. User model use `NotificationChannels\WebPush\HasPushSubscriptions;`
 3. `php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
