@@ -870,17 +870,26 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
 - Tutorials
     - https://github.com/cretueusebiu/laravel-web-push-demo
     - https://medium.com/@sagarmaheshwary31/push-notifications-with-laravel-and-webpush-446884265aaa <sup>very helpful</sup>
-- Related
-    - https://developer.mozilla.org/en-US/docs/Web/API/Notification/onclick
-    - https://www.sitepoint.com/introduction-web-notifications-api/
-    - https://www.youtube.com/watch?v=EEhohSp0if4
-    - https://www.youtube.com/watch?v=ggUY0Q4f5ok
-    - https://www.youtube.com/watch?v=HlYFW2zaYQM
-    - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN
-    - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
-    - https://firebase.google.com/docs/cloud-messaging/js/client
-    - https://www.izooto.com/web-push-notifications-explained
-
+- Theory
+    - Web Notification API
+        - https://www.sitepoint.com/introduction-web-notifications-api/
+        - https://www.youtube.com/watch?v=EEhohSp0if4
+        - https://developer.mozilla.org/en-US/docs/Web/API/notification <sup>Documentation</sup>
+    - Web Push Notifications
+        - https://www.izooto.com/web-push-notifications-explained
+    - Notification API working in conjunction with Web Push
+        - https://www.youtube.com/watch?v=ggUY0Q4f5ok 
+        - https://www.youtube.com/watch?v=HlYFW2zaYQM
+    - FireBase
+        - https://developers.google.com/web/fundamentals/push-notifications/how-push-works
+        - https://www.youtube.com/playlist?list=PLCakfctNSHkGLCs9az_9PKqW1NY1C5HIU
+        - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
+        - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
+        - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
+        - https://firebase.google.com/docs/cloud-messaging/js/client
+        - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
+        - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
+    
 1. `composer require laravel-notification-channels/webpush`
 2. User model use `NotificationChannels\WebPush\HasPushSubscriptions;`
 3. `php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
@@ -1090,37 +1099,6 @@ Update `node_modules` according to `package.json` . In CLI: `npm install`
 
 Install Bootstrap. In CLI: `npm install bootstrap`
 
-## Find out if Vue works in setup
-
-`resources/assets/js/components/Example.vue` is an example vue file that comes along with Laravel. 
-
-This can be used to see if Vue works ok in the project.
-
-### Method 1 : 
-
-1. Set up `resources/views/welcome.blade.php` like this:
-
-```html
-<body>
-    <div id="app">
-        <example></example>
-    </div>
-    <script src="{{ asset('js/app.js') }}"></script>
-</body>
-```
-
-4. In CLI, launch server: `php artisan serve`, then see: `http://127.0.0.1:8000/welcome`, or turn on local server and see `http://localhost/{sitename}/public/welcome`
-
-5. Note that `resources/assets/js/app.js` is used.
-
-#### It should look like this:
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/vuetest1.PNG)
-
-6. Then you will have to do your own css.
-
-### Method 2 (better) : 
-
 1. Set up `resources/views/welcome.blade.php` like this:
 
 ```html
@@ -1138,7 +1116,6 @@ This can be used to see if Vue works ok in the project.
 ```
 
 In Laravel 5.8
-- Laravel 5.8 dont have `resources/assets` folder anymore, so don't use `<script src="{{ asset('js/app.js') }}">`
 - In `resources/js/app.js`: must include `.default` in `Vue.component('xx', require('./components/xx.vue').default)`( https://stackoverflow.com/questions/49138501/vue-warn-failed-to-mount-component-template-or-render-function-not-defined-i )
 
 2. Have the dev script `package.json` like this:
@@ -1147,9 +1124,6 @@ In Laravel 5.8
 ...
   "scripts": {
     "dev": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-
-    "watch": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-
     ...
   },
 ...
