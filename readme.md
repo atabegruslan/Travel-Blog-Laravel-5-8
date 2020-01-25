@@ -1131,3 +1131,4 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 ## To Do
 
 - FCM
+- Swagger
