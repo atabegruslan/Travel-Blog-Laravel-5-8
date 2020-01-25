@@ -787,6 +787,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
             - https://developers.google.com/web/fundamentals/push-notifications/how-push-works
             - https://firebase.google.com/docs/cloud-messaging/js/client
             - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
+            - https://www.youtube.com/watch?v=XijS62iP1Xo  <sup>Android</sup>
         - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
         - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
         - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
