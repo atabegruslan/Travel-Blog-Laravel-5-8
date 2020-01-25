@@ -129,14 +129,12 @@ Return OK or Error response
 
 ### Beginner CRUD and User accounts - refer to:
 
-- [YouTube - Traversy Media - Laravel From Scratch](https://www.youtube.com/playlist?list=PLillGF-RfqbYhQsN5WMXy6VsDMKGadrJ-)
-
-- [Github - bradtraversy/lsapp](https://github.com/bradtraversy/lsapp)
-
+- https://www.youtube.com/playlist?list=PLillGF-RfqbYhQsN5WMXy6VsDMKGadrJ-
+- https://github.com/bradtraversy/lsapp
 - https://github.com/mrakodol/Laravel-5-Bootstrap-3-Starter-Site
 - Testing https://www.youtube.com/playlist?list=PLrIm-p2rpV0Hu9EvTidyYG1vsX0LWIM7Q
-- Socket https://www.youtube.com/playlist?list=PLwAKR305CRO9rlj-U9oOi4m2sQaWN6XA8
-- Socket https://www.youtube.com/playlist?list=PLXsbBbd36_uVjOFH_P25__XAyGsohXWlv
+- https://www.youtube.com/playlist?list=PLwAKR305CRO9rlj-U9oOi4m2sQaWN6XA8
+- https://www.youtube.com/playlist?list=PLXsbBbd36_uVjOFH_P25__XAyGsohXWlv
 
 In CLI: `composer create-project --prefer-dist laravel/laravel travel_blog`
 
