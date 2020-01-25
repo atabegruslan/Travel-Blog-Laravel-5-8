@@ -1,41 +1,3 @@
-# Laravel 5.8 CRUD API Android
-
-- Website http://ruslan-website.com/laravel5/travel_blog/
-
-- Tester account: ruslan_aliyev_@hotmail / ruslan12
-
-- Note: Android integration: Update in progress. 
-
-- Updates for https://github.com/atabegruslan/Travel-Blog-Laravel-5 are in progress.
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/Snapshot.PNG)
-
-## Features
-
-- Laravel MVC CRUD
-
-- User Accounts, Social Signin, RESTful API, Token Auth
-
-- Android<sup>updating</sup> & Web FrontEnd
-
-- Contact Form
-
-- Search
-
-- Custom Carousel
-
-## Download all app images
-
-`./download_all_travel_blog_images.sh` <sup>updating</sup>
-
-## Android App
-
-Download here: http://ruslan-website.com/laravel5/travel_blog/apk/TravelBlog.apk <sup>updating</sup>
-
-Source code: https://github.com/atabegruslan/Travel-Blog-Android <sup>updating</sup>
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Android/master/Screenshot.png)
-
 # API
 
 ## Users
@@ -928,8 +890,6 @@ Note: If you only do steps 1-5, this is NOT complete!
 
 ### Method 1
 
-https://laravel-news.com/creating-helpers
-
 1. Make `app/XxxHelper.php`
 ```php
 use ...\...;
@@ -953,8 +913,6 @@ if (! function_exists('helperFunction')) {
 3. `composer dump-autoload`
 
 ### Method 2
-
-https://www.youtube.com/watch?v=PCiqqLXTya4
 
 1. Make `app/Helpers/XxxHelper.php`
 ```php
@@ -1153,7 +1111,6 @@ AJAX here is done by
 
 ## Notes
 
-- `fsevents` warnings when running `npm install`? Never mind it, it's not needed on Windows. https://stackoverflow.com/questions/40226745/npm-warn-notsup-skipping-optional-dependency-unsupported-platform-for-fsevents
 - what if your APIs are protected by access token ? 
     - https://justlaravel.com/vuejs-consumer-app-laravel-api-passport/
     - https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
@@ -1187,5 +1144,4 @@ AJAX here is done by
 
 ## To Do
 
-- Update Android app
 - FCM
