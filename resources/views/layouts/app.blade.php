@@ -30,8 +30,8 @@
 <body>
 
     <div class="container">        
-        @include('parts/_browsers')
-
+        {{-- @include('parts/_browsers') --}}
+        
         @include('parts/menu/_top_nav')
 
         @yield('content')
