@@ -1,72 +1,67 @@
-initSW();
+const vapidPublicKey = $("meta[name=vapid_public_key]").attr('content');
+const baseUrl        = 'http://localhost/laravel_5_8/travel_blog/public/';
 
-const applicationServerPublicKey = 'BPu7vF6d9MfLdxYOQEwCSOQV4mS91XSNIO-1DmilVgz5CtYKHIkmIyKr1eaoTvwce7iDSI5dCwnkMoEIdUrPkXI';
+initServiceWorker();
 
-function initSW() 
+function initServiceWorker() 
 {
     if ('serviceWorker' in navigator && 'PushManager' in window) 
     {
-        console.log('Service Worker and Push is supported');
+        navigator.serviceWorker.getRegistration()
+            .then(function(registration) {
 
-        navigator.serviceWorker.register('http://localhost/laravel_5_8/travel_blog/public/js/service-worker.js')
-            .then(function(swReg) {
+                if (registration)
+                {
+                    registration.update();
+                    subscribeUser(registration);
+                }
+                else
+                {
+                    navigator.serviceWorker.register(baseUrl + 'js/service-worker.js')
+                        .then(function(newRegistration) {
 
-                console.log('Service Worker is registered', swReg);
-                swReg.update();
-
-                swRegistration = swReg;
-                initializeUI();
-            })
-            .catch(function(error) {
-                console.error('Service Worker Error', error);
+                            newRegistration.update();
+                            subscribeUser(newRegistration);
+                        })
+                        .catch(function(error) {
+                            console.error({error});
+                        });
+                }
             });
     } 
     else 
     {
-        console.warn('Push messaging is not supported');
-        pushButton.textContent = 'Push Not Supported';
+        console.warn('Service Worker and Push Messaging are not supported');
     }
 }
 
-function initializeUI() 
+function subscribeUser(registration) 
 {
-    subscribeUser();
+    console.log({registration});
 
-    // Set the initial subscription value
-    swRegistration.pushManager.getSubscription()
+    registration.pushManager.getSubscription()
         .then(function(subscription) {
 
-        isSubscribed = !(subscription === null);
+            if (subscription === null) 
+            {
+                const applicationServerKey = urlB64ToUint8Array(vapidPublicKey);
 
-        if (isSubscribed) 
-        {
-            console.log('User is subscribed.');
-        } 
-        else 
-        {
-            console.log('User is NOT subscribed.');
-        }
+                registration.pushManager.subscribe({
+                    userVisibleOnly      : true,
+                    applicationServerKey : applicationServerKey
+                })
+                    .then(function(newSubscription) {
 
-        });
-}
-
-function subscribeUser() 
-{
-    const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
-
-    swRegistration.pushManager.subscribe({
-
-        userVisibleOnly: true,
-        applicationServerKey: applicationServerKey
-    })
-        .then(function(subscription) {
-
-            console.log(JSON.stringify(subscription));
-
-            storePushSubscription(subscription);
-        })
-        .catch(function(err) {
-            console.log('Failed to subscribe the user: ', err);
+                        storePushSubscription(newSubscription);
+                    })
+                    .catch(function(error) {
+                        console.error({error});
+                    });
+            } 
+            else 
+            {
+                storePushSubscription(subscription);
+            }
         });
 }
 
@@ -89,17 +84,29 @@ function urlB64ToUint8Array(base64String)
 }
 
 
-function storePushSubscription(pushSubscription) 
+function storePushSubscription(subscription) 
 {
+    console.log({subscription});
+    /*
+    subscription: PushSubscription
+        endpoint: "https://fcm.googleapis.com/fcm/send/blah"
+        expirationTime: null
+        options: PushSubscriptionOptions
+            userVisibleOnly: true
+            applicationServerKey: ArrayBuffer(65)
+                [[Int8Array]]: Int8Array(65) [4, -5, -69, ...]
+                [[Uint8Array]]: Uint8Array(65) [4, 251, 187, ...]
+    */
+
     const token = document.querySelector('meta[name=csrf-token]').getAttribute('content');
 
-    fetch('http://localhost/laravel_5_8/travel_blog/public/notification', {
-        method: 'POST',
-        body: JSON.stringify(pushSubscription),
+    fetch(baseUrl + 'notification', {
+        method : 'POST',
+        body   : JSON.stringify(subscription),
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': token,
+            'Accept'       : 'application/json',
+            'Content-Type' : 'application/json',
+            'X-CSRF-Token' : token,
             'Authorization': 'Bearer ' + window.token,
         }
     })
@@ -109,7 +116,7 @@ function storePushSubscription(pushSubscription)
     .then((res) => {
         console.log(res)
     })
-    .catch((err) => {
-        console.log(err)
+    .catch((error) => {
+        console.error(error)
     });
 }
