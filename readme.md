@@ -1,41 +1,3 @@
-# Laravel 5.8 CRUD API Android
-
-- Website http://ruslan-website.com/laravel5/travel_blog/
-
-- Tester account: ruslan_aliyev_@hotmail / ruslan12
-
-- Note: Android integration: Update in progress. 
-
-- Updates for https://github.com/atabegruslan/Travel-Blog-Laravel-5 are in progress.
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/Snapshot.PNG)
-
-## Features
-
-- Laravel MVC CRUD
-
-- User Accounts, Social Signin, RESTful API, Token Auth
-
-- Android<sup>updating</sup> & Web FrontEnd
-
-- Contact Form
-
-- Search
-
-- Custom Carousel
-
-## Download all app images
-
-`./download_all_travel_blog_images.sh` <sup>updating</sup>
-
-## Android App
-
-Download here: http://ruslan-website.com/laravel5/travel_blog/apk/TravelBlog.apk <sup>updating</sup>
-
-Source code: https://github.com/atabegruslan/Travel-Blog-Android <sup>updating</sup>
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Android/master/Screenshot.png)
-
 # API
 
 ## Users
@@ -167,14 +129,12 @@ Return OK or Error response
 
 ### Beginner CRUD and User accounts - refer to:
 
-- [YouTube - Traversy Media - Laravel From Scratch](https://www.youtube.com/playlist?list=PLillGF-RfqbYhQsN5WMXy6VsDMKGadrJ-)
-
-- [Github - bradtraversy/lsapp](https://github.com/bradtraversy/lsapp)
-
+- https://www.youtube.com/playlist?list=PLillGF-RfqbYhQsN5WMXy6VsDMKGadrJ-
+- https://github.com/bradtraversy/lsapp
 - https://github.com/mrakodol/Laravel-5-Bootstrap-3-Starter-Site
 - Testing https://www.youtube.com/playlist?list=PLrIm-p2rpV0Hu9EvTidyYG1vsX0LWIM7Q
-- Socket https://www.youtube.com/playlist?list=PLwAKR305CRO9rlj-U9oOi4m2sQaWN6XA8
-- Socket https://www.youtube.com/playlist?list=PLXsbBbd36_uVjOFH_P25__XAyGsohXWlv
+- https://www.youtube.com/playlist?list=PLwAKR305CRO9rlj-U9oOi4m2sQaWN6XA8
+- https://www.youtube.com/playlist?list=PLXsbBbd36_uVjOFH_P25__XAyGsohXWlv
 
 In CLI: `composer create-project --prefer-dist laravel/laravel travel_blog`
 
@@ -757,64 +717,6 @@ $slider1.slider
 - https://laravel.com/docs/5.8/events#dispatching-events
 - `php artisan event:generate`
 
-## Service Provider
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer1.jpg)
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer2.png)
-
-- https://code.tutsplus.com/tutorials/how-to-register-use-laravel-service-providers--cms-28966
-- Then watch these tutorials:
-    - https://www.youtube.com/watch?v=urycXvTEnF8&t=1m
-    - https://www.youtube.com/watch?v=GqVdt6OWN-Y&list=PL_HVsP_TO8z7aeylCMe64BIx3VEfvPdn&index=34
-- Then watch these tutorials:
-    - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
-    - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
-
-## Different ways of writting things
-
-In Blade
-```
-@if (!in_array($modLabel, ['xxx', 'yyy']))
-
-@endif
-```
-is same as
-```
-@php {{ $skips = ['xxx','yyy','deleted_at']; }} @endphp
-@if (!in_array($initLabel, $skips))
-
-@endif
-```
-
-In PHP
-```
-$thisAndPrevious = ActionLog::where([
-        [ 'time',            '<=', $log['time']            ],
-        [ 'record_key_name', '=',  $log['record_key_name'] ],
-        [ 'record_id',       '=',  $log['record_id']       ],
-        [ 'model',           '=',  $log['model']           ],
-    ])
-    ->where(function ($query) {
-        $query->where('method', '=', 'create')
-              ->orWhere('method', '=', 'update');
-    })
-    ->orderBy('id', 'DESC')
-    ->take(2)
-    ->get();
-```
-is same as
-```
-$thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
-    ->where('record_key_name', '=',  $log['record_key_name'])
-    ->where('record_id', '=',  $log['record_id'])
-    ->where('model', '=',  $log['model'])
-    ->whereIn('method', ['create', 'update'])
-    ->orderBy('id', 'DESC')
-    ->take(2)
-    ->get();
-```
-
 ## Notifications
 
 https://developers.google.com/cloud-messaging
@@ -885,6 +787,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
             - https://developers.google.com/web/fundamentals/push-notifications/how-push-works
             - https://firebase.google.com/docs/cloud-messaging/js/client
             - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
+            - https://www.youtube.com/watch?v=XijS62iP1Xo  <sup>Android</sup>
         - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
         - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
         - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
@@ -928,8 +831,6 @@ Note: If you only do steps 1-5, this is NOT complete!
 
 ### Method 1
 
-https://laravel-news.com/creating-helpers
-
 1. Make `app/XxxHelper.php`
 ```php
 use ...\...;
@@ -953,8 +854,6 @@ if (! function_exists('helperFunction')) {
 3. `composer dump-autoload`
 
 ### Method 2
-
-https://www.youtube.com/watch?v=PCiqqLXTya4
 
 1. Make `app/Helpers/XxxHelper.php`
 ```php
@@ -1067,18 +966,6 @@ ClassicEditor
   .then( editor => { ...
 ```
 
-## Useful notes:
-
-- Clear cache: https://tecadmin.net/clear-cache-laravel-5/
-    - On top of the above `php artisan config:cache` is also an useful command
-
-## Upload to server
-
-- public folder to server's public folder
-- The rest to another folder outside of the server's public folder
-- public/index.php: rectify all relevant paths
-- import .sql to server's database, rectify database-name, username & password in the .env file
-
 ---
 
 # Vue.js
@@ -1139,26 +1026,6 @@ In Laravel 5.8
 
 ![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/vuetest2.PNG)
 
-## The Vue frontend relies on AJAXes to your backend API
-
-AJAX here is done by
-
-- JS's Fetch API
-- Axios library
-
-- https://stackoverflow.com/questions/40844297/what-is-difference-between-axios-and-fetch
-- https://www.sitepoint.com/introduction-to-the-fetch-api/
-- https://www.youtube.com/playlist?list=PLyuRouwmQCjkWu63mHksI9EA4fN-vwGs7
-
-
-## Notes
-
-- `fsevents` warnings when running `npm install`? Never mind it, it's not needed on Windows. https://stackoverflow.com/questions/40226745/npm-warn-notsup-skipping-optional-dependency-unsupported-platform-for-fsevents
-- what if your APIs are protected by access token ? 
-    - https://justlaravel.com/vuejs-consumer-app-laravel-api-passport/
-    - https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
-    - https://learn.co/lessons/javascript-fetch
-
 ## Draggable and Droppable Hierachy Tree in FrontEnd
 
 ### jQuery UI (But no provision for trees)
@@ -1185,7 +1052,86 @@ AJAX here is done by
 
 ---
 
+## Theory
+
+### Service Provider
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer1.jpg)
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer2.png)
+
+- https://code.tutsplus.com/tutorials/how-to-register-use-laravel-service-providers--cms-28966
+- Then watch these tutorials:
+    - https://www.youtube.com/watch?v=urycXvTEnF8&t=1m
+    - https://www.youtube.com/watch?v=GqVdt6OWN-Y&list=PL_HVsP_TO8z7aeylCMe64BIx3VEfvPdn&index=34
+- Then watch these tutorials:
+    - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
+    - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
+
+---
+
+## Notes
+
+### Clear cache
+    - https://tecadmin.net/clear-cache-laravel-5/
+    - On top of the above `php artisan config:cache` is also an useful command
+
+### Upload to server
+
+- public folder to server's public folder
+- The rest to another folder outside of the server's public folder
+- public/index.php: rectify all relevant paths
+- import .sql to server's database, rectify database-name, username & password in the .env file
+
+### Different ways of writting things
+
+In Blade
+```
+@if (!in_array($modLabel, ['xxx', 'yyy']))
+
+@endif
+```
+is same as
+```
+@php {{ $skips = ['xxx','yyy','deleted_at']; }} @endphp
+@if (!in_array($initLabel, $skips))
+
+@endif
+```
+
+In PHP
+```
+$thisAndPrevious = ActionLog::where([
+        [ 'time',            '<=', $log['time']            ],
+        [ 'record_key_name', '=',  $log['record_key_name'] ],
+        [ 'record_id',       '=',  $log['record_id']       ],
+        [ 'model',           '=',  $log['model']           ],
+    ])
+    ->where(function ($query) {
+        $query->where('method', '=', 'create')
+              ->orWhere('method', '=', 'update');
+    })
+    ->orderBy('id', 'DESC')
+    ->take(2)
+    ->get();
+```
+is same as
+```
+$thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
+    ->where('record_key_name', '=',  $log['record_key_name'])
+    ->where('record_id', '=',  $log['record_id'])
+    ->where('model', '=',  $log['model'])
+    ->whereIn('method', ['create', 'update'])
+    ->orderBy('id', 'DESC')
+    ->take(2)
+    ->get();
+```
+
+---
+
 ## To Do
 
-- Update Android app
 - FCM
+- Swagger
+    - https://github.com/DarkaOnLine/L5-Swagger
+    - https://m.youtube.com/playlist?list=PLnBvgoOXZNCOiV54qjDOPA9R7DIDazxBA
