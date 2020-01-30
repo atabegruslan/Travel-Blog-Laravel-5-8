@@ -768,6 +768,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
 - Documentations
     - https://laravel.com/docs/5.8/notifications#specifying-delivery-channels
     - https://github.com/laravel-notification-channels/webpush
+        - https://github.com/laravel-notification-channels/webpush/blob/master/src/WebPushMessage.php
     - https://laravel-notification-channels.com/webpush/#installation
 - Tutorials
     - https://github.com/cretueusebiu/laravel-web-push-demo
@@ -779,6 +780,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
         - https://developer.mozilla.org/en-US/docs/Web/API/notification <sup>Documentation</sup>
     - Push API
         - https://www.izooto.com/web-push-notifications-explained
+        - https://developers.google.com/web/updates/2016/01/notification-actions <sup>Actions</sup>
     - Notification API working in conjunction with Push API
         - https://www.youtube.com/watch?v=ggUY0Q4f5ok 
         - https://www.youtube.com/watch?v=HlYFW2zaYQM

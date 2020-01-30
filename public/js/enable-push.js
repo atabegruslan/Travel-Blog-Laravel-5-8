@@ -1,9 +1,10 @@
 const vapidPublicKey = $("meta[name=vapid_public_key]").attr('content');
 const baseUrl        = 'http://localhost/laravel_5_8/travel_blog/public/';
+//const baseUrl        = 'https://ruslan-website.com/laravel5/travel_blog/';
 
-initServiceWorker();
+registerServiceWorker();
 
-function initServiceWorker() 
+function registerServiceWorker() 
 {
     if ('serviceWorker' in navigator && 'PushManager' in window) 
     {
@@ -42,7 +43,11 @@ function subscribeUser(registration)
     registration.pushManager.getSubscription()
         .then(function(subscription) {
 
-            if (subscription === null) 
+            if (subscription) 
+            {
+                storePushSubscription(subscription);
+            } 
+            else 
             {
                 const applicationServerKey = urlB64ToUint8Array(vapidPublicKey);
 
@@ -57,10 +62,6 @@ function subscribeUser(registration)
                     .catch(function(error) {
                         console.error({error});
                     });
-            } 
-            else 
-            {
-                storePushSubscription(subscription);
             }
         });
 }
@@ -87,16 +88,6 @@ function urlB64ToUint8Array(base64String)
 function storePushSubscription(subscription) 
 {
     console.log({subscription});
-    /*
-    subscription: PushSubscription
-        endpoint: "https://fcm.googleapis.com/fcm/send/blah"
-        expirationTime: null
-        options: PushSubscriptionOptions
-            userVisibleOnly: true
-            applicationServerKey: ArrayBuffer(65)
-                [[Int8Array]]: Int8Array(65) [4, -5, -69, ...]
-                [[Uint8Array]]: Uint8Array(65) [4, 251, 187, ...]
-    */
 
     const token = document.querySelector('meta[name=csrf-token]').getAttribute('content');
 

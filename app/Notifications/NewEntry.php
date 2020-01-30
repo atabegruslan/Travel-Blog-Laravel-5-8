@@ -14,8 +14,10 @@ class NewEntry extends Notification
 {
     use Queueable;
 
-    protected $url;
+    protected $entry_url;
     protected $name;
+    protected $entry_id;
+    protected $img_url;
 
     /**
      * Create a new notification instance.
@@ -24,8 +26,10 @@ class NewEntry extends Notification
      */
     public function __construct($notice)
     {
-        $this->url  = $notice['url'];
-        $this->name = $notice['name'];
+        $this->entry_url = $notice['entry_url'];
+        $this->name      = $notice['name'];
+        $this->entry_id  = $notice['entry_id'];
+        $this->img_url   = $notice['img_url'];
     }
 
     /**
@@ -49,34 +53,41 @@ class NewEntry extends Notification
     {
         return (new MailMessage)
                     ->line('A new Travel Blog entry about ' . $this->name . ' was added')
-                    ->action('Visit new entry', $this->url)
+                    ->action('Visit new entry', $this->entry_url)
                     ->line('Thank you for using our website!');
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'url'  => $this->url,
+            'url'  => $this->entry_url,
             'name' => $this->name,
         ];
     }
 
     public function toWebPush($notifiable, $notification)
     {
+        $data = [
+            'entry_id'  => $this->entry_id,
+            'entry_url' => $this->entry_url,
+            'base_url'  => url('/'),
+        ];
+
         return (new WebPushMessage)
             ->title('New Travel Blog entry!')
-            ->icon('/approved-icon.png')
+            ->icon(url('/images/sys/favicon-1.png'))
             ->body('A new Travel Blog entry about ' . $this->name . ' was added')
-            ->action('View entry', $this->url);
-            // ->data(['id' => $notification->id])
-            // ->badge()
-            // ->dir()
-            // ->image()
-            // ->lang()
+            ->data($data)
+            ->dir('ltr')
+            ->image($this->img_url)
+            ->lang('en-US')
+            ->tag($notification->id)
+            ->action('View entry', 'view')
+            ->action('No thanks', 'close')
+            ->vibrate([100, 50, 100]);
             // ->renotify()
             // ->requireInteraction()
-            // ->tag()
-            // ->vibrate()
+            // ->badge();
     }
 
     /**

@@ -13,14 +13,19 @@ self.addEventListener('push', function (e) {
         console.log({msg});
 
         var options = {
-            body   : msg.body,
-            icon   : msg.icon,
-            // actions: [
-            //     {action: 'explore', title: 'Go to the site', icon: 'check.png'},
+            body    : msg.body,
+            icon    : msg.icon,
+            image   : msg.image,
+            lang    : msg.lang,
+            dir     : msg.dir,
+            // actions : [
+            //     {action: 'view', title: 'View entry', icon: 'check.png'},
             //     {action: 'close', title: 'No thanks', icon: 'x.png'},
             // ],
-            //vibrate: [100, 50, 100],
-            //data   : {primaryKey: 1}
+            actions : msg.actions,
+            data    : msg.data,
+            tag     : msg.tag,
+            vibrate : msg.vibrate,
         };
         
         e.waitUntil(
@@ -32,24 +37,31 @@ self.addEventListener('push', function (e) {
 self.addEventListener('notificationclick', function (event) {
     
     var notification = event.notification;
+    var data         = notification.data;
     var action       = event.action;
 
     if (action === 'close')
     {
         notification.close();
     }
+    else if (action === 'view')
+    {
+        event.waitUntil(
+            clients.openWindow(data.entry_url)
+        );
+    }
     else
     {
         event.waitUntil(
-            clients.openWindow('https://www.google.com')
+            clients.openWindow(data.base_url)
         );
     }
-});
+}, false);
 
 self.addEventListener('notificationclose', function (event) {
 
-    // var notification = event.notification;
-    // var primaryKey   = notification.data.primaryKey;
+    var notification   = event.notification;
+    var notificationId = notification.tag;
 
-    // console.log(`Closed notification: $(primaryKey)`);
+    console.log(`Closed notification: ${notificationId}`);
 });

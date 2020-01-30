@@ -67,8 +67,10 @@ class EntryController extends Controller
         // }
 
         $notice = array(
-            'url'  => url('/entry/' . $entry->id), //PUB_URL . 'entry/' . $entry->id,
-            'name' => $entry->place,
+            'entry_url' => url('/entry/' . $entry->id), //PUB_URL . 'entry/' . $entry->id,
+            'entry_id'  => $entry->id,
+            'name'      => $entry->place,
+            'img_url'   => $imgUrl,
         );
 
         Notification::send($users, new NewEntry($notice));

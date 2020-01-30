@@ -16,10 +16,11 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
+        // Getting data from Subscription object
         $this->validate($request, [
-            'endpoint'    => 'required',
-            'keys.auth'   => 'required',
-            'keys.p256dh' => 'required'
+            'endpoint'    => 'required', // Unique to every client
+            'keys.auth'   => 'required', // Authentication secret
+            'keys.p256dh' => 'required'  // Elliptic-curve Diffie-Hellman public key - for message encryption
         ]);
 
         $endpoint = $request->endpoint;
