@@ -1019,6 +1019,50 @@ In Laravel 5.8
 
 ![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/vuetest2.PNG)
 
+## Output seperate JS files from Vue files
+
+https://stackoverflow.com/questions/58659571/separate-js-file-for-bundle-and-components-in-vuejs
+
+In your webpack.mix.js
+```js
+mix.js('resources/js/modules/module1.js', 'public/js/modules')
+   .js('resources/js/modules/module2.js', 'public/js/modules');
+```
+
+or more elaborately:
+```js
+let fs = require('fs');
+
+let getFiles = function (dir) 
+{
+  return fs.readdirSync(dir).filter(file => {
+    return fs.statSync(`${dir}/${file}`).isFile();
+  });
+};
+
+getFiles('resources/js/modules').forEach(function (filepath) {
+  mix.js('resources/js/modules/' + filepath, 'public/js/modules');
+});
+```
+
+resources/js/modules/module1.js, for example, can be like:
+```js
+import Component from 'resources/js/components/Component.vue';
+
+Vue.component('base', Component);
+```
+
+Then in your resources/views/what..ever/view.blade.php:
+```
+@section('content')
+    <Base></Base>
+@endsection
+
+@section('script')
+    <script src="/public/js/modules/module1.js"></script>
+@endsection
+```
+
 ---
 
 ## Theory
@@ -1042,8 +1086,9 @@ In Laravel 5.8
 ## Notes
 
 ### Clear cache
-    - https://tecadmin.net/clear-cache-laravel-5/
-    - On top of the above `php artisan config:cache` is also an useful command
+
+- https://tecadmin.net/clear-cache-laravel-5/
+- On top of the above `php artisan config:cache` is also an useful command
 
 ### Upload to server
 
@@ -1156,6 +1201,18 @@ So that, eg: East Asia is a subset of Asia
             - https://www.vuescript.com/interactive-tree-view-vue-js-2-vjstree/
                 - https://zdy1988.github.io/vue-jstree/
     - **In conclusion:** JSTree in Vue is the most convenient. But the `regions` list view was written in `blade`, so now it needs to be re-written in `Vue`.
+
+5. Put `Vue.component('regions', require('./components/region/Tree.vue').default)` into `resources/js/app.js` and `<Regions></Regions>` into the `regions` list view.
+
+6. Vue relies on AJAX to get data. So make the necessary api route.
+```php
+Route::group(['namespace' => 'Api'], function () {
+    Route::resource('/region', 'RegionController');
+```
+
+7. `php artisan make:controller Api/RegionController --resource`
+
+8. `npm install vue-jstree`
 
 ---
 

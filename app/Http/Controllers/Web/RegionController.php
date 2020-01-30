@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Region;
+use App\Models\RegionTree;
+use Illuminate\Support\Facades\DB;
 
 class RegionController extends Controller
 {
@@ -46,6 +48,8 @@ class RegionController extends Controller
         $region->name = $request->input('name');
 
         $region->save();
+
+        DB::table('region_tree')->insert(['region_id' => $region->id, 'parent_id' => 0]);
 
         \Session::flash('success', 'Region Created');
 

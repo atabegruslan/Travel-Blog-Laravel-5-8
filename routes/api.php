@@ -21,6 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Protected Entry CRUDs
 Route::group(['namespace' => 'Api'/*, 'middleware' => ['auth:api']*/], function () {
 
+	Route::resource('/region', 'RegionController');
+	Route::post('/region/rearrange', 'RegionController@rearrange');
+
 	Route::resource('/entry', 'EntryController');
 
 	Route::post('/user', 'UserController@store');
