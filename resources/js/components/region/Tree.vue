@@ -116,19 +116,19 @@
 
 				this.tally = [];
 				this.getNode(regions);
-
+				
 				fetch('api/region/rearrange', {
-					method: 'post',
-					body: JSON.stringify(this.tally),
-					headers: {
-						'content-type' : 'application/json'
-					}
-				})
-					.then(res => {
-						window.location.href = this.regionRoute;
+						method: 'post',
+						body: JSON.stringify(this.tally),
+						headers: {
+							'content-type' : 'application/json'
+						}
 					})
-					.catch(err => console.error(err));
-
+						.then(res => {
+							window.location.href = this.regionRoute;
+						})
+						.catch(err => console.error(err));
+						
             },  
 		    getNode(node)
 		    {
@@ -144,7 +144,7 @@
 					}
 					else
 					{
-						this.tally.push({role_id: node.find('div.role_node').attr('id'), parent_id: node.parent().closest('li').find('div.role_node').attr('id')});
+						this.tally.push({region_id: node.find('div.role_node').attr('id'), parent_id: node.parent().closest('li').find('div.role_node').attr('id')});
 
 						return;
 					}

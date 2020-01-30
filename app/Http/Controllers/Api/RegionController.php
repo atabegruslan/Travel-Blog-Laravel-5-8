@@ -67,8 +67,8 @@ class RegionController extends Controller
             {
                 foreach ($data as $key1 => $item1) 
                 {
-                    if ($item->parent_id === $item1->role_id)
-                    {
+                    if ($item->parent_id === $item1->region_id)
+                    {// @todo https://stackoverflow.com/questions/38462131/indirect-modification-of-overloaded-property-app-categorythesizes-has-no-effe
                         $data[$key1]->children[] = $item;
                     }
                 }

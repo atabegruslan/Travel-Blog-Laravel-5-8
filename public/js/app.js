@@ -2123,7 +2123,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           this.tally.push({
-            role_id: node.find('div.role_node').attr('id'),
+            region_id: node.find('div.role_node').attr('id'),
             parent_id: node.parent().closest('li').find('div.role_node').attr('id')
           });
           return;
