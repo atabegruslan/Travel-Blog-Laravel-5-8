@@ -11,6 +11,14 @@
             </thead>
             <tbody>
                 <tr>
+                    <td><strong>Region: </strong></td>
+                    <td>
+                        @foreach($param->regions as $region)
+                            {!! $region->name !!}<br>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
                     <td><strong>By: </strong></td>
                     <td>{{ $param->user->name }}</td>
                 </tr>

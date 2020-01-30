@@ -8,6 +8,6 @@
  
 @include('parts/msg/_search_err')
 
-@include('parts/_archive')
+@include('parts/_entry_archive')
 
 @endsection

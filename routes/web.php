@@ -22,6 +22,7 @@ Route::middleware('auth')->get('/home', 'HomeController@index')->name('home');
 Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 
 	Route::resource('/entry', 'EntryController');
+	Route::resource('/region', 'RegionController');
 
 	Route::get('/search', 'SearchController@index');
 

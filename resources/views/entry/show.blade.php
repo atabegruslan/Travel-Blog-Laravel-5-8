@@ -4,6 +4,6 @@
 
 @include('parts/menu/_entry_crud_nav')
 
-@include('parts/_single')
+@include('parts/_entry_single')
 
 @endsection

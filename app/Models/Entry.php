@@ -26,6 +26,17 @@ class Entry extends Base
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
+    }
+
+    public function regions()
+    {
+// https://laravel.com/api/5.6/Illuminate/Database/Eloquent/Concerns/HasRelationships.html
+        return $this->belongsToMany(
+            Region::class,
+            'entry_region',
+            'place_id',
+            'region_id',
+        );
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Entry;
+use App\Models\Region;
 use App\Models\User;
 use App\Notifications\NewEntry;
 use Notification;
@@ -19,7 +20,7 @@ class EntryController extends Controller
     public function index()
     {
         $entries = Entry::orderBy('time', 'DESC')->paginate(PAG);
-        
+
         return view('entry.index', ['param' => $entries]);
     }
 
@@ -56,6 +57,8 @@ class EntryController extends Controller
         $entry->img_url  = $imgUrl;
 
         $entry->save();
+        $regions = Region::find([1]); // @todo Un-hardcode
+        $entry->regions()->sync($regions);
 
         \Session::flash('success', 'New Entry Created');
 
@@ -136,6 +139,9 @@ class EntryController extends Controller
             'user_id'  => $request->input('user_id'),
             'img_url'  => isset($newImgUrl) ? $newImgUrl : $oldImgUrl
         ]);
+        
+        $regions = Region::find([1]); // @todo Un-hardcode
+        $entry->regions()->sync($regions);
 
         \Session::flash('success', 'Entry Updated');
 

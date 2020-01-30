@@ -175,15 +175,6 @@ public function index(){
 
 5. Create: resources/views/entry.blade.php
 
-### Model Relationships
-
-- 1 - many or many - 1
-    - `->belongsTo` 
-- Many to many
-    - Pivot tables. `Illuminate\Database\Eloquent\Relations\Concerns\InteractsWithPivotTable::sync()` is especially useful: https://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/pivot-sync.png)
-
 ### Create Controller Inside a Subfolder
 
 1. `php artisan make:controller Web/EntryController --resource` ( https://laracasts.com/discuss/channels/laravel/create-controller-inside-a-subfolder?page=1 )
@@ -1128,6 +1119,40 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
     ->take(2)
     ->get();
 ```
+
+---
+
+# Make Region Feature
+
+So that a place-entry can belong to a region.
+
+Need to create a many-to-many relationship between place and region.
+
+## Theory of many to many relationships in Laravel
+
+Use pivot tables. `Illuminate\Database\Eloquent\Relations\Concerns\InteractsWithPivotTable::sync()` is especially useful: https://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/pivot-sync.png)
+
+## Steps
+
+https://appdividend.com/2018/05/17/laravel-many-to-many-relationship-example/?fbclid=IwAR0AzrvJyhG0tuHEpScPXz4yAy4U6Itc23PAXDygs2yQW8C2GGH8_RheMQM
+
+`php artisan make:model Models/Region`
+
+Make `database/migrations/xxx_create_regions_table.php`
+
+`php artisan make:migration create_region_entry_table --create=region_entry`
+
+`php artisan migrate`
+
+Complete region model and edit entry model.
+
+Edit entry controller's store and update functions.
+
+Make region route and controller (`php artisan make:controller Web/RegionController --resource`) and views.
+
+Make region display in entry list and item views.
 
 ---
 

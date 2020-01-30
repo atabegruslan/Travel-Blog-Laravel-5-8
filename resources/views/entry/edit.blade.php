@@ -19,6 +19,8 @@
                 {{ Form::text('place',$param->place,array('placeholder'=>'Place','class'=>'form-control','id'=>'place')) }}
             </div>
 
+            <!-- @todo multi-select dropmenu for regions -->
+
             <div class="form-group">
                 <label for="comments">Comments: </label>
                 {{ Form::textarea('comments',$param->comments,array('placeholder'=>'Comments','class'=>'form-control','id'=>'comments','rows'=>10)) }}
@@ -49,6 +51,14 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td><strong>Region: </strong></td>
+                    <td>
+                        @foreach($param->regions as $region)
+                            {!! $region->name !!}<br>
+                        @endforeach
+                    </td>
+                </tr>
                 <tr>
                     <td><strong>By: </strong></td>
                     <td>{{ $param->user->name }}</td>

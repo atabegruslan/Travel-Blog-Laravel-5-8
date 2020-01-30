@@ -4,6 +4,7 @@
             <tr>
                 <th></th>
                 <th>Place</th>
+                <th>Region</th>
                 <th>Comments</th>
                 <th>User</th>
                 <th>Time</th>
@@ -17,6 +18,11 @@
                         <img src="{{ $v->img_url }}" class="img-responsive small" alt="{{ $v->place }}">
                     </td>
                     <td><b>{{ link_to_route('entry.show', $v->place, [ $v->id ] ) }}</b></td>
+                    <td>
+                        @foreach($v->regions as $region)
+                            {!! $region->name !!}<br>
+                        @endforeach
+                    </td>
                     <td>{!! $v->comments !!}</td>
                     <td>{!! $v->user->name !!}</td>
                     <td>{!! date('Y-m-d h:i:s', strtotime($v->time) ) !!}</td>
