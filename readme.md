@@ -1019,30 +1019,6 @@ In Laravel 5.8
 
 ![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/vuetest2.PNG)
 
-## Draggable and Droppable Hierachy Tree in FrontEnd
-
-### jQuery UI (But no provision for trees)
-
-- https://jqueryui.com/droppable/
-    - https://jsfiddle.net/atabegaslan/j7web6yp/
-
-### JSTree (Have provision for trees. Draggable and Droppable provided for in its DnD plugin)
-
-- https://www.jstree.com/
-    - https://jsfiddle.net/atabegaslan/my9q02sf/
-
-### Recursion (Needed because the nested data can be infinitely deep)
-
-- https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/ 
-    - https://jsfiddle.net/atabegaslan/mhf58zg9/
-
-### JSTree for Vue (Fortunately the ability of recursion for infinitely-deep nested-data is already here)
-
-- https://www.npmjs.com/package/vue-jstree
-- https://www.vuescript.com/tag/tree-view/
-    - https://www.vuescript.com/interactive-tree-view-vue-js-2-vjstree/
-        - https://zdy1988.github.io/vue-jstree/
-
 ---
 
 ## Theory
@@ -1122,7 +1098,7 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 
 ---
 
-# Make Region Feature
+# Make region feature
 
 So that a place-entry can belong to a region.
 
@@ -1138,21 +1114,48 @@ Use pivot tables. `Illuminate\Database\Eloquent\Relations\Concerns\InteractsWith
 
 https://appdividend.com/2018/05/17/laravel-many-to-many-relationship-example/?fbclid=IwAR0AzrvJyhG0tuHEpScPXz4yAy4U6Itc23PAXDygs2yQW8C2GGH8_RheMQM
 
-`php artisan make:model Models/Region`
+1. `php artisan make:model Models/Region`
 
-Make `database/migrations/xxx_create_regions_table.php`
+2. Make `database/migrations/xxx_create_regions_table.php`
 
-`php artisan make:migration create_region_entry_table --create=region_entry`
+3. `php artisan make:migration create_region_entry_table --create=region_entry`
 
-`php artisan migrate`
+4. `php artisan migrate`
 
-Complete region model and edit entry model.
+5. Complete region model and edit entry model.
 
-Edit entry controller's store and update functions.
+6. Edit entry controller's store and update functions.
 
-Make region route and controller (`php artisan make:controller Web/RegionController --resource`) and views.
+7. Make region route and controller (`php artisan make:controller Web/RegionController --resource`) and views.
 
-Make region display in entry list and item views.
+8. Make region display in entry list and item views.
+
+## Make regions hierarchical
+
+So that, eg: East Asia is a subset of Asia
+
+1. `php artisan make:migration create_region_tree_table --create=region_tree`
+
+2. `php artisan migrate`
+
+3. `php artisan make:model Models/RegionTree`
+
+4. Make manipulatable tree in view. There are a few options for making draggable and droppable hierarchical tree in frontend:
+    - jQuery UI (But no provision for trees)
+        - https://jqueryui.com/droppable/
+            - https://jsfiddle.net/atabegaslan/j7web6yp/
+    - JSTree (Have provision for trees. Draggable and Droppable provided for in its DnD plugin)
+        - https://www.jstree.com/
+            - https://jsfiddle.net/atabegaslan/my9q02sf/
+    - Recursion (Needed because the nested data can be infinitely deep)
+        - https://vuejsdevelopers.com/2017/10/23/vue-js-tree-menu-recursive-components/ 
+            - https://jsfiddle.net/atabegaslan/mhf58zg9/
+    - JSTree for Vue (Fortunately the ability of recursion for infinitely-deep nested-data is already here)
+        - https://www.npmjs.com/package/vue-jstree
+        - https://www.vuescript.com/tag/tree-view/
+            - https://www.vuescript.com/interactive-tree-view-vue-js-2-vjstree/
+                - https://zdy1988.github.io/vue-jstree/
+    - **In conclusion:** JSTree in Vue is the most convenient. But the `regions` list view was written in `blade`, so now it needs to be re-written in `Vue`.
 
 ---
 

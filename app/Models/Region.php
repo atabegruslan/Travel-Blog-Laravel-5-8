@@ -25,4 +25,13 @@ class Region extends Base
     {
         return $this->belongsToMany(Entry::class);
     }
+
+    public function regionTree()
+    {
+        return $this->belongsTo(
+            RegionTree::class,
+            'id',
+            'region_id'
+        );
+    }
 }
