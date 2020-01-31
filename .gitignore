@@ -13,3 +13,4 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /public/js/firebase-config.js
+/public/fcm_temp.php
