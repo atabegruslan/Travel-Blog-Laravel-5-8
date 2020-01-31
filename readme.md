@@ -1,3 +1,5 @@
+This is an update of https://github.com/Ruslan-Aliyev/Travel-Blog-Laravel-5-4
+
 # API
 
 ## Users
@@ -1219,7 +1221,6 @@ Route::group(['namespace' => 'Api'], function () {
 
 ## To Do
 
-- FCM
 - Swagger
     - https://github.com/DarkaOnLine/L5-Swagger
     - https://m.youtube.com/playlist?list=PLnBvgoOXZNCOiV54qjDOPA9R7DIDazxBA
