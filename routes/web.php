@@ -44,4 +44,5 @@ Route::group(['namespace' => 'Web'], function () {
 });
 
 Route::post('/notification', 'NotificationController@store');
+Route::post('/notification/firebase', 'NotificationController@firebaseStore');
 Route::get('/markAsRead', 'NotificationController@markAsRead');

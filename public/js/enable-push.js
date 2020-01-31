@@ -1,6 +1,4 @@
 const vapidPublicKey = $("meta[name=vapid_public_key]").attr('content');
-const baseUrl        = 'http://localhost/laravel_5_8/travel_blog/public/';
-//const baseUrl        = 'https://ruslan-website.com/laravel5/travel_blog/';
 
 registerServiceWorker();
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entry;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -30,6 +31,15 @@ class NotificationController extends Controller
 
         $user->updatePushSubscription($endpoint, $key, $token);
         
+        return response()->json(['success' => true], 200);
+    }
+
+    public function firebaseStore(Request $request)
+    {
+        $token = $request->input('token');
+
+        DB::table('fcm_tokens')->insert(['token' => $token]);
+
         return response()->json(['success' => true], 200);
     }
 

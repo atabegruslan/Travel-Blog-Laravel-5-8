@@ -8,6 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="base_url" content="{{ ($_SERVER['HTTP_HOST'] === 'localhost') ? env('BASE_URL_DEV') : env('BASE_URL_PROD') }}">
     <meta name="vapid_public_key" content="{{ env('VAPID_PUBLIC_KEY') }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -25,6 +26,8 @@
         <link rel="stylesheet" type="text/css" href="{{ PUB_URL }}css/ruslan_slider.css?v={{ rand() }}">
         <link rel="stylesheet" type="text/css" href="{{ PUB_URL }}css/my_sliders.css?v={{ rand() }}">
     @endif
+
+    <link rel="manifest" href="{{ PUB_URL }}/manifest.json" />
     
 </head>
 <body>
@@ -52,10 +55,19 @@
     <!-- Laravel 5.8 dont have /assets anymore -->
     <!-- <script src="{{ asset('js/app.js') }}"></script> -->
     
-    <script src="{{ PUB_URL }}js/browser_detection.js?v={{ rand() }}"></script>
+    <!-- <script src="{{ PUB_URL }}js/browser_detection.js?v={{ rand() }}"></script> -->
+    
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-messaging.js"></script>
+    <script src="{{ PUB_URL }}js/firebase-config.js?v={{ rand() }}"></script>
+
+    <script>
+        const baseUrl = $("meta[name=base_url]").attr('content');
+    </script>
     
     @auth
         <script src="{{ PUB_URL }}js/enable-push.js?v={{ rand() }}"></script>
+        <script src="{{ PUB_URL }}js/enable-firebase-push.js?v={{ rand() }}"></script>
     @endauth
 
     <script src="{{ PUB_URL }}js/notification.js?v={{ rand() }}"></script>
