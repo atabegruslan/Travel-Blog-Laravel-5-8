@@ -28,4 +28,6 @@ Route::group(['namespace' => 'Api'/*, 'middleware' => ['auth:api']*/], function 
 
 	Route::post('/user', 'UserController@store');
 
+	Route::resource('/comment', 'CommentController');
+
 });

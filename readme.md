@@ -1,5 +1,13 @@
 This is an update of https://github.com/Ruslan-Aliyev/Travel-Blog-Laravel-5-4
 
+# Dummy accounts
+
+| Username | Password |
+| --- | --- |
+| ruslan_aliyev_@hotmail.com | ruslan12 |
+| eldorado1485@outlook.co.nz | testing |
+| atabegruslan@gmail.com | testing |
+
 # API
 
 ## Users
@@ -1216,6 +1224,31 @@ Route::group(['namespace' => 'Api'], function () {
 7. `php artisan make:controller Api/RegionController --resource`
 
 8. `npm install vue-jstree`
+
+---
+
+# Make comment feature
+
+1. `php artisan make:migration create_comments_table --create=comments`
+
+2. `php artisan migrate`
+
+3. `php artisan make:model Models/Comment`. 1 blog should have many comments.
+
+4. `php artisan make:controller Api/CommentController --resource`
+
+5. `@include('parts/_entry_comments')` in `resources/views/entry/show.blade.php` and `edit.blade.php`
+
+6. In `parts/_entry_comments.blade.php`
+```html
+<div class="vuepart">
+    <Comments></Comments>
+</div>
+```
+
+7. In `resources/js/app.js`: `Vue.component('comments', require('./components/entry/Comments.vue').default);`
+
+8. Create `resources/js/components/entry/Comments.vue`
 
 ---
 

@@ -6,4 +6,6 @@
 
 @include('parts/_entry_single')
 
+@include('parts/_entry_comments')
+
 @endsection

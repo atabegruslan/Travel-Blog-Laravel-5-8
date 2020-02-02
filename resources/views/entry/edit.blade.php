@@ -79,4 +79,6 @@
 
 </div>
 
+@include('parts/_entry_comments')
+
 @endsection

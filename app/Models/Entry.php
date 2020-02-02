@@ -39,4 +39,9 @@ class Entry extends Base
             'region_id',
         );
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
