@@ -1005,6 +1005,12 @@ Then in your resources/views/what..ever/view.blade.php:
     - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
     - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
 
+### Architectural Patterns
+
+Laravel best fits the ADR pattern.
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/patterns.png)
+
 ---
 
 ## Notes
