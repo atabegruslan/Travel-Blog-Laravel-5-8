@@ -13,19 +13,25 @@
         </form>
 
 		<div v-for="comment in comments" v-bind:key="comment.id">
-			<p>{{ comment.contents }}</p>
+			<p v-html="comment.contents">{{ comment.contents }}</p>
 		</div>
 	</div>
 </template>
 
 <script>
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
     export default {
     	props: ['entryId', 'baseUrl'],
 		components: {
 
 		},
         mounted() {
-
+            ClassicEditor
+                .create( document.querySelector( "textarea#comment" ) )
+                .catch( error => {
+                    console.error( error );
+                } );
         },
         created() {
             this.fetchComments();

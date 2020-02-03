@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LogTrait;
 
-class Comment extends Base
-{
-    use LogTrait;
+class Comment extends Model
+{// @todo make this able to extend App\Models\Base and utilize log
+    //use LogTrait;
     
     public $timestamps = false;
     

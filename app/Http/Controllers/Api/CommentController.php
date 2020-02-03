@@ -75,9 +75,7 @@ class CommentController extends Controller
     {
         try
         {
-            $regions = Comment::where(['entry_id', $id]);
-
-            $response = $regions;
+            $response = Comment::where('entry_id', $id)->get();
 
             $statusCode = 200;
 
