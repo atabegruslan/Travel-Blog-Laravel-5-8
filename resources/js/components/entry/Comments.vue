@@ -16,9 +16,24 @@
         <select id="autosuggest" @change="choseUser" size="5"></select>
         <input type="hidden" id="curr_username">
 
-		<div v-for="comment in comments" v-bind:key="comment.id">
-			<p v-html="comment.contents">{{ comment.contents }}</p>
-		</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Commentor</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="comment in comments" v-bind:key="comment.id">
+                    <td>
+                        <a :href="link_route(baseUrl, comment.commentor_id)">{{ comment.commentor.name }}</a>
+                    </td>
+                    <td>
+                        <p v-html="comment.contents">{{ comment.contents }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
 	</div>
 </template>
@@ -27,7 +42,11 @@
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
     export default {
-    	props: ['entryId', 'baseUrl'],
+    	props: [
+            'entryId', 
+            'userId',
+            'baseUrl', 
+        ],
 		components: {
 
 		},
@@ -74,7 +93,7 @@
                     entry_id    : this.entryId, 
                     //contents    : this.comment, 
                     contents    : this.editor.getData(), 
-                    commentor_id: 1
+                    commentor_id: this.userId,
                 };
 
                 fetch(this.baseUrl + 'api/comment', {
@@ -143,7 +162,7 @@
             {
                 var value = event.target.value;
                 var text  = $(event.target).find("option:selected").text();
-                var link  = '<a href="http://localhost/laravel_5_8/travel_blog/public/user/'+ value +'">'+ text +'</a>';
+                var link  = '<a href="' + this.baseUrl + 'user/'+ value +'">'+ text +'</a>';
 
                 var commentText = $("div.ck-content").html();
                 var toReplace   = $("#curr_username").val();
@@ -153,7 +172,11 @@
                 $("#curr_username").val('');
                 $("select#autosuggest").empty();
                 $("select#autosuggest").hide();
-            }
+            },
+            link_route: function (base, id)
+            {
+                return base + 'user/' + id;
+            },
 		}
 	}
 </script>

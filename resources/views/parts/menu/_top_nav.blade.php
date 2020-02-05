@@ -5,7 +5,11 @@
 		</li>
 
 		<li>
-			{{ link_to_route('entry.index', 'Main', [], ['class' => 'btn btn-link'] ) }}
+			{{ link_to_route('entry.index', 'Places', [], ['class' => 'btn btn-link'] ) }}
+		</li>
+
+		<li>
+			{{ link_to_route('region.index', 'Regions', [], ['class' => 'btn btn-link'] ) }}
 		</li>
 
 		<li>

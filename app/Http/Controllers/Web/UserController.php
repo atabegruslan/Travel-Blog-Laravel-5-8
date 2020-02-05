@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Comment;
+use App\Models\User;
 
-class CommentController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,33 +36,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        try
-        {
-            $comment               = new Comment;
-            $comment->entry_id     = $request->input('entry_id');
-            $comment->contents     = $request->input('contents');
-            $comment->commentor_id = $request->input('commentor_id');
-
-            $comment->save();
-
-            $response = [
-                "msg" => "OK"
-            ];
-
-            $statusCode = 200;
-
-            return \Response::json($response, $statusCode); 
-        }
-        catch(Throwable $t)
-        {
-            $response = [
-                "error" => "Error"
-            ];
-
-            $statusCode = 404;
-
-            return \Response::json($response, $statusCode); 
-        }
+        //
     }
 
     /**
@@ -73,24 +47,9 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        try
-        {
-            $response = Comment::with('commentor')->where('entry_id', $id)->get();
+        $user = (object) User::find($id)->getAttributes();
 
-            $statusCode = 200;
-
-            return \Response::json($response, $statusCode); 
-        }
-        catch (Throwable $t)
-        {
-            $response = [
-                "error" => "Error"
-            ];
-
-            $statusCode = 404;
-
-            return \Response::json($response, $statusCode); 
-        }
+        return view('user.show', ['param' => $user]);
     }
 
     /**

@@ -2040,9 +2040,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['entryId', 'baseUrl'],
+  props: ['entryId', 'userId', 'baseUrl'],
   components: {},
   mounted: function mounted() {
     var _this = this;
@@ -2087,7 +2102,7 @@ __webpack_require__.r(__webpack_exports__);
         entry_id: this.entryId,
         //contents    : this.comment, 
         contents: this.editor.getData(),
-        commentor_id: 1
+        commentor_id: this.userId
       };
       fetch(this.baseUrl + 'api/comment', {
         method: 'post',
@@ -2146,7 +2161,7 @@ __webpack_require__.r(__webpack_exports__);
     choseUser: function choseUser(event) {
       var value = event.target.value;
       var text = $(event.target).find("option:selected").text();
-      var link = '<a href="http://localhost/laravel_5_8/travel_blog/public/user/' + value + '">' + text + '</a>';
+      var link = '<a href="' + this.baseUrl + 'user/' + value + '">' + text + '</a>';
       var commentText = $("div.ck-content").html();
       var toReplace = $("#curr_username").val();
       var replaced = commentText.replace('@' + toReplace, link);
@@ -2154,6 +2169,9 @@ __webpack_require__.r(__webpack_exports__);
       $("#curr_username").val('');
       $("select#autosuggest").empty();
       $("select#autosuggest").hide();
+    },
+    link_route: function link_route(base, id) {
+      return base + 'user/' + id;
     }
   }
 });
@@ -38061,75 +38079,106 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [_vm._v("Comments")]),
+  return _c("div", [
+    _c("h1", [_vm._v("Comments")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "form-inline",
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.createComment($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "place" } }, [_vm._v("Comment:")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.comment,
+                expression: "comment"
+              }
+            ],
+            attrs: { id: "comment" },
+            domProps: { value: _vm.comment },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.comment = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-default", attrs: { type: "submit" } },
+          [_vm._v("Submit Comment")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("select", {
+      attrs: { id: "autosuggest", size: "5" },
+      on: { change: _vm.choseUser }
+    }),
+    _vm._v(" "),
+    _c("input", { attrs: { type: "hidden", id: "curr_username" } }),
+    _vm._v(" "),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
       _vm._v(" "),
       _c(
-        "form",
-        {
-          staticClass: "form-inline",
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.createComment($event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "place" } }, [_vm._v("Comment:")]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
+        "tbody",
+        _vm._l(_vm.comments, function(comment) {
+          return _c("tr", { key: comment.id }, [
+            _c("td", [
+              _c(
+                "a",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.comment,
-                  expression: "comment"
-                }
-              ],
-              attrs: { id: "comment" },
-              domProps: { value: _vm.comment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  attrs: {
+                    href: _vm.link_route(_vm.baseUrl, comment.commentor_id)
                   }
-                  _vm.comment = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-default", attrs: { type: "submit" } },
-            [_vm._v("Submit Comment")]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("select", {
-        attrs: { id: "autosuggest", size: "5" },
-        on: { change: _vm.choseUser }
-      }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", id: "curr_username" } }),
-      _vm._v(" "),
-      _vm._l(_vm.comments, function(comment) {
-        return _c("div", { key: comment.id }, [
-          _c("p", { domProps: { innerHTML: _vm._s(comment.contents) } }, [
-            _vm._v(_vm._s(comment.contents))
+                },
+                [_vm._v(_vm._s(comment.commentor.name))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("p", { domProps: { innerHTML: _vm._s(comment.contents) } }, [
+                _vm._v(_vm._s(comment.contents))
+              ])
+            ])
           ])
-        ])
-      })
-    ],
-    2
-  )
+        }),
+        0
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Commentor")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Comment")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38220,12 +38269,11 @@ var render = function() {
                       ? _c(
                           "a",
                           {
-                            staticClass: "btn btn-xs blue btn-outline",
                             attrs: {
                               href: _vm.link_route(_vm.regionRoute, _.model.id)
                             }
                           },
-                          [_c("i", { staticClass: "fa fa-pencil" })]
+                          [_vm._v("\n\t            \tEdit\n\t            ")]
                         )
                       : _vm._e(),
                     _vm._v(" "),
@@ -38233,7 +38281,6 @@ var render = function() {
                       ? _c(
                           "button",
                           {
-                            staticClass: "btn btn-xs red btn-outline",
                             attrs: { type: "button" },
                             on: {
                               click: function($event) {
@@ -38241,7 +38288,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_c("i", { staticClass: "fa fa-trash" })]
+                          [_vm._v("\n\t            \tDelete\n\t            ")]
                         )
                       : _vm._e()
                   ]
