@@ -785,18 +785,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
     - Notification API working in conjunction with Push API
         - https://www.youtube.com/watch?v=ggUY0Q4f5ok 
         - https://www.youtube.com/watch?v=HlYFW2zaYQM
-    - FireBase
-        - https://www.youtube.com/playlist?list=PLCakfctNSHkGLCs9az_9PKqW1NY1C5HIU <sup>Web, PHP. Very helpful</sup>
-        - https://codeburst.io/how-to-add-push-notifications-on-firebase-cloud-messaging-to-react-web-app-de7c6f04c920 <sup>Very helpful</sup>
-            - https://developers.google.com/web/fundamentals/push-notifications/how-push-works
-            - https://firebase.google.com/docs/cloud-messaging/js/client
-            - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
-            - https://www.youtube.com/watch?v=XijS62iP1Xo  <sup>Android</sup>
-        - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
-        - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
-        - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
-        - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
-        
+
 1. `composer require laravel-notification-channels/webpush`
 2. User model use `NotificationChannels\WebPush\HasPushSubscriptions;`
 3. `php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
@@ -818,7 +807,24 @@ and complete `toWebPush` function.
 
 9. `Notification::send($users, new NewEntry);`
 
-Note: If you only do steps 1-5, this is NOT complete!
+### 3rd party notifications - Firebase push notifications
+
+- Documentations
+    - https://laravel.com/docs/master/notifications#custom-channels
+- Tutorials
+    - https://www.youtube.com/playlist?list=PLCakfctNSHkGLCs9az_9PKqW1NY1C5HIU <sup>Web, PHP. Very helpful</sup>
+    - https://codeburst.io/how-to-add-push-notifications-on-firebase-cloud-messaging-to-react-web-app-de7c6f04c920 <sup>Very helpful</sup>
+        - https://developers.google.com/web/fundamentals/push-notifications/how-push-works
+        - https://firebase.google.com/docs/cloud-messaging/js/client
+        - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
+        - https://www.youtube.com/watch?v=XijS62iP1Xo  <sup>Android</sup>
+        - https://medium.com/@ThatJenPerson/authenticating-firebase-cloud-messaging-http-v1-api-requests-e9af3e0827b8
+    - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
+    - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
+    - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
+    - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
+
+
 
 ## Scheduling tasks
 

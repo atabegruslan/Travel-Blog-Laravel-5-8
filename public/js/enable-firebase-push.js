@@ -88,3 +88,11 @@ function saveToken(fcmToken)
         console.error(error)
     });
 }
+
+messaging.onMessage(function(payload) {
+	console.log({payload});
+
+	// var notification = new Notification(payload.data.title, {
+	// 	body: payload.data.body
+	// });
+});

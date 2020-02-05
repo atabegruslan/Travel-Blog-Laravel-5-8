@@ -9,6 +9,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Carbon\Carbon;
 use NotificationChannels\WebPush\WebPushMessage;
 use NotificationChannels\WebPush\WebPushChannel;
+use App\Channels\FirebaseChannel;
 
 class NewEntry extends Notification
 {
@@ -40,7 +41,7 @@ class NewEntry extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database', WebPushChannel::class];
+        return ['mail', 'database', WebPushChannel::class, FirebaseChannel::class];
     }
 
     /**
@@ -88,6 +89,24 @@ class NewEntry extends Notification
             // ->renotify()
             // ->requireInteraction()
             // ->badge();
+    }
+
+    public function toFirebase($notifiable, $notification)
+    {
+        $message = [    
+            'title'   => 'New Travel Blog entry!', 
+            'body'    => 'A new Travel Blog entry about ' . $this->name . ' was added',   
+            'icon'    => url('/images/sys/favicon-1.png'),   
+            'image'   => $this->img_url,   
+            'data'    => $data,   
+            'tag'     => $notification->id, 
+            'actions' => [
+                            ['title' => 'View entry', 'action' => 'view'],
+                            ['title' => 'No thanks', 'action' => 'close'],
+                        ],   
+        ];  
+
+        return $message;
     }
 
     /**
