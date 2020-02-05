@@ -19,12 +19,12 @@
 
 					{{_.model.text}}
 
-		            <a v-if="_.model.id !== 0" :href="link_route(regionRoute, _.model.id)" class="btn btn-xs blue btn-outline">
-		            	<i class="fa fa-pencil" />
+		            <a v-if="_.model.id !== 0" :href="link_route(regionRoute, _.model.id)">
+		            	Edit
 		            </a>
 
-		            <button v-if="_.model.id !== 0" type="button" class="btn btn-xs red btn-outline" @click="deleteNode(_.vm, _.model, $event)">
-		            	<i class="fa fa-trash" />
+		            <button v-if="_.model.id !== 0" type="button" @click="deleteNode(_.vm, _.model, $event)">
+		            	Delete
 		            </button>
 
 				</div>
