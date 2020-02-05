@@ -16,7 +16,7 @@ class FirebaseChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        $message = $notification->toFirebase($notifiable);
+        $message = $notification->toFirebase($notifiable, $notification);
 
         // Send notification to the $notifiable instance...
         $curl = curl_init();    

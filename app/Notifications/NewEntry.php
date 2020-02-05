@@ -41,7 +41,7 @@ class NewEntry extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database', WebPushChannel::class, FirebaseChannel::class];
+        return ['mail', 'database', /*WebPushChannel::class,*/ FirebaseChannel::class];
     }
 
     /**
@@ -93,6 +93,12 @@ class NewEntry extends Notification
 
     public function toFirebase($notifiable, $notification)
     {
+        $data = [
+            'entry_id'  => $this->entry_id,
+            'entry_url' => $this->entry_url,
+            'base_url'  => url('/'),
+        ];
+
         $message = [    
             'title'   => 'New Travel Blog entry!', 
             'body'    => 'A new Travel Blog entry about ' . $this->name . ' was added',   

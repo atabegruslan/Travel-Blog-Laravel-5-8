@@ -62,7 +62,7 @@
     </script>
     
     @auth
-        <script src="{{ PUB_URL }}js/enable-push.js?v={{ rand() }}"></script>
+        <!-- <script src="{{ PUB_URL }}js/enable-push.js?v={{ rand() }}"></script> -->
         <script src="{{ PUB_URL }}js/enable-firebase-push.js?v={{ rand() }}"></script>
     @endauth
 
