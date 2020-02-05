@@ -50,7 +50,11 @@
 				</div>     
             @else
 				<div class="dropdown">
-					<button class="dropbtn btn btn-link">{{ Auth::user()->name }}'s Account</button>
+					<button class="dropbtn btn btn-link">
+						<a href="{{ url('user/' . Auth::user()->id) }}">
+							{{ Auth::user()->name }}'s Account
+						</a>
+					</button>
 					<div class="dropdown-content">
 	                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 

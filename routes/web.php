@@ -24,6 +24,8 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 	Route::resource('/entry', 'EntryController');
 	Route::resource('/region', 'RegionController');
 
+	Route::resource('/user', 'UserController');
+
 	Route::get('/search', 'SearchController@index');
 
 	Route::get('/android', 'PageController@android');

@@ -30,4 +30,5 @@ Route::group(['namespace' => 'Api'/*, 'middleware' => ['auth:api']*/], function 
 
 	Route::resource('/comment', 'CommentController');
 
+	Route::get('autosuggest/user/{name}', 'UserController@autosuggest');
 });

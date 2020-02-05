@@ -34,8 +34,8 @@ class RegionController extends Controller
                 $region->children  = [];
                 $region->region_id = $region->id;
                 $region->parent_id = $region->regionTree->parent_id;
-                
-                $linearData[] = $region;
+
+                $linearData[] = (object) $region->getAttributes();
             }
 
             $response = $this->prepareTree($linearData);
@@ -68,7 +68,7 @@ class RegionController extends Controller
                 foreach ($data as $key1 => $item1) 
                 {
                     if ($item->parent_id === $item1->region_id)
-                    {// @todo https://stackoverflow.com/questions/38462131/indirect-modification-of-overloaded-property-app-categorythesizes-has-no-effe
+                    {
                         $data[$key1]->children[] = $item;
                     }
                 }

@@ -135,4 +135,25 @@ class UserController extends Controller
     {
         //
     }
+
+    public function autosuggest(Request $request, $name)
+    {
+        try
+        {
+            $response   = User::where('name', 'like', $name . '%')->get();
+            $statusCode = 200;
+
+            return \Response::json($response, $statusCode); 
+        }
+        catch (Throwable $t)
+        {
+            $response = [
+                "error" => "Error"
+            ];
+
+            $statusCode = 404;
+
+            return \Response::json($response, $statusCode); 
+        }
+    }
 }

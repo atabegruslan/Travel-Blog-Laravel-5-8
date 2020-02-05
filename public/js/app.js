@@ -2035,14 +2035,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['entryId', 'baseUrl'],
   components: {},
   mounted: function mounted() {
-    _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a.create(document.querySelector("textarea#comment"))["catch"](function (error) {
+    var _this = this;
+
+    _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default.a.create(document.querySelector("textarea#comment")).then(function (editor) {
+      _this.editor = editor;
+      editor.editing.view.document.on('keyup', _this.getUserList);
+    })["catch"](function (error) {
       console.error(error);
     });
+    $("#curr_username").val('');
+    $("select#autosuggest").empty();
+    $("select#autosuggest").hide();
+    this.getUserList = _.debounce(this.getUserList, 500);
   },
   created: function created() {
     this.fetchComments();
@@ -2050,43 +2064,96 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       comments: [],
-      comment: ''
+      comment: '',
+      editor: null
     };
   },
   methods: {
     fetchComments: function fetchComments() {
-      var _this = this;
+      var _this2 = this;
 
       fetch(this.baseUrl + 'api/comment/' + this.entryId).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.comments = res;
+        _this2.comments = res;
       })["catch"](function (err) {
         return console.error(err);
       });
     },
     createComment: function createComment() {
-      var _this2 = this;
+      var _this3 = this;
 
+      var data = {
+        entry_id: this.entryId,
+        //contents    : this.comment, 
+        contents: this.editor.getData(),
+        commentor_id: 1
+      };
       fetch(this.baseUrl + 'api/comment', {
         method: 'post',
-        body: JSON.stringify({
-          entry_id: this.entryId,
-          contents: this.comment,
-          commentor_id: 1
-        }),
+        body: JSON.stringify(data),
         headers: {
           'content-type': 'application/json'
         }
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this2.comment = '';
+        //this.comment = '';
+        _this3.editor.setData('');
 
-        _this2.fetchComments();
+        _this3.fetchComments();
       })["catch"](function (err) {
         return console.error(err);
       });
+    },
+    getUserList: function getUserList(e, data) {
+      var selection = window.getSelection();
+      var currPos = selection.anchorOffset;
+      var currInput = selection.focusNode.wholeText;
+
+      if (currPos) {
+        var currPart = currInput.substring(0, currPos);
+        var currWord = currPart.substring(currPart.lastIndexOf(" ") + 1);
+
+        if (currWord.charAt(0) === '@') {
+          var username = currWord.replace("@", "");
+
+          if (username) {
+            $("#curr_username").val(username);
+            $("select#autosuggest").empty();
+            fetch(this.baseUrl + 'api/autosuggest/user/' + username).then(function (users) {
+              return users.json();
+            }).then(function (users) {
+              $(users).each(function (i) {
+                $("select#autosuggest").append('<option value="' + this.id + '">' + this.name + '</option>');
+              });
+              $("select#autosuggest").show();
+            })["catch"](function (err) {
+              return console.error(err);
+            });
+          } else {
+            $("#curr_username").val('');
+            $("select#autosuggest").empty();
+            $("select#autosuggest").hide();
+          }
+        } else {
+          $("#curr_username").val('');
+          $("select#autosuggest").empty();
+          $("select#autosuggest").hide();
+        }
+      }
+    },
+    choseUser: function choseUser(event) {
+      var value = event.target.value;
+      var text = $(event.target).find("option:selected").text();
+      var link = '<a href="http://localhost/laravel_5_8/travel_blog/public/user/' + value + '">' + text + '</a>';
+      var commentText = $("div.ck-content").html();
+      var toReplace = $("#curr_username").val();
+      var replaced = commentText.replace('@' + toReplace, link);
+      this.editor.setData(replaced);
+      $("#curr_username").val('');
+      $("select#autosuggest").empty();
+      $("select#autosuggest").hide();
     }
   }
 });
@@ -38044,15 +38111,19 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _c("select", {
+        attrs: { id: "autosuggest", size: "5" },
+        on: { change: _vm.choseUser }
+      }),
+      _vm._v(" "),
+      _c("input", { attrs: { type: "hidden", id: "curr_username" } }),
+      _vm._v(" "),
       _vm._l(_vm.comments, function(comment) {
-        return _c(
-          "div",
-          {
-            key: comment.id,
-            domProps: { innerHTML: _vm._s(comment.contents) }
-          },
-          [_c("p", [_vm._v(_vm._s(comment.contents))])]
-        )
+        return _c("div", { key: comment.id }, [
+          _c("p", { domProps: { innerHTML: _vm._s(comment.contents) } }, [
+            _vm._v(_vm._s(comment.contents))
+          ])
+        ])
       })
     ],
     2
