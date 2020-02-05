@@ -71,3 +71,12 @@ img.log_img {
 #home_vue form button {
     margin: 10px;
 } 
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+select#autosuggest::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE and Edge */
+select#autosuggest {
+  -ms-overflow-style: none;
+}
