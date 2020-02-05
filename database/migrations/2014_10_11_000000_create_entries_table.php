@@ -21,6 +21,10 @@ class CreateEntriesTable extends Migration
                 $table->string('img_url', 500)->nullable();
                 $table->unsignedBigInteger('user_id')->nullable();
                 $table->timestamp('time')->useCurrent();
+
+                // https://stackoverflow.com/questions/26437342/laravel-migration-best-way-to-add-foreign-key
+                // https://stackoverflow.com/questions/33819703/is-there-a-way-to-specify-a-name-for-foreign-constraints-in-the-schema-builder-o
+                $table->foreign('user_id', 'user_entry')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             });
         }
     }

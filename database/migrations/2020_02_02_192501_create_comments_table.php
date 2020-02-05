@@ -19,6 +19,8 @@ class CreateCommentsTable extends Migration
                 $table->unsignedInteger('entry_id');   
                 $table->string('contents', 10000);   
                 $table->unsignedBigInteger('commentor_id');
+
+                $table->foreign('commentor_id', 'user_comment')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             });
         }
     }
