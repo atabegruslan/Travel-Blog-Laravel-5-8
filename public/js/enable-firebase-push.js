@@ -91,18 +91,26 @@ function saveToken(fcmToken)
 
 messaging.onMessage(function(payload) {
 	console.log({payload});
-
+	//@todo Do this properly
 	var options = {
 		icon   : payload.data.icon,
 		body   : payload.data.body,
-		// data   : payload.data.data,
+		data   : payload.data.data,
 		dir    : payload.data.dir,
 		image  : payload.data.image,
 		lang   : payload.data.lang,
-		// tag    : payload.data.tag,
-		// actions: payload.data.actions,
-		// vibrate: payload.data.vibrate
+		tag    : payload.data.tag,
+		//actions: payload.data.actions,
+		vibrate: payload.data.vibrate
 	};
 
 	var notification = new Notification(payload.data.title, options);
+
+	notification.onclick = function(event) {
+	  console.log({event});
+	};
+
+	notification.onerror = function(event) {
+	  console.error(event);
+	};
 });

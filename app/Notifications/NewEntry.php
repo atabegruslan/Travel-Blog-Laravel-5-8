@@ -109,8 +109,8 @@ class NewEntry extends Notification
             'lang'    => 'en-US',  
             'tag'     => $notification->id, 
             'actions' => [
-                            ['title' => 'View entry', 'action' => 'view'],
-                            ['title' => 'No thanks', 'action' => 'close'],
+                            ['title' => 'View', 'action' => 'view'],
+                            ['title' => 'Close', 'action' => 'close'],
                         ],  
             'vibrate' => [100, 50, 100],
         ];  

@@ -770,6 +770,7 @@ Note: If the mail method doesn't exist, it will default to the `toArray` method.
         - https://www.sitepoint.com/introduction-web-notifications-api/
         - https://www.youtube.com/watch?v=EEhohSp0if4
         - https://developer.mozilla.org/en-US/docs/Web/API/notification <sup>Documentation</sup>
+        - https://web-push-book.gauntface.com/chapter-05/02-display-a-notification/
     - Push API
         - https://www.izooto.com/web-push-notifications-explained
         - https://developers.google.com/web/updates/2016/01/notification-actions <sup>Actions</sup>
