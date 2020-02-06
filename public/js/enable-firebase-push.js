@@ -92,7 +92,17 @@ function saveToken(fcmToken)
 messaging.onMessage(function(payload) {
 	console.log({payload});
 
-	var notification = new Notification(payload.data.title, {
-		body: payload.data.body
-	});
+	var options = {
+		icon   : payload.data.icon,
+		body   : payload.data.body,
+		// data   : payload.data.data,
+		dir    : payload.data.dir,
+		image  : payload.data.image,
+		lang   : payload.data.lang,
+		// tag    : payload.data.tag,
+		// actions: payload.data.actions,
+		// vibrate: payload.data.vibrate
+	};
+
+	var notification = new Notification(payload.data.title, options);
 });

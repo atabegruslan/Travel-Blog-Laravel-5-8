@@ -101,15 +101,18 @@ class NewEntry extends Notification
 
         $message = [    
             'title'   => 'New Travel Blog entry!', 
-            'body'    => 'A new Travel Blog entry about ' . $this->name . ' was added',   
             'icon'    => url('/images/sys/favicon-1.png'),   
-            'image'   => $this->img_url,   
+            'body'    => 'A new Travel Blog entry about ' . $this->name . ' was added',   
             'data'    => $data,   
+            'dir'     => 'ltr',
+            'image'   => $this->img_url, 
+            'lang'    => 'en-US',  
             'tag'     => $notification->id, 
             'actions' => [
                             ['title' => 'View entry', 'action' => 'view'],
                             ['title' => 'No thanks', 'action' => 'close'],
-                        ],   
+                        ],  
+            'vibrate' => [100, 50, 100],
         ];  
 
         return $message;
