@@ -821,7 +821,32 @@ and complete `toWebPush` function.
 4. Make the `notification/firebase` API route handle it in the backend controller and DB.
 5. To send: POST to https://fcm.googleapis.com/fcm/send
 6. To do this properly, use notification (https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Notifications/NewEntry.php) and create a custom channel (https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Channels/FirebaseChannel.php). Creating custom channel tutorial is here: https://laravel.com/docs/master/notifications#custom-channels
-7. Display notification in `messaging.onMessage`.
+7. Handle incoming notification in `messaging.onMessage` and the service worker's `messaging.setBackgroundMessageHandler`
+
+#### HTTPS
+
+When developing FCM on localhost, it helps to have HTTPS
+
+1. Make sure you have `C:\xampp\apache\conf\ssl.crt\server.crt` and `C:\xampp\apache\conf\ssl.key\server.key`.
+
+If you dont have them, run `C:\xampp\apache\makecert.bat` as admin.
+
+2. `xampp\apache\conf\extra\httpd-ssl.conf`
+```
+<VirtualHost _default_:443>
+
+DocumentRoot "C:/xampp/htdocs"
+ServerName www.example.com:443
+
+SSLEngine on
+
+SSLCertificateFile "conf/ssl.crt/server.crt"
+
+SSLCertificateKeyFile "conf/ssl.key/server.key"
+```
+
+- https://gist.github.com/nguyenanhtu/33aa7ffb6c36fdc110ea8624eeb51e69
+- https://florianbrinkmann.com/en/https-virtual-hosts-xampp-4215/
 
 ## Scheduling tasks
 
