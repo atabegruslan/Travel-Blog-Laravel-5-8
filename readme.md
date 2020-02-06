@@ -1,5 +1,7 @@
 This is an update of https://github.com/Ruslan-Aliyev/Travel-Blog-Laravel-5-4
 
+---
+
 # Dummy accounts
 
 | Username | Password |
@@ -7,6 +9,8 @@ This is an update of https://github.com/Ruslan-Aliyev/Travel-Blog-Laravel-5-4
 | ruslan_aliyev_@hotmail.com | ruslan12 |
 | eldorado1485@outlook.co.nz | testing |
 | atabegruslan@gmail.com | testing |
+
+---
 
 # API
 
@@ -133,6 +137,8 @@ POST `http://ruslan-website.com/laravel5/travel_blog/api/entry/{id}`
 
 Return OK or Error response
 
+---
+
 # How to make this app
 
 ## Make New Project
@@ -142,7 +148,7 @@ Return OK or Error response
 - https://www.youtube.com/playlist?list=PLillGF-RfqbYhQsN5WMXy6VsDMKGadrJ-
 - https://github.com/bradtraversy/lsapp
 - https://github.com/mrakodol/Laravel-5-Bootstrap-3-Starter-Site
-- Testing https://www.youtube.com/playlist?list=PLrIm-p2rpV0Hu9EvTidyYG1vsX0LWIM7Q
+- https://www.youtube.com/playlist?list=PLrIm-p2rpV0Hu9EvTidyYG1vsX0LWIM7Q <sup>Testing</sup>
 - https://www.youtube.com/playlist?list=PLwAKR305CRO9rlj-U9oOi4m2sQaWN6XA8
 - https://www.youtube.com/playlist?list=PLXsbBbd36_uVjOFH_P25__XAyGsohXWlv
 
@@ -158,7 +164,7 @@ DB_PASSWORD=***
 config/database.php : 
 ```
 'mysql' => [
-	...
+	... // credentials
 	'charset' => 'utf8',
 	'collation' => 'utf8_unicode_ci',
 	...
@@ -167,34 +173,19 @@ config/database.php :
 
 ## Scaffolding
 
-1. New Controller for Entry: `php artisan make:controller EntryController --resource`
+1. New Controller for Entry: `php artisan make:controller Web/EntryController --resource`
 
-2. New Entry Model: `php artisan make:model Entry`
+2. New Entry Model: `php artisan make:model Models/Entry`
 
 3. routes/web.php :
 ```php
-Route::resource('/entry', 'EntryController');
-```
-
-4. In EntryController:
-```php
-public function index(){
-    return view('entry');
-}
-```
-
-5. Create: resources/views/entry.blade.php
-
-### Create Controller Inside a Subfolder
-
-1. `php artisan make:controller Web/EntryController --resource` ( https://laracasts.com/discuss/channels/laravel/create-controller-inside-a-subfolder?page=1 )
-
-2. routes/web.php :
-```php
 Route::group(['namespace' => 'Web'], function () {
     Route::resource('/entry', 'EntryController');
-});
 ```
+
+4. Complete EntryController:
+
+5. Create: `resources/views/entry.blade.php` and other related views.
 
 ## Auth (Web)
 
@@ -230,7 +221,7 @@ Or add this to route
 
 ## Database table
 
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/db.PNG)
+See entry and user migrations.
 
 ## Text and Image MultiPart Upload Form
 
@@ -807,10 +798,10 @@ and complete `toWebPush` function.
 
 9. `Notification::send($users, new NewEntry);`
 
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/push_notifications_anatomy.png)
+
 ### 3rd party notifications - Firebase push notifications
 
-- Documentations
-    - https://laravel.com/docs/master/notifications#custom-channels
 - Tutorials
     - https://www.youtube.com/playlist?list=PLCakfctNSHkGLCs9az_9PKqW1NY1C5HIU <sup>Web, PHP. Very helpful</sup>
     - https://codeburst.io/how-to-add-push-notifications-on-firebase-cloud-messaging-to-react-web-app-de7c6f04c920 <sup>Very helpful</sup>
@@ -822,9 +813,14 @@ and complete `toWebPush` function.
     - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
     - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
     - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
-    - https://stackoverflow.com/questions/54996206/firebase-cloud-messaging-where-to-find-public-vapid-key <sup>very helpful</sup>
 
-
+1. Create a project and web app in https://console.firebase.google.com/ . Get the Firebase config credentials. Get the `public/manifest.json` too and include it in the HTML link tag.
+2. See https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/public/js/enable-firebase-push.js and https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/public/js/firebase-service-worker.js.
+3. Run the `create_fcm_tokens_table` migration script.
+4. Make the `notification/firebase` API route handle it in the backend controller and DB.
+5. To send: POST to https://fcm.googleapis.com/fcm/send
+6. To do this properly, use notification (https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Notifications/NewEntry.php) and create a custom channel (https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Channels/FirebaseChannel.php). Creating custom channel tutorial is here: https://laravel.com/docs/master/notifications#custom-channels
+7. Display notification in `messaging.onMessage`.
 
 ## Scheduling tasks
 
@@ -891,7 +887,7 @@ class XxxHelper
 
 ---
 
-# Vue.js
+# How to use Vue in Laravel
 
 ## Tutorials
 
@@ -995,91 +991,7 @@ Then in your resources/views/what..ever/view.blade.php:
 
 ---
 
-## Theory
-
-### Service Provider
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer1.jpg)
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer2.png)
-
-- https://code.tutsplus.com/tutorials/how-to-register-use-laravel-service-providers--cms-28966
-- Then watch these tutorials:
-    - https://www.youtube.com/watch?v=urycXvTEnF8&t=1m
-    - https://www.youtube.com/watch?v=GqVdt6OWN-Y&list=PL_HVsP_TO8z7aeylCMe64BIx3VEfvPdn&index=34
-- Then watch these tutorials:
-    - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
-    - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
-
-### Architectural Patterns
-
-Laravel best fits the ADR pattern.
-
-![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/patterns.png)
-
----
-
-## Notes
-
-### Clear cache
-
-- https://tecadmin.net/clear-cache-laravel-5/
-- On top of the above `php artisan config:cache` is also an useful command
-
-### Upload to server
-
-- public folder to server's public folder
-- The rest to another folder outside of the server's public folder
-- public/index.php: rectify all relevant paths
-- import .sql to server's database, rectify database-name, username & password in the .env file
-
-### Different ways of writting things
-
-In Blade
-```
-@if (!in_array($modLabel, ['xxx', 'yyy']))
-
-@endif
-```
-is same as
-```
-@php {{ $skips = ['xxx','yyy','deleted_at']; }} @endphp
-@if (!in_array($initLabel, $skips))
-
-@endif
-```
-
-In PHP
-```
-$thisAndPrevious = ActionLog::where([
-        [ 'time',            '<=', $log['time']            ],
-        [ 'record_key_name', '=',  $log['record_key_name'] ],
-        [ 'record_id',       '=',  $log['record_id']       ],
-        [ 'model',           '=',  $log['model']           ],
-    ])
-    ->where(function ($query) {
-        $query->where('method', '=', 'create')
-              ->orWhere('method', '=', 'update');
-    })
-    ->orderBy('id', 'DESC')
-    ->take(2)
-    ->get();
-```
-is same as
-```
-$thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
-    ->where('record_key_name', '=',  $log['record_key_name'])
-    ->where('record_id', '=',  $log['record_id'])
-    ->where('model', '=',  $log['model'])
-    ->whereIn('method', ['create', 'update'])
-    ->orderBy('id', 'DESC')
-    ->take(2)
-    ->get();
-```
-
----
-
-# Make region feature
+# How to make the region feature
 
 So that a place-entry can belong to a region.
 
@@ -1152,7 +1064,7 @@ Route::group(['namespace' => 'Api'], function () {
 
 ---
 
-# Make comment feature
+# How to make the comment feature
 
 1. `php artisan make:migration create_comments_table --create=comments`
 
@@ -1177,7 +1089,7 @@ Route::group(['namespace' => 'Api'], function () {
 
 ---
 
-# Make 'at user' (@user) autosuggest feature:
+# How to make the 'at user' (@user) autosuggest feature:
 
 First we need to make user profile pages. Then:
 
@@ -1269,7 +1181,87 @@ ClassicEditor
 
 ---
 
-## To Do
+# Notes about Laravel
+
+## Service Provider
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer1.jpg)
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/servicecontainer2.png)
+
+- https://code.tutsplus.com/tutorials/how-to-register-use-laravel-service-providers--cms-28966
+- Then watch these tutorials:
+    - https://www.youtube.com/watch?v=urycXvTEnF8&t=1m
+    - https://www.youtube.com/watch?v=GqVdt6OWN-Y&list=PL_HVsP_TO8z7aeylCMe64BIx3VEfvPdn&index=34
+- Then watch these tutorials:
+    - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
+    - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
+
+## Architectural Patterns
+
+Laravel best fits the ADR pattern.
+
+![](https://raw.githubusercontent.com/atabegruslan/Travel-Blog-Laravel-5-8/master/Illustrations/patterns.png)
+
+## Clear cache
+
+- https://tecadmin.net/clear-cache-laravel-5/
+- On top of the above `php artisan config:cache` is also an useful command
+
+## Upload to server
+
+- public folder to server's public folder
+- The rest to another folder outside of the server's public folder
+- public/index.php: rectify all relevant paths
+- import .sql to server's database, rectify database-name, username & password in the .env file
+
+## Different ways of writting things
+
+In Blade
+```
+@if (!in_array($modLabel, ['xxx', 'yyy']))
+
+@endif
+```
+is same as
+```
+@php {{ $skips = ['xxx','yyy','deleted_at']; }} @endphp
+@if (!in_array($initLabel, $skips))
+
+@endif
+```
+
+In PHP
+```
+$thisAndPrevious = ActionLog::where([
+        [ 'time',            '<=', $log['time']            ],
+        [ 'record_key_name', '=',  $log['record_key_name'] ],
+        [ 'record_id',       '=',  $log['record_id']       ],
+        [ 'model',           '=',  $log['model']           ],
+    ])
+    ->where(function ($query) {
+        $query->where('method', '=', 'create')
+              ->orWhere('method', '=', 'update');
+    })
+    ->orderBy('id', 'DESC')
+    ->take(2)
+    ->get();
+```
+is same as
+```
+$thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
+    ->where('record_key_name', '=',  $log['record_key_name'])
+    ->where('record_id', '=',  $log['record_id'])
+    ->where('model', '=',  $log['model'])
+    ->whereIn('method', ['create', 'update'])
+    ->orderBy('id', 'DESC')
+    ->take(2)
+    ->get();
+```
+
+---
+
+# To Do
 
 - Swagger
     - https://github.com/DarkaOnLine/L5-Swagger

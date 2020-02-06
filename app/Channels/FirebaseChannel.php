@@ -46,14 +46,6 @@ class FirebaseChannel
         $response = curl_exec($curl);   
         $err      = curl_error($curl);   
 
-$myfile = fopen("C:/Users/Victor/Desktop/response" . date("YFd_H-i-s") . rand(1, 99999) . ".txt", "w");
-fwrite($myfile, serialize($response));
-fclose($myfile);
-
-$myfile = fopen("C:/Users/Victor/Desktop/err" . date("YFd_H-i-s") . rand(1, 99999) . ".txt", "w");
-fwrite($myfile, serialize($err));
-fclose($myfile);
-
         curl_close($curl);  
     }
 }

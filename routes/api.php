@@ -18,17 +18,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Protected Entry CRUDs
-Route::group(['namespace' => 'Api'/*, 'middleware' => ['auth:api']*/], function () {
-
-	Route::resource('/region', 'RegionController');
-	Route::post('/region/rearrange', 'RegionController@rearrange');
+// Protected CRUDs
+Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function () {
 
 	Route::resource('/entry', 'EntryController');
 
 	Route::post('/user', 'UserController@store');
 
+});
+
+Route::group(['namespace' => 'Api'], function () {
+
+	Route::resource('/region', 'RegionController');
+	Route::post('/region/rearrange', 'RegionController@rearrange');
+
 	Route::resource('/comment', 'CommentController');
 
 	Route::get('autosuggest/user/{name}', 'UserController@autosuggest');
+
 });
