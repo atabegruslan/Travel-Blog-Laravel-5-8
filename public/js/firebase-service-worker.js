@@ -1,6 +1,6 @@
 importScripts('https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/7.8.0/firebase-messaging.js');
-importScripts('http://localhost/laravel_5_8/travel_blog/public/js/firebase-config.js');
+importScripts('firebase-config.js');
 
 firebase.initializeApp(firebaseConfig);
 

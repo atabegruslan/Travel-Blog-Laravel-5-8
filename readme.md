@@ -847,6 +847,7 @@ SSLCertificateKeyFile "conf/ssl.key/server.key"
 
 - https://gist.github.com/nguyenanhtu/33aa7ffb6c36fdc110ea8624eeb51e69
 - https://florianbrinkmann.com/en/https-virtual-hosts-xampp-4215/
+- https://deanhume.com/testing-service-workers-locally-with-self-signed-certificates/
 
 ## Scheduling tasks
 
@@ -1289,6 +1290,7 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 
 # To Do
 
-- Swagger
+- Document APIs using Swagger
     - https://github.com/DarkaOnLine/L5-Swagger
     - https://m.youtube.com/playlist?list=PLnBvgoOXZNCOiV54qjDOPA9R7DIDazxBA
+- Permission controls

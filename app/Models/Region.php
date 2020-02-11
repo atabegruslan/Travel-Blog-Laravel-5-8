@@ -6,8 +6,6 @@ use App\Models\Traits\LogTrait;
 
 class Region extends Base
 {
-    use LogTrait;
-    
     public $timestamps = false;
     
     protected $table = 'regions';

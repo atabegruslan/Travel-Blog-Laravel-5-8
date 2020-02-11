@@ -2,16 +2,38 @@ firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
-init();
+registerServiceWorker();
 
-function init()
+function registerServiceWorker()
 { // https://stackoverflow.com/questions/41659970/firebase-change-the-location-of-the-service-worker
-	navigator.serviceWorker.register(baseUrl + 'js/firebase-service-worker.js')
-		.then((registration) => {
-			messaging.useServiceWorker(registration);
+    if ('serviceWorker' in navigator && 'PushManager' in window) 
+    {
+        navigator.serviceWorker.getRegistration()
+            .then(function(registration) {
 
-			getPermission();
-		});
+                if (registration)
+                {
+					messaging.useServiceWorker(registration);
+					getPermission();
+                }
+                else
+                {
+                    navigator.serviceWorker.register(baseUrl + 'js/firebase-service-worker.js')
+                        .then(function(newRegistration) {
+
+							messaging.useServiceWorker(newRegistration);
+							getPermission();
+                        })
+                        .catch(function(error) {
+                            console.error({error});
+                        });
+                }
+            });
+    } 
+    else 
+    {
+        console.warn('Service Worker and Push Messaging are not supported');
+    }
 }
 
 function getPermission()
@@ -92,6 +114,7 @@ function saveToken(fcmToken)
 messaging.onMessage(function(payload) {
 	console.log({payload});
 	//@todo Do this properly
+
 	var options = {
 		icon   : payload.data.icon,
 		body   : payload.data.body,
@@ -100,7 +123,7 @@ messaging.onMessage(function(payload) {
 		image  : payload.data.image,
 		lang   : payload.data.lang,
 		tag    : payload.data.tag,
-		//actions: payload.data.actions,
+		//actions: $.parseJSON(payload.data.actions),
 		vibrate: payload.data.vibrate
 	};
 
