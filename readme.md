@@ -1294,3 +1294,4 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
     - https://github.com/DarkaOnLine/L5-Swagger
     - https://m.youtube.com/playlist?list=PLnBvgoOXZNCOiV54qjDOPA9R7DIDazxBA
 - Permission controls
+- Soft Deletes

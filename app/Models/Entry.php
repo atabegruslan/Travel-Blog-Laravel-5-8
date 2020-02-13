@@ -34,7 +34,7 @@ class Entry extends Base
             Region::class,
             'entry_region',
             'place_id',
-            'region_id',
+            'region_id'
         );
     }
 
