@@ -23,6 +23,17 @@
         </div>
 
         <div class="form-group">
+            <label for="region_ids">Regions: </label>
+            <select name="region_ids[]" id="region_ids" class="form-control" multiple>
+                 @foreach($regions as $region)
+                     <option value="{{ $region->id }}">
+                         {{ $region->name }}
+                     </option>
+                 @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
             <label for="image">Image: </label>
             {!! Form::file('image',array('class'=>'img-thumbnail form-control-file','id'=>'image')) !!}
         </div>

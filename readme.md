@@ -1286,6 +1286,12 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
     ->get();
 ```
 
+## Migration scripts
+
+To run a DB migration script again:
+- `php artisan migrate:rollback` (which deletes the most recent batch out of the `migrations` table), or:
+- Go into the DB, manually delete the entry out of the `migrations` table.
+
 ---
 
 # To Do
@@ -1293,5 +1299,75 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 - Document APIs using Swagger
     - https://github.com/DarkaOnLine/L5-Swagger
     - https://m.youtube.com/playlist?list=PLnBvgoOXZNCOiV54qjDOPA9R7DIDazxBA
-- Permission controls
-- Soft Deletes
+- Permission controls.
+    - Utilize https://github.com/spatie/laravel-permission
+    - Start using Seeders, eg `php artisan make:seeder PermissionTableSeeder`
+```php
+use Illuminate\Database\Seeder;
+use App\Models\Permission;
+
+class PermissionTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('permissions')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        // Reset cached roles and permissions.
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // Create permissions.
+        $permissions = config('permission.features');
+
+        foreach ($permissions as $feature => $permissionList) {
+            $hasChild = array_filter($permissionList, 'is_array');
+
+            if (count($hasChild)) {
+                foreach ($permissionList as $child => $permissionListChild) {
+                    $this->insertPermissions($permissionListChild);
+                }
+
+                continue;
+            }
+
+            $this->insertPermissions($permissionList);
+        }
+    }
+
+    protected function insertPermissions($data)
+    {
+        $insertData = collect($data)->transform(function ($item) {
+            return [
+                'name' => $item,
+                'guard_name' => 'api',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        })->toArray();
+
+        Permission::query()->insert($insertData);
+    }
+}
+```
+then run `php artisan db:seed --class=PermissionTableSeeder`
+
+- Make all features use log. 
+- Only admin can view log.
+- Soft Deletes.
+- Better if notifications are triggered by events (and event listeners)
+- Fix FCM
+    - Notification shouldn't should be send to the same person as many times as the number of users.
+    - More code needed
+        - User model should use Trait `NotificationChannels\WebPush\HasPushSubscriptions`
+        - Add firebase code to `Illuminate\Notifications\RoutesNotifications::routeNotificationFor`
+    - Not entering Firebase service worker upon receiving notification.
+- Rid home vue (not needed anymore).
+- Pagination in Vue
+- Utilize https://github.com/tightenco/ziggy
+- Deeply nested region tree have bugs

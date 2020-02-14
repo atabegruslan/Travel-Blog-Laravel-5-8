@@ -31,7 +31,9 @@ class EntryController extends Controller
      */
     public function create()
     {
-        return view('entry.create');
+        $regions = Region::get();
+
+        return view('entry.create', compact('regions'));
     }
 
     /**
@@ -46,6 +48,7 @@ class EntryController extends Controller
             'place'    => 'required|max:15',
             'comments' => 'required|max:50',
             'image'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            // @todo validate region_ids as an integer array https://stackoverflow.com/questions/24588975/how-do-i-validate-an-array-of-integers-in-laravel
         ]); 
 
         $img             = $request->file('image');
@@ -57,8 +60,7 @@ class EntryController extends Controller
         $entry->img_url  = $imgUrl;
 
         $entry->save();
-        $regions = Region::find([1]); // @todo Un-hardcode
-        $entry->regions()->sync($regions);
+        $entry->regions()->sync($request->input('region_ids'));
 
         \Session::flash('success', 'New Entry Created');
 
@@ -89,9 +91,10 @@ class EntryController extends Controller
      */
     public function show($id)
     {
-        $entry = Entry::where('id', $id)->first();
+        $entry   = Entry::where('id', $id)->first();
+        $regions = Region::get();
 
-        return view('entry.show', ['param' => $entry]);
+        return view('entry.show', ['param' => $entry, 'regions' => $regions]);
     }
 
     /**
@@ -102,9 +105,16 @@ class EntryController extends Controller
      */
     public function edit($id)
     {
-        $entry = Entry::where('id', $id)->first();
+        $entry   = Entry::where('id', $id)->first();
+        $regions = Region::get();
+        $selectedRegionIds = [];
 
-        return view('entry.edit', ['param' => $entry]);
+        foreach ($entry->regions as $region) 
+        {
+            $selectedRegionIds[] = $region->id;
+        }
+
+        return view('entry.edit', ['param' => $entry, 'regions' => $regions, 'selectedRegionIds' => $selectedRegionIds]);
     }
 
     /**
@@ -120,6 +130,7 @@ class EntryController extends Controller
             'place'    => 'required|max:15',
             'comments' => 'required|max:50',
             'image'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            // @todo validate region_ids as an integer array
         ]); 
 
         $entry     = Entry::where('id', $id)->first();
@@ -140,8 +151,7 @@ class EntryController extends Controller
             'img_url'  => isset($newImgUrl) ? $newImgUrl : $oldImgUrl
         ]);
         
-        $regions = Region::find([1]); // @todo Un-hardcode
-        $entry->regions()->sync($regions);
+        $entry->regions()->sync($request->input('region_ids'));
 
         \Session::flash('success', 'Entry Updated');
 
