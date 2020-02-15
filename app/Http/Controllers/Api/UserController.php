@@ -25,7 +25,24 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        try
+        {
+            $users      = User::all();
+            $response   = ['data' => $users, 'pagination' => []]; // @todo Finish pagination
+            $statusCode = 200;
+
+            return \Response::json($response, $statusCode); 
+        }
+        catch (Throwable $t)
+        {
+            $response = [
+                "error" => "Error"
+            ];
+
+            $statusCode = 404;
+
+            return \Response::json($response, $statusCode); 
+        }
     }
 
     /**

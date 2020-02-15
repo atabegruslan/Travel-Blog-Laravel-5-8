@@ -22,6 +22,7 @@ window.Vue = require('vue');
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('regions', require('./components/region/Tree.vue').default);
 Vue.component('comments', require('./components/entry/Comments.vue').default);
+Vue.component('users', require('./components/user/Users.vue').default);
 Vue.component('vue-pagination', require('./components/common/Pagination.vue').default);
 
 /**
