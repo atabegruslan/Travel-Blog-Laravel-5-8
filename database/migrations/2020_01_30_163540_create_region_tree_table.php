@@ -19,19 +19,6 @@ class CreateRegionTreeTable extends Migration
                 $table->integer('region_id');
                 $table->integer('parent_id');
             });
-
-            $regionIds = DB::table('regions')
-                ->pluck('id')
-                ->toArray();
-
-            $defaultTree = [];
-
-            foreach ($regionIds as $regionId) 
-            {
-                $defaultTree[] = ['region_id' => $regionId, 'parent_id' => 0];
-            }
-
-            DB::table('region_tree')->insert($defaultTree);
         }
     }
 

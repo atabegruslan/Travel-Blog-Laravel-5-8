@@ -92,6 +92,9 @@
 
     </div>
 
+    <!-- Just Test @todo To be done properly later -->
+    {{-- route('api.region', 1) --}}
+
 </div>
 
 @include('parts/_entry_comments')

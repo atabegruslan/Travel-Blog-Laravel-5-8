@@ -17,7 +17,7 @@
 			<template slot-scope="_">
 				<div class="role_node" v-bind:id="_.model.id">
 
-					{{_.model.text}}
+					<label>{{_.model.text}}</label>
 
 		            <a v-if="_.model.id !== 0" :href="link_route(regionRoute, _.model.id)">
 		            	Edit
@@ -31,9 +31,10 @@
 			</template>
 		</v-jstree>
 
-		<button type="button" @click="sync()">Save All</button>
+		<button class="btn btn-primary" id="sync_tree" type="button" @click="sync()">Save All</button>
 
 	</div>
+
 </template>
 
 <script>

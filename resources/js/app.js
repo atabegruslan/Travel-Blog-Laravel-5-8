@@ -20,10 +20,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('blogs', require('./components/Blogs.vue').default);
-Vue.component('banner', require('./components/Banner.vue').default);
 Vue.component('regions', require('./components/region/Tree.vue').default);
 Vue.component('comments', require('./components/entry/Comments.vue').default);
+Vue.component('vue-pagination', require('./components/common/Pagination.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

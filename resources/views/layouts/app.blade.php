@@ -25,6 +25,7 @@
 
     <link rel="manifest" href="{{ PUB_URL }}/manifest.json" />
     
+    @routes
 </head>
 <body>
 

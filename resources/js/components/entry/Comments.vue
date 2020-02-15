@@ -35,7 +35,14 @@
             </tbody>
         </table>
 
+        <!-- Just Test @todo To be done properly later -->
+        <!-- {{ route('api.comment', {comment: comment.id}) }} -->
+
+        <!-- Just Test @todo To be refined later -->
+        <vue-pagination :pagination="pagination" @paginate="fetchComments()" />
+
 	</div>
+
 </template>
 
 <script>
@@ -75,6 +82,14 @@
 				comments: [],
 				comment: '',
                 editor: null,
+                pagination: { // Just Test @todo To be refined later
+                    "current_page" :1,
+                    "from"         :1,
+                    "last_page"    :1,
+                    "per_page"     :20,
+                    "to"           :2,
+                    "total"        :2
+                }
             }
         },
         methods: {
