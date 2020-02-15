@@ -912,6 +912,48 @@ class XxxHelper
 
 3. `composer dump-autoload`
 
+## Permissions (Spatie library)
+
+1. `composer require spatie/laravel-permission`
+2. Create migration and config files: `php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"`
+    - Or create seperately by:
+        - Migration: `php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"`
+        - Config: `php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"`
+3. `php artisan migrate`
+4. Make User model use `Spatie\Permission\Traits\HasRoles`
+5. Add `features` to `config/permission.php`: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/config/permission.php#L130
+6. Run seeder: `php artisan db:seed --class=SyncPermissionTableSeeder` to populate `permissions` table from `config/permission.php`'s `features` part.
+6. Do MVC for User, Role and Permission
+7. Make use of:
+```php
+//A permission can be assigned to a role using 1 of these methods:
+$role->givePermissionTo($permission);
+$permission->assignRole($role);
+//Multiple permissions can be synced to a role using 1 of these methods:
+$role->syncPermissions($permissions);
+$permission->syncRoles($roles);
+//A permission can be removed from a role using 1 of these methods:
+$role->revokePermissionTo($permission);
+$permission->removeRole($role);
+
+$user->assignRole($roles);
+$user->removeRole($role);
+$user->syncRoles($roles);
+```
+8. Check permissions by:
+```php
+auth()->user()->hasRole($roles);
+auth()->user()->can($permission);
+```
+
+### Tutorials
+
+- https://github.com/spatie/laravel-permission
+- https://www.youtube.com/watch?v=zIgYJlu03bI&list=PLYtuiR2P4Dr72be9bC_vCYLGRTWjVBmUz
+- https://docs.spatie.be/laravel-permission/v3/installation-laravel/
+- https://docs.spatie.be/laravel-permission/v3/basic-usage/basic-usage/
+- https://docs.spatie.be/laravel-permission/v3/basic-usage/role-permissions/
+
 ---
 
 # How to use Vue in Laravel
@@ -1300,7 +1342,7 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 
 If you weren't using these before and decide to start using them
 
-1. Adust the database to compensate
+1. Adust the database
     - For timestamps: add `created_at` & `updated_at` nullable columns of timestamp type, default now.
     - For soft delete: add `deleted_at` nullable column of timestamp type, default null.
 2. Make the migration script consistent by adding 
@@ -1399,14 +1441,9 @@ Pass the `pagination` object into the view.
     - https://swagger.io/blog/api-development/swaggerhub-101-ondemand-tutorial/
     - https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-1-introduction/
     - https://www.youtube.com/watch?v=xggucT_xl5U
-- Permission controls.
-    - https://github.com/spatie/laravel-permission
-    - https://www.youtube.com/watch?v=zIgYJlu03bI&list=PLYtuiR2P4Dr72be9bC_vCYLGRTWjVBmUz
-    - https://docs.spatie.be/laravel-permission/v3/installation-laravel/
-    - https://docs.spatie.be/laravel-permission/v3/basic-usage/basic-usage/
-    - https://docs.spatie.be/laravel-permission/v3/basic-usage/role-permissions/
-- Make all features use log. 
-- Only admin can view log.
+- Permission
+- Only admin can view log
+- Make all features use log 
 - Better if notifications are triggered by events (and event listeners)
 - Fix FCM
     - Notification shouldn't should be send to the same person as many times as the number of users.
