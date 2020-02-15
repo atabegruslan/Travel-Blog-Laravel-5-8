@@ -1449,9 +1449,9 @@ Pass the `pagination` object into the view.
     - Notification shouldn't should be send to the same person as many times as the number of users.
         - https://laravel.com/docs/5.8/notifications#using-the-notifiable-trait <sup>read again</sup>
         - https://github.com/laravel-notification-channels/webpush/blob/master/src/WebPushChannel.php <sup>imitate</sup>
-    - More code needed
-        - User model should use Trait `NotificationChannels\WebPush\HasPushSubscriptions`
-        - Add firebase code to `Illuminate\Notifications\RoutesNotifications::routeNotificationFor`
+            - Maybe more code needed
+                - User model should use Trait `NotificationChannels\WebPush\HasPushSubscriptions`
+                - Add firebase code to `Illuminate\Notifications\RoutesNotifications::routeNotificationFor`
 - Use Vue Pagination wherever possible 
 - Make use of timestamps and soft deletes wherever possible 
 - Route

@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 	Route::resource('/region', 'RegionController');
 
 	Route::resource('/user', 'UserController');
+	Route::resource('/role', 'RoleController');
 
 	Route::get('/search', 'SearchController@index');
 
