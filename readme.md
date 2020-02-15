@@ -923,8 +923,8 @@ class XxxHelper
 4. Make User model use `Spatie\Permission\Traits\HasRoles`
 5. Add `features` to `config/permission.php`: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/config/permission.php#L130
 6. Run seeder: `php artisan db:seed --class=SyncPermissionTableSeeder` to populate `permissions` table from `config/permission.php`'s `features` part.
-6. Do MVC for User, Role and Permission
-7. Make use of:
+7. Do MVC for User, Role and Permission
+8. Make use of:
 ```php
 //A permission can be assigned to a role using 1 of these methods:
 $role->givePermissionTo($permission);
@@ -940,7 +940,7 @@ $user->assignRole($roles);
 $user->removeRole($role);
 $user->syncRoles($roles);
 ```
-8. Check permissions by:
+9. Check permissions by:
 ```php
 auth()->user()->hasRole($roles);
 auth()->user()->can($permission);
