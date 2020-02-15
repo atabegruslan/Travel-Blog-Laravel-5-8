@@ -111,29 +111,30 @@ function saveToken(fcmToken)
     });
 }
 
-messaging.onMessage(function(payload) {
-	console.log({payload});
-	//@todo Do this properly
+// If you want the service worker's setBackgroundMessageHandler to be called, then below is not necessary.
+// messaging.onMessage(function(payload) {
 
-	var options = {
-		icon   : payload.data.icon,
-		body   : payload.data.body,
-		data   : payload.data.data,
-		dir    : payload.data.dir,
-		image  : payload.data.image,
-		lang   : payload.data.lang,
-		tag    : payload.data.tag,
-		//actions: $.parseJSON(payload.data.actions),
-		vibrate: payload.data.vibrate
-	};
+// 	console.log({payload});
 
-	var notification = new Notification(payload.data.title, options);
+// 	var options = {
+// 		icon   : payload.data.icon,
+// 		body   : payload.data.body,
+// 		data   : payload.data.data,
+// 		dir    : payload.data.dir,
+// 		image  : payload.data.image,
+// 		lang   : payload.data.lang,
+// 		tag    : payload.data.tag,
+// 		//actions: $.parseJSON(payload.data.actions), // Don't use actions here. Otherwise you will get: TypeError: Failed to construct 'Notification': Actions are only supported for persistent notifications shown using ServiceWorkerRegistration.showNotification().
+// 		vibrate: payload.data.vibrate
+// 	};
 
-	notification.onclick = function(event) {
-	  console.log({event});
-	};
+// 	var notification = new Notification(payload.data.title, options);
 
-	notification.onerror = function(event) {
-	  console.error(event);
-	};
-});
+// 	notification.onclick = function(event) {
+// 	  console.log({event});
+// 	};
+
+// 	notification.onerror = function(event) {
+// 	  console.error(event);
+// 	};
+// });

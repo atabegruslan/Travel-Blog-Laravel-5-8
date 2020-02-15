@@ -17,3 +17,39 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
 	return self.registration.showNotification(notificationTitle, notificationOptions);
 });
+
+self.addEventListener('notificationclick', function(event) {
+	
+    console.log({event});
+
+    // var notification = event.notification;
+    // var data         = notification.data;
+    // var action       = event.action;
+
+    // if (action === 'close')
+    // {
+    //     notification.close();
+    // }
+    // else if (action === 'view')
+    // {
+    //     event.waitUntil(
+    //         clients.openWindow(data.entry_url)
+    //     );
+    // }
+    // else
+    // {
+    //     event.waitUntil(
+    //         clients.openWindow(data.base_url)
+    //     );
+    // }
+}, false);
+
+self.addEventListener('notificationclose', function(event) {
+
+    console.log({event});
+
+    // var notification   = event.notification;
+    // var notificationId = notification.tag;
+
+    // console.log(`Closed notification: ${notificationId}`);
+});

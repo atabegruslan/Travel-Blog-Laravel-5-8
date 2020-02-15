@@ -32,7 +32,8 @@ class FirebaseChannel
 
         $payload = [    
             'registration_ids' => $tokens,  
-            'data'             => $message, 
+            'data'             => ['notification' => $message], // If you want the service worker's setBackgroundMessageHandler to be called, then structure your message like so. https://stackoverflow.com/questions/47973215/web-push-messaging-setbackgroundmessagehandler-not-working
+            //'data'             => $message, 
         ];  
 
         curl_setopt_array($curl, array( 

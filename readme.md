@@ -1403,6 +1403,8 @@ Pass the `pagination` object into the view.
     - https://github.com/spatie/laravel-permission
     - https://www.youtube.com/watch?v=zIgYJlu03bI&list=PLYtuiR2P4Dr72be9bC_vCYLGRTWjVBmUz
     - https://docs.spatie.be/laravel-permission/v3/installation-laravel/
+    - https://docs.spatie.be/laravel-permission/v3/basic-usage/basic-usage/
+    - https://docs.spatie.be/laravel-permission/v3/basic-usage/role-permissions/
 - Make all features use log. 
 - Only admin can view log.
 - Better if notifications are triggered by events (and event listeners)
@@ -1413,20 +1415,11 @@ Pass the `pagination` object into the view.
     - More code needed
         - User model should use Trait `NotificationChannels\WebPush\HasPushSubscriptions`
         - Add firebase code to `Illuminate\Notifications\RoutesNotifications::routeNotificationFor`
-    - Firebase service worker `setBackgroundMessageHandler` not called
-        - https://stackoverflow.com/questions/40462414/firebase-cloud-messaging-setbackgroundmessagehandler-not-called
-        - https://stackoverflow.com/questions/47973215/web-push-messaging-setbackgroundmessagehandler-not-working
-        - https://stackoverflow.com/questions/50755931/firebase-set-background-message-handler
-        - https://stackoverflow.com/questions/53883138/messaging-setbackgroundmessagehandler-not-receiving-messages-in-web
-        - https://stackoverflow.com/questions/42045394/firebase-messaging-setbackgroundmessagehandler-overrides-notification-body-as
-        - https://github.com/firebase/quickstart-js/issues/161
-        - https://github.com/firebase/quickstart-js/issues/134
-        - https://www.answiz.com/questions/28309/firebase-cloud-messaging-setbackgroundmessagehandler-not-called
-        - https://www.sentinelstand.com/article/handling-firebase-notification-messages-in-your-web-app
-        - https://stackoverflow.com/questions/40462414/firebase-cloud-messaging-setbackgroundmessagehandler-not-called/48104868#48104868
-        - https://stackoverflow.com/questions/40462414/firebase-cloud-messaging-setbackgroundmessagehandler-not-called/40463864#40463864
 - Use Vue Pagination wherever possible 
 - Make use of timestamps and soft deletes wherever possible 
 - Route
     - https://github.com/tightenco/ziggy
     - https://www.youtube.com/watch?v=rs7_X47wYBs
+    - https://github.com/tightenco/ziggy/issues/217
+    - https://github.com/tightenco/ziggy/issues/265
+    - https://github.com/tightenco/ziggy/issues/70
