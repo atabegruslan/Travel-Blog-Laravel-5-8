@@ -59,7 +59,7 @@ class RegionController extends Controller
     protected function prepareTree($data)
     {
         $parentId = array_column($data, 'parent_id');
-        array_multisort($parentId, SORT_DESC, $data);
+        array_multisort($parentId, SORT_DESC, $data); // @todo This can sometimes have bugs. Parent IDs shouldn't always be sorted descendingly.
 
         foreach ($data as $key => $item)
         {

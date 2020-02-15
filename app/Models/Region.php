@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Traits\LogTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Region extends Base
 {
-    public $timestamps = false;
+    use SoftDeletes;
+
+    public $timestamps = true;
     
     protected $table = 'regions';
 

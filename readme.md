@@ -1295,27 +1295,116 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
 - Seeding is for database data.
     - Make seed: `php artisan make:seeder WhateverTableSeeder`
     - Run seed: `php artisan db:seed --class=WhateverTableSeeder`
+
+## Timestamps and Soft Deletes
+
+If you weren't using these before and decide to start using them
+
+1. Adust the database to compensate
+    - For timestamps: add `created_at` & `updated_at` nullable columns of timestamp type, default now.
+    - For soft delete: add `deleted_at` nullable column of timestamp type, default null.
+2. Make the migration script consistent by adding 
+```php
+Schema::create('whatevers', function (Blueprint $table) {
+    ...
+    $table->softDeletes();
+    $table->timestamps();
+});
+```
+3. In model, add:
+```php
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Whatever extends Model
+{
+    use SoftDeletes;
+
+    public $timestamps = true;
+```
+
+You can see that `Illuminate\Database\Eloquent\Model.php::performDeleteOnModel()` is overridden by `Illuminate\Database\Eloquent\SoftDeletes.php::performDeleteOnModel()`
+
+https://www.itsolutionstuff.com/post/how-to-use-soft-delete-in-laravel-5example.html
+
+## Pagination (with and without Vue)
+
+### Blade
+
+#### In controller
+```php
+    public function index()
+    {
+        //$data = WhateverModel::orderBy('updated_at', 'ASC')->get()->all();
+        $data = WhateverModel::orderBy('updated_at', 'ASC')->paginate(10);
+
+        return view('whatever.index', ['data' => $data]);
+```
+
+#### In view `whatever/index.blade.php`
+```
+<div class="row" >
+    <div id="paginate">
+        {{ $data->links() }}
+    </div>
+</div>
+
+```
+
+### Vue
+
+#### For the view
+
+1. Write your custom pagination component, like: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/tree/master/resources/js/components/common/Pagination.vue
+
+2. In `app.js`
+```
+import VuePagination from './components/common/Pagination';
+Vue.component('vue-pagination', VuePagination);
+```
+
+3. Use it `<vue-pagination :pagination="pagination" @paginate="getItems()" />` where `pagination` is
+```
+{
+    "current_page" :1,
+    "from"         :1,
+    "last_page"    :1,
+    "per_page"     :20,
+    "to"           :2,
+    "total"        :2
+}
+```
+
+#### In API controller
+
+Pass the `pagination` object into the view.
+
+#### Or you can use other's libraries
+
+- https://bootstrap-vue.js.org/docs/components/pagination/
+- https://www.npmjs.com/package/vuejs-paginate
+- https://vuejsexamples.com/tag/pagination/
+- https://github.com/gilbitron/laravel-vue-pagination/blob/master/README.md
+- https://github.com/matfish2/vue-pagination-2/blob/master/README.md
+
 ---
 
 # To Do
 
 - Document APIs using Swagger
     - https://github.com/DarkaOnLine/L5-Swagger
-    - https://m.youtube.com/playlist?list=PLnBvgoOXZNCOiV54qjDOPA9R7DIDazxBA
+    - https://www.youtube.com/playlist?list=PLnBvgoOXZNCOiV54qjDOPA9R7DIDazxBA
     - https://idratherbewriting.com/learnapidoc/pubapis_swagger.html <sup>helpful</sup>
     - https://swagger.io/blog/api-strategy/difference-between-swagger-and-openapi/ <sup>theory</sup>
     - https://swagger.io/blog/api-development/swaggerhub-101-ondemand-tutorial/
     - https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-1-introduction/
+    - https://www.youtube.com/watch?v=xggucT_xl5U
 - Permission controls.
     - https://github.com/spatie/laravel-permission
     - https://www.youtube.com/watch?v=zIgYJlu03bI&list=PLYtuiR2P4Dr72be9bC_vCYLGRTWjVBmUz
     - https://docs.spatie.be/laravel-permission/v3/installation-laravel/
 - Make all features use log. 
 - Only admin can view log.
-- Soft Deletes (nullable timestamp type `deleted_at`)
-- Start using timestamps (nullable timestamp type `created_at` and `updated_at`)
-    - https://medium.com/@chrissoemma/laravel-5-8-delete-and-soft-delete-practical-examples-b9b71c0a97f
-    - https://www.itsolutionstuff.com/post/how-to-use-soft-delete-in-laravel-5example.html <sup>helpful</sup>
 - Better if notifications are triggered by events (and event listeners)
 - Fix FCM
     - Notification shouldn't should be send to the same person as many times as the number of users.
@@ -1336,30 +1425,8 @@ $thisAndPrevious = CrudLog::where('time', '<=', $log['time'])
         - https://www.sentinelstand.com/article/handling-firebase-notification-messages-in-your-web-app
         - https://stackoverflow.com/questions/40462414/firebase-cloud-messaging-setbackgroundmessagehandler-not-called/48104868#48104868
         - https://stackoverflow.com/questions/40462414/firebase-cloud-messaging-setbackgroundmessagehandler-not-called/40463864#40463864
-- Pagination in Vue
-    - https://bootstrap-vue.js.org/docs/components/pagination/
-    - https://www.npmjs.com/package/vuejs-paginate
-    - https://vuejsexamples.com/tag/pagination/
-    - https://github.com/gilbitron/laravel-vue-pagination/blob/master/README.md
-    - https://github.com/matfish2/vue-pagination-2/blob/master/README.md
-    - Or custom-make it:
-        1. https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/tree/master/resources/js/components/common/Pagination.vue
-        2. In https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/resources/js/app.js 
-```
-import VuePagination from './components/common/Pagination';
-Vue.component('vue-pagination', VuePagination);
-```
-        3. Use it `<vue-pagination :pagination="pagination" @paginate="getItems()" />` where `pagination` is
-```
-{
-    "current_page" :1,
-    "from"         :1,
-    "last_page"    :1,
-    "per_page"     :20,
-    "to"           :2,
-    "total"        :2
-}
-```
+- Use Vue Pagination wherever possible 
+- Make use of timestamps and soft deletes wherever possible 
 - Route
     - https://github.com/tightenco/ziggy
     - https://www.youtube.com/watch?v=rs7_X47wYBs
