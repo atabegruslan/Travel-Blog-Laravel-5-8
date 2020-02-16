@@ -35,3 +35,5 @@ const app = new Vue({
     //el: '#app',
     el: '.vuepart',
 });
+
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.head.querySelector('meta[name="token"]');

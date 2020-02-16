@@ -1058,6 +1058,13 @@ Then in your resources/views/what..ever/view.blade.php:
 @endsection
 ```
 
+## How to access protected API routes from Vue view
+
+1. Pass access token (`auth('api')->login($currentUser)`) from backend to view template, like https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Http/Controllers/Web/BaseController.php
+2. Keep the token in a meta tag `<meta name="token" content="{{ $token }}">`
+3. In the JS part, set the token as a part of the header `axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.head.querySelector('meta[name="token"]')`
+4. In the script part of the Vue view, you can use axios to make requests to token-protected routes.
+
 ---
 
 # How to make the region feature
