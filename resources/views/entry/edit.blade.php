@@ -19,8 +19,6 @@
                 {{ Form::text('place',$param->place,array('placeholder'=>'Place','class'=>'form-control','id'=>'place')) }}
             </div>
 
-            <!-- @todo multi-select dropmenu for regions -->
-
             <div class="form-group">
                 <label for="comments">Comments: </label>
                 {{ Form::textarea('comments',$param->comments,array('placeholder'=>'Comments','class'=>'form-control','id'=>'comments','rows'=>10)) }}
@@ -91,9 +89,6 @@
         </div>   
 
     </div>
-
-    <!-- Just Test @todo To be done properly later -->
-    {{-- route('api.region', 1) --}}
 
 </div>
 

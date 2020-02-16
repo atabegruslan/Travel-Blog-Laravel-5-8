@@ -35,9 +35,6 @@
             </tbody>
         </table>
 
-        <!-- Just Test @todo To be done properly later -->
-        <!-- {{ route('api.comment', {comment: comment.id}) }} -->
-
         <!-- Just Test @todo To be refined later -->
         <vue-pagination :pagination="pagination" @paginate="fetchComments()" />
 

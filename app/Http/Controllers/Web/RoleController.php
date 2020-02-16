@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -27,7 +28,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('role.create');
+        $permissions = Permission::all();
+        
+        return view('role.create', ['permissions' => $permissions]);
     }
 
     /**
@@ -47,7 +50,8 @@ class RoleController extends Controller
 
         $role->save();
 
-        // @todo Attach permissions
+        $permissions = $request->input('permission_ids');
+        $role->syncPermissions($permissions);
 
         \Session::flash('success', 'Role Created');
 
@@ -63,8 +67,9 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::where('id', $id)->first();
+        $permissions = $role->permissions()->get();
 
-        return view('role.show', ['param' => $role]);
+        return view('role.show', ['param' => $role, 'permissions' => $permissions]);
     }
 
     /**
@@ -76,8 +81,11 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::where('id', $id)->first();
+        $permissions = Permission::all();
+        $selectedPermissions = $role->permissions()->get();
+        $selectedPermissionIds = $selectedPermissions->pluck('id')->toArray();
 
-        return view('role.edit', ['param' => $role]);
+        return view('role.edit', ['param' => $role, 'permissions' => $permissions, 'selectedPermissions' => $selectedPermissions, 'selectedPermissionIds' => $selectedPermissionIds]);
     }
 
     /**
@@ -99,7 +107,8 @@ class RoleController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        // @todo Sync permissions
+        $permissions = $request->input('permission_ids');
+        $role->syncPermissions($permissions);
 
         \Session::flash('success', 'Role Updated');
 

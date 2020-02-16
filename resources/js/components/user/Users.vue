@@ -37,12 +37,13 @@ export default {
     methods: {
         fetchUsers ()
         { // @todo Finish
-//            fetch('http://localhost/laravel_5_8/travel_blog/public/api/user')
-//                .then(res => res.json())
+//            axios.post(route('api.user.index'))
 //                .then(res => {
 //                    this.users = res.data;
 //                })
-//                .catch(err => console.error(err));
+//                .catch(err => {
+//                    console.error(err);
+//                });
         },
     },
 }

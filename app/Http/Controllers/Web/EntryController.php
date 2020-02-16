@@ -9,6 +9,7 @@ use App\Models\Region;
 use App\Models\User;
 use App\Notifications\NewEntry;
 use Notification;
+use Illuminate\Support\Facades\Auth;
 
 class EntryController extends Controller
 {

@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{ PUB_URL }}favicon.ico">
     
+    @auth
     <!-- Access Token -->
     <meta name="token" content="{{ $token }}">
+    @endauth
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

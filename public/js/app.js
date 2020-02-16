@@ -2387,12 +2387,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchUsers: function fetchUsers() {// @todo Finish
-      //            fetch('')
-      //                .then(res => res.json())
+      //            axios.post(route('api.user.index'))
       //                .then(res => {
       //                    this.users = res.data;
       //                })
-      //                .catch(err => console.error(err));
+      //                .catch(err => {
+      //                    console.error(err);
+      //                });
     }
   }
 });
@@ -50591,6 +50592,7 @@ var app = new Vue({
   //el: '#app',
   el: '.vuepart'
 });
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.head.querySelector('meta[name="token"]');
 
 /***/ }),
 

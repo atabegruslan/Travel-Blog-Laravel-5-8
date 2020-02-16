@@ -19,14 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Protected CRUDs
-Route::group(['namespace' => 'Api', 'middleware' => ['auth:api']], function () {
+Route::group([/*'prefix' => 'api', 'as' => 'api.', */'namespace' => 'Api', 'middleware' => ['auth:api']], function () {
 
 	Route::resource('/entry', 'EntryController');
 
 	Route::post('/user', 'UserController@store');
 
 });
-
+// @todo Sort out, put into 1 group
 Route::group(['namespace' => 'Api'], function () {
 
 	Route::resource('/region', 'RegionController');
