@@ -22,9 +22,15 @@
                     <td><strong>SignUp Type: </strong></td>
                     <td>{{ $param->type }}</td>
                 </tr>
+                <tr>
+                    <td><strong>Roles: </strong></td>
+                    <td>
+                        @foreach($roles as $role)
+                            <p>{{ $role->name }}</p>
+                        @endforeach
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-
-    <!-- @todo Multi Select for roles -->
 </div>
