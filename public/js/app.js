@@ -2050,9 +2050,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['entryId', 'userId', 'baseUrl'],
@@ -2350,6 +2347,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2382,18 +2392,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      users: []
+      users: [],
+      pagination: {}
     };
   },
   methods: {
-    fetchUsers: function fetchUsers() {// @todo Finish
-      //            axios.post(route('api.user.index'))
-      //                .then(res => {
-      //                    this.users = res.data;
-      //                })
-      //                .catch(err => {
-      //                    console.error(err);
-      //                });
+    fetchUsers: function fetchUsers() {
+      var _this = this;
+
+      var params = {
+        'page': this.pagination.current_page,
+        'per_page': this.pagination.per_page
+      };
+      axios.get(route('api.user.index'), {
+        params: params
+      }).then(function (res) {
+        _this.users = res.data.data;
+        _this.pagination = _objectSpread({}, res.data); // https://stackoverflow.com/questions/4215737/convert-array-to-object
+      })["catch"](function (err) {
+        console.error(err);
+      });
     }
   }
 });
@@ -38376,25 +38394,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Users")]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table" }, [
-      _vm._m(0),
+  return _c(
+    "div",
+    [
+      _c("h1", [_vm._v("Users")]),
       _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.users, function(user) {
-          return _c("tr", { key: user.id }, [
-            _c("td", [_c("p", [_vm._v(_vm._s(user.name))])]),
-            _vm._v(" "),
-            _c("td", [_c("p", [_vm._v(_vm._s(user.email))])])
-          ])
-        }),
-        0
-      )
-    ])
-  ])
+      _c("table", { staticClass: "table" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.users, function(user) {
+            return _c("tr", { key: user.id }, [
+              _c("td", [
+                _c("p", [
+                  _vm._v(
+                    "\n                                " +
+                      _vm._s(user.name) +
+                      "\n                            "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", [_c("p", [_vm._v(_vm._s(user.email))])])
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("vue-pagination", {
+        attrs: { pagination: _vm.pagination },
+        on: {
+          paginate: function($event) {
+            return _vm.fetchUsers()
+          }
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -50567,6 +50606,7 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.head.querySelector('meta[name="token"]').content;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -50592,7 +50632,6 @@ var app = new Vue({
   //el: '#app',
   el: '.vuepart'
 });
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.head.querySelector('meta[name="token"]');
 
 /***/ }),
 

@@ -12,7 +12,12 @@
             <tbody>
                 <tr v-for="user in users" v-bind:key="user.id">
                     <td>
-                        <p>{{ user.name }}</p>
+                        <p>
+                            <!-- @todo Fix -->
+                            <!-- <a :href="route('api.user.show', {user:user.id})"> -->
+                                {{ user.name }}
+                            <!-- </a> -->
+                        </p>
                     </td>
                     <td>
                         <p>{{ user.email }}</p>
@@ -20,6 +25,9 @@
                 </tr>
             </tbody>
         </table>
+
+        <vue-pagination :pagination="pagination" @paginate="fetchUsers()" />
+
 	</div>
 
 </template>
@@ -32,18 +40,24 @@ export default {
     data() {
         return {
             users: [],
+            pagination: {},
         }
     },
     methods: {
         fetchUsers ()
-        { // @todo Finish
-//            axios.post(route('api.user.index'))
-//                .then(res => {
-//                    this.users = res.data;
-//                })
-//                .catch(err => {
-//                    console.error(err);
-//                });
+        {
+            let params = {
+                'page'     : this.pagination.current_page,
+                'per_page' : this.pagination.per_page,
+            };
+            axios.get(route('api.user.index'), {params: params})
+                .then(res => {
+                    this.users = res.data.data;
+                    this.pagination = { ...res.data }; // https://stackoverflow.com/questions/4215737/convert-array-to-object
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         },
     },
 }

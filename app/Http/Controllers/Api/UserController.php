@@ -13,12 +13,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try
         {
-            $users      = User::all();
-            $response   = ['data' => $users, 'pagination' => []]; // @todo Finish pagination
+            //$params = $request->only('per_page', 'page');
+
+            $users      = User::paginate(3)->toArray();
+            $response   = $users;
             $statusCode = 200;
 
             return \Response::json($response, $statusCode); 
