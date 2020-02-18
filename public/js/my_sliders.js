@@ -1,20 +1,18 @@
 var $slider1 = $('#slider1');
 var $slider2 = $('#slider2');
 
-$.ajax
-({
-	url: "ajax_php/images.php", 
-	type: "get",
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + document.head.querySelector('meta[name="token"]').content; // @todo Do better
+axios.get(route('api.entry_images'))
+    .then(res => {
+    	var images = res.data;
 
-	success: function(result)
-	{ 
-		var imagesArray = JSON.parse(result);
-
-		if (imagesArray.length > 3) {
+		if (images.length > 3) 
+		{
 			
-			var firstHalfPictures = imagesArray.slice( 0 , imagesArray.length/2 );
-			var latterHalfPictures = imagesArray.slice( imagesArray.length/2 , imagesArray.length );
+			var firstHalfPictures = images.slice( 0 , images.length/2 );
+			var latterHalfPictures = images.slice( images.length/2 , images.length );
 
+			// @todo Somehow the sliders aren't displaying
 			$slider1.slider
 			({
 				title: "pictures ...",
@@ -29,5 +27,7 @@ $.ajax
 				pictures: latterHalfPictures
 			});	
 		}	
-	}
-});
+    })
+    .catch(err => {
+        console.error(err);
+    });

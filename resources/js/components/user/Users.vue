@@ -13,10 +13,7 @@
                 <tr v-for="user in users" v-bind:key="user.id">
                     <td>
                         <p>
-                            <!-- @todo Fix -->
-                            <!-- <a :href="route('api.user.show', {user:user.id})"> -->
-                                {{ user.name }}
-                            <!-- </a> -->
+                            <a :href="link_route('api.user.show', user.id)">{{ user.name }}</a>
                         </p>
                     </td>
                     <td>
@@ -58,6 +55,10 @@ export default {
                 .catch(err => {
                     console.error(err);
                 });
+        },
+        link_route(name, id)
+        {
+            return route(name, {user: id});
         },
     },
 }

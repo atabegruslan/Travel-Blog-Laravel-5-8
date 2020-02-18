@@ -100,12 +100,13 @@
 			},
             fetchRegions() 
             {
-                fetch('api/region')
-                    .then(res => res.json())
-                    .then(res => {
-                        this.tree[0].children = res;
-                    })
-                    .catch(err => console.error(err));
+	            axios.get(route('api.region.index'))
+	                .then(res => {
+	                    this.tree[0].children = res.data;
+	                })
+	                .catch(err => {
+	                    console.error(err);
+	                });
             },
             onDrop()
             {
@@ -118,17 +119,11 @@
 				this.tally = [];
 				this.getNode(regions);
 				
-				fetch('api/region/rearrange', {
-						method: 'post',
-						body: JSON.stringify(this.tally),
-						headers: {
-							'content-type' : 'application/json'
-						}
+				axios.post(route('api.region_rearrange'), this.tally)
+					.then((res) => {
+						window.location.href = this.regionRoute;
 					})
-						.then(res => {
-							window.location.href = this.regionRoute;
-						})
-						.catch(err => console.error(err));
+					.catch(err => console.error(err));
 						
             },  
 		    getNode(node)

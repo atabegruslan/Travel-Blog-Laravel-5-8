@@ -44,6 +44,7 @@
 
     <!-- Scripts -->
     @if(Route::currentRouteName() == '')
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script><!-- @todo Do better -->
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>      
         <script src="http://hammerjs.github.io/dist/hammer.min.js" type="text/javascript"></script>
         <script src="{{ PUB_URL }}js/ruslan_slider.js?v={{ rand() }}"></script>

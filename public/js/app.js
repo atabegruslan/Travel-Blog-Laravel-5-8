@@ -2047,9 +2047,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['entryId', 'userId', 'baseUrl'],
@@ -2075,28 +2072,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       comments: [],
       comment: '',
-      editor: null,
-      pagination: {
-        // Just Test @todo To be refined later
-        "current_page": 1,
-        "from": 1,
-        "last_page": 1,
-        "per_page": 20,
-        "to": 2,
-        "total": 2
-      }
+      editor: null
     };
   },
   methods: {
     fetchComments: function fetchComments() {
       var _this2 = this;
 
-      fetch(this.baseUrl + 'api/comment/' + this.entryId).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        _this2.comments = res;
+      axios.get(this.baseUrl + 'api/comment/' + this.entryId).then(function (res) {
+        _this2.comments = res.data;
       })["catch"](function (err) {
-        return console.error(err);
+        console.error(err);
       });
     },
     createComment: function createComment() {
@@ -2108,21 +2094,12 @@ __webpack_require__.r(__webpack_exports__);
         contents: this.editor.getData(),
         commentor_id: this.userId
       };
-      fetch(this.baseUrl + 'api/comment', {
-        method: 'post',
-        body: JSON.stringify(data),
-        headers: {
-          'content-type': 'application/json'
-        }
-      }).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        //this.comment = '';
+      axios.post(route('api.comment.store'), data).then(function (res) {
         _this3.editor.setData('');
 
         _this3.fetchComments();
       })["catch"](function (err) {
-        return console.error(err);
+        console.error(err);
       });
     },
     getUserList: function getUserList(e, data) {
@@ -2140,15 +2117,15 @@ __webpack_require__.r(__webpack_exports__);
           if (username) {
             $("#curr_username").val(username);
             $("select#autosuggest").empty();
-            fetch(this.baseUrl + 'api/autosuggest/user/' + username).then(function (users) {
-              return users.json();
-            }).then(function (users) {
-              $(users).each(function (i) {
+            axios.get(route('api.user_autosuggest', {
+              name: username
+            })).then(function (users) {
+              $(users.data).each(function (i) {
                 $("select#autosuggest").append('<option value="' + this.id + '">' + this.name + '</option>');
               });
               $("select#autosuggest").show();
             })["catch"](function (err) {
-              return console.error(err);
+              console.error(err);
             });
           } else {
             $("#curr_username").val('');
@@ -2281,12 +2258,10 @@ __webpack_require__.r(__webpack_exports__);
     fetchRegions: function fetchRegions() {
       var _this = this;
 
-      fetch('api/region').then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        _this.tree[0].children = res;
+      axios.get(route('api.region.index')).then(function (res) {
+        _this.tree[0].children = res.data;
       })["catch"](function (err) {
-        return console.error(err);
+        console.error(err);
       });
     },
     onDrop: function onDrop() {},
@@ -2296,13 +2271,7 @@ __webpack_require__.r(__webpack_exports__);
       var regions = $('div.role_node#0').closest('li').find('li');
       this.tally = [];
       this.getNode(regions);
-      fetch('api/region/rearrange', {
-        method: 'post',
-        body: JSON.stringify(this.tally),
-        headers: {
-          'content-type': 'application/json'
-        }
-      }).then(function (res) {
+      axios.post(route('api.region_rearrange'), this.tally).then(function (res) {
         window.location.href = _this2.regionRoute;
       })["catch"](function (err) {
         return console.error(err);
@@ -2385,8 +2354,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.fetchUsers();
@@ -2412,6 +2379,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.pagination = _objectSpread({}, res.data); // https://stackoverflow.com/questions/4215737/convert-array-to-object
       })["catch"](function (err) {
         console.error(err);
+      });
+    },
+    link_route: function link_route(name, id) {
+      return route(name, {
+        user: id
       });
     }
   }
@@ -38126,104 +38098,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [_vm._v("Comments")]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "form-inline",
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.createComment($event)
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "place" } }, [_vm._v("Comment:")]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.comment,
-                  expression: "comment"
-                }
-              ],
-              attrs: { id: "comment" },
-              domProps: { value: _vm.comment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.comment = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-default", attrs: { type: "submit" } },
-            [_vm._v("Submit Comment")]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("select", {
-        attrs: { id: "autosuggest", size: "5" },
-        on: { change: _vm.choseUser }
-      }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", id: "curr_username" } }),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.comments, function(comment) {
-            return _c("tr", { key: comment.id }, [
-              _c("td", [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      href: _vm.link_route(_vm.baseUrl, comment.commentor_id)
-                    }
-                  },
-                  [_vm._v(_vm._s(comment.commentor.name))]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("p", { domProps: { innerHTML: _vm._s(comment.contents) } }, [
-                  _vm._v(_vm._s(comment.contents))
-                ])
-              ])
-            ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c("vue-pagination", {
-        attrs: { pagination: _vm.pagination },
+  return _c("div", [
+    _c("h1", [_vm._v("Comments")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "form-inline",
         on: {
-          paginate: function($event) {
-            return _vm.fetchComments()
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.createComment($event)
           }
         }
-      })
-    ],
-    1
-  )
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "place" } }, [_vm._v("Comment:")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.comment,
+                expression: "comment"
+              }
+            ],
+            attrs: { id: "comment" },
+            domProps: { value: _vm.comment },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.comment = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-default", attrs: { type: "submit" } },
+          [_vm._v("Submit Comment")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("select", {
+      attrs: { id: "autosuggest", size: "5" },
+      on: { change: _vm.choseUser }
+    }),
+    _vm._v(" "),
+    _c("input", { attrs: { type: "hidden", id: "curr_username" } }),
+    _vm._v(" "),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.comments, function(comment) {
+          return _c("tr", { key: comment.id }, [
+            _c("td", [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href: _vm.link_route(_vm.baseUrl, comment.commentor_id)
+                  }
+                },
+                [_vm._v(_vm._s(comment.commentor.name))]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("p", { domProps: { innerHTML: _vm._s(comment.contents) } }, [
+                _vm._v(_vm._s(comment.contents))
+              ])
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -38409,10 +38368,12 @@ var render = function() {
             return _c("tr", { key: user.id }, [
               _c("td", [
                 _c("p", [
-                  _vm._v(
-                    "\n                                " +
-                      _vm._s(user.name) +
-                      "\n                            "
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: _vm.link_route("api.user.show", user.id) }
+                    },
+                    [_vm._v(_vm._s(user.name))]
                   )
                 ])
               ]),

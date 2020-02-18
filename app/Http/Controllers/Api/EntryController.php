@@ -223,4 +223,16 @@ class EntryController extends Controller
 
         \File::delete('images/' . $imageName);
     }
+
+    public function images()
+    {    
+        $images = glob(IMG_DIR . "*.png");
+
+        foreach($images as &$image) 
+        {
+            $image = str_replace(IMG_DIR, PUB_URL . 'images/', $image);
+        }
+
+        echo json_encode($images);
+    }
 }

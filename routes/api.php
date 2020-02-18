@@ -22,19 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group([/*'prefix' => 'api', */'as' => 'api.', 'namespace' => 'Api', 'middleware' => ['auth:api']], function () {
 
 	Route::resource('/entry', 'EntryController');
-
-	Route::resource('/user', 'UserController');
-	//Route::post('/user', 'UserController@store');
-
-});
-// @todo Sort out, put into 1 group
-Route::group(['namespace' => 'Api'], function () {
+	Route::get('/entry-images', 'EntryController@images')->name('entry_images');
 
 	Route::resource('/region', 'RegionController');
-	Route::post('/region/rearrange', 'RegionController@rearrange');
+	Route::post('/region-rearrange', 'RegionController@rearrange')->name('region_rearrange');
+
+	Route::resource('/user', 'UserController');
+	Route::get('user-autosuggest/{name}', 'UserController@autosuggest')->name('user_autosuggest');
 
 	Route::resource('/comment', 'CommentController');
-
-	Route::get('autosuggest/user/{name}', 'UserController@autosuggest');
-
 });

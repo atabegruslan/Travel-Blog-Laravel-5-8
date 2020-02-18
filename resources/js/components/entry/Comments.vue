@@ -81,12 +81,13 @@
         methods: {
 			fetchComments ()
 			{
-                fetch(this.baseUrl + 'api/comment/' + this.entryId)
-                    .then(res => res.json())
+                axios.get(this.baseUrl + 'api/comment/' + this.entryId)
                     .then(res => {
-                        this.comments = res;
+                        this.comments = res.data;
                     })
-                    .catch(err => console.error(err));
+                    .catch(err => {
+                        console.error(err);
+                    });
 			},
 			createComment ()
 			{
@@ -97,20 +98,14 @@
                     commentor_id: this.userId,
                 };
 
-                fetch(this.baseUrl + 'api/comment', {
-                    method: 'post',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'content-type' : 'application/json'
-                    }
-                })
-                .then(res => res.json())
-                .then(res => {
-                    //this.comment = '';
-                    this.editor.setData('');
-                    this.fetchComments();
-                })
-                .catch(err => console.error(err));
+                axios.post(route('api.comment.store'), data)
+                    .then(res => {
+                        this.editor.setData('');
+                        this.fetchComments();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
 			},
             getUserList(e, data)
             {
@@ -132,17 +127,18 @@
                             $("#curr_username").val(username);
                             $("select#autosuggest").empty();
 
-                            fetch(this.baseUrl + 'api/autosuggest/user/' + username)
-                                .then(users => users.json())
+                            axios.get(route('api.user_autosuggest', {name: username}))
                                 .then(users => {
-                                    $(users).each(function(i) {
+                                    $(users.data).each(function(i) {
                                         $("select#autosuggest")
                                             .append('<option value="'+ this.id +'">'+ this.name +'</option>');
                                     });
 
                                     $("select#autosuggest").show();
                                 })
-                                .catch(err => console.error(err));
+                                .catch(err => {
+                                    console.error(err);
+                                });
                         }
                         else
                         {
@@ -174,7 +170,7 @@
                 $("select#autosuggest").empty();
                 $("select#autosuggest").hide();
             },
-            link_route: function (base, id)
+            link_route(base, id)
             {
                 return base + 'user/' + id;
             },

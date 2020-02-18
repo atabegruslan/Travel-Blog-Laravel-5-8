@@ -35,7 +35,7 @@ switch ($_SERVER['HTTP_HOST'])
 
         define("BTSP_DIR", "/../laravel5_travel_blog_base/bootstrap/");
         define("PUB_URL", $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/laravel5/travel_blog/');
-        define("IMG_DIR", $_SERVER['DOCUMENT_ROOT'].'/laravel5/travel_blog/images' );
+        define("IMG_DIR", $_SERVER['DOCUMENT_ROOT'].'/laravel5/travel_blog/images/' );
 }
 
 
