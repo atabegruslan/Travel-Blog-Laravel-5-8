@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -27,6 +27,7 @@ Route::group(['namespace' => 'Web', 'middleware' => ['auth']], function () {
 
 	Route::get('/search', 'SearchController@index');
 
+    Route::get('/', 'PageController@welcome');
 	Route::get('/android', 'PageController@android');
 	Route::get('/contact', 'PageController@contact');
 

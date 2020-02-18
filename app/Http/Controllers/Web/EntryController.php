@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 class EntryController extends Controller
 {
+    private $feature = 'entry';
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +24,9 @@ class EntryController extends Controller
     {
         $entries = Entry::orderBy('time', 'DESC')->paginate(PAG);
 
-        return view('entry.index', ['param' => $entries]);
+        $data = ['items' => $entries, 'feature' => $this->feature];
+
+        return view($this->feature . '.index', $data);
     }
 
     /**
@@ -32,9 +36,17 @@ class EntryController extends Controller
      */
     public function create()
     {
-        $regions = Region::get();
+        $regions = Region::all();
 
-        return view('entry.create', compact('regions'));
+        $data = [
+            'item' => null, 
+            'feature' => $this->feature, 
+            'regions' => $regions,
+            'selectedRegions' => [],
+            'selectedRegionIds' => [],
+        ];
+
+        return view($this->feature . '.create', $data);
     }
 
     /**
@@ -63,7 +75,7 @@ class EntryController extends Controller
         $entry->save();
         $entry->regions()->sync($request->input('region_ids'));
 
-        \Session::flash('success', 'New Entry Created');
+        \Session::flash('success', ucfirst($this->feature) . ' Created');
 
         $users = User::all();
 
@@ -73,7 +85,7 @@ class EntryController extends Controller
         // }
 
         $notice = array(
-            'entry_url' => url('/entry/' . $entry->id), //PUB_URL . 'entry/' . $entry->id,
+            'entry_url' => url("/$this->feature/" . $entry->id), //PUB_URL . 'entry/' . $entry->id,
             'entry_id'  => $entry->id,
             'name'      => $entry->place,
             'img_url'   => $imgUrl,
@@ -81,7 +93,7 @@ class EntryController extends Controller
 
         Notification::send($users, new NewEntry($notice));
 
-        return redirect('entry');
+        return redirect($this->feature);
     }
 
     /**
@@ -93,9 +105,17 @@ class EntryController extends Controller
     public function show($id)
     {
         $entry   = Entry::where('id', $id)->first();
-        $regions = Region::get();
+        $selectedRegions = $entry->regions()->get();
 
-        return view('entry.show', ['param' => $entry, 'regions' => $regions]);
+        $data = [
+            'item' => $entry, 
+            'feature' => $this->feature, 
+            'regions' => [],
+            'selectedRegions' => $selectedRegions,
+            'selectedRegionIds' => [],
+        ];
+
+        return view($this->feature . '.show', $data);
     }
 
     /**
@@ -107,15 +127,19 @@ class EntryController extends Controller
     public function edit($id)
     {
         $entry   = Entry::where('id', $id)->first();
-        $regions = Region::get();
-        $selectedRegionIds = [];
+        $regions = Region::all();
+        $selectedRegions = $entry->regions()->get();
+        $selectedRegionIds = $selectedRegions->pluck('id')->toArray();
 
-        foreach ($entry->regions as $region) 
-        {
-            $selectedRegionIds[] = $region->id;
-        }
+        $data = [
+            'item' => $entry, 
+            'feature' => $this->feature, 
+            'regions' => $regions,
+            'selectedRegions' => $selectedRegions,
+            'selectedRegionIds' => $selectedRegionIds,
+        ];
 
-        return view('entry.edit', ['param' => $entry, 'regions' => $regions, 'selectedRegionIds' => $selectedRegionIds]);
+        return view($this->feature . '.edit', $data);
     }
 
     /**
@@ -154,9 +178,9 @@ class EntryController extends Controller
         
         $entry->regions()->sync($request->input('region_ids'));
 
-        \Session::flash('success', 'Entry Updated');
+        \Session::flash('success', ucfirst($this->feature) . ' Updated');
 
-        return redirect('entry');
+        return redirect($this->feature);
     }
 
     /**
@@ -173,9 +197,9 @@ class EntryController extends Controller
 
         $entry->delete();
 
-        \Session::flash('success', 'Entry Deleted');
+        \Session::flash('success', ucfirst($this->feature) . ' Deleted');
 
-        return redirect('entry');
+        return redirect($this->feature);
     }
 
     private function makeImage($img)

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('title')
-    Users
+    {{ ucfirst($feature) }}
 @endsection
 
 @section('content')
 
-	{{-- @include('parts/msg/_success') --}}
+	@include('parts/msg/_success')
 
     <div class="vuepart">
         <Users></Users>

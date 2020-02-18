@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class RegionController extends Controller
 {
+    private $feature = 'region';
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +20,10 @@ class RegionController extends Controller
     public function index()
     {
         $regions = Region::all();
-        
-        return view('region.index', ['param' => $regions]);
+
+        $data = ['items' => $regions, 'feature' => $this->feature];
+
+        return view($this->feature . '.index', $data);
     }
 
     /**
@@ -29,7 +33,9 @@ class RegionController extends Controller
      */
     public function create()
     {
-        return view('region.create');
+        $data = ['item' => null, 'feature' => $this->feature];
+
+        return view($this->feature . '.create', $data);
     }
 
     /**
@@ -51,9 +57,9 @@ class RegionController extends Controller
 
         DB::table('region_tree')->insert(['region_id' => $region->id, 'parent_id' => 0]);
 
-        \Session::flash('success', 'Region Created');
+        \Session::flash('success', ucfirst($this->feature) . ' Created');
 
-        return redirect('region');
+        return redirect($this->feature);
     }
 
     /**
@@ -66,7 +72,9 @@ class RegionController extends Controller
     {
         $region = Region::where('id', $id)->first();
 
-        return view('region.show', ['param' => $region]);
+        $data = ['item' => $region, 'feature' => $this->feature];
+
+        return view($this->feature . '.show', $data);
     }
 
     /**
@@ -79,7 +87,9 @@ class RegionController extends Controller
     {
         $region = Region::where('id', $id)->first();
 
-        return view('region.edit', ['param' => $region]);
+        $data = ['item' => $region, 'feature' => $this->feature];
+
+        return view($this->feature . '.edit', $data);
     }
 
     /**
@@ -101,9 +111,9 @@ class RegionController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        \Session::flash('success', 'Region Updated');
+        \Session::flash('success', ucfirst($this->feature) . ' Updated');
 
-        return redirect('region');
+        return redirect($this->feature);
     }
 
     /**
@@ -118,8 +128,8 @@ class RegionController extends Controller
 
         $region->delete();
 
-        \Session::flash('success', 'Region Deleted');
+        \Session::flash('success', ucfirst($this->feature) . ' Deleted');
 
-        return redirect('region');
+        return redirect($this->feature);
     }
 }

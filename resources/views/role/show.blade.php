@@ -1,34 +1,21 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ ucfirst($feature) }}
+@endsection
+
 @section('content')
 
-@include('parts/menu/_role_crud_nav')
+    @include('parts/menu/_crud_nav')
 
-<div class="row">
-        
-    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+    <div class="row">
+            
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Role: </th>
-                    <th>{{ $param->name }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Permissions: </td>
-                    <td>
-						@foreach($permissions as $permission)
-							<p>{{ $permission->name }}</p>
-						@endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        @include('parts/role/item')
 
+        </div>
+            
     </div>
-        
-</div>
 
 @endsection

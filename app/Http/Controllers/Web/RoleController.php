@@ -9,6 +9,8 @@ use App\Models\Permission;
 
 class RoleController extends Controller
 {
+    private $feature = 'role';
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +20,9 @@ class RoleController extends Controller
     {
         $roles = Role::all();
         
-        return view('role.index', ['param' => $roles]);
+        $data = ['items' => $roles, 'feature' => $this->feature];
+
+        return view($this->feature . '.index', $data);
     }
 
     /**
@@ -30,7 +34,15 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
         
-        return view('role.create', ['permissions' => $permissions]);
+        $data = [
+            'item' => null, 
+            'feature' => $this->feature, 
+            'permissions' => $permissions,
+            'selectedPermissions' => [],
+            'selectedPermissionIds' => [],
+        ];
+
+        return view($this->feature . '.create', $data);
     }
 
     /**
@@ -53,9 +65,9 @@ class RoleController extends Controller
         $permissions = $request->input('permission_ids');
         $role->syncPermissions($permissions);
 
-        \Session::flash('success', 'Role Created');
+        \Session::flash('success', ucfirst($this->feature) . ' Created');
 
-        return redirect('role');
+        return redirect($this->feature);
     }
 
     /**
@@ -67,9 +79,17 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::where('id', $id)->first();
-        $permissions = $role->permissions()->get();
+        $selectedPermissions = $role->permissions()->get();
 
-        return view('role.show', ['param' => $role, 'permissions' => $permissions]);
+        $data = [
+            'item' => $role, 
+            'feature' => $this->feature, 
+            'permissions' => [],
+            'selectedPermissions' => $selectedPermissions,
+            'selectedPermissionIds' => [],
+        ];
+
+        return view($this->feature . '.show', $data);
     }
 
     /**
@@ -85,7 +105,15 @@ class RoleController extends Controller
         $selectedPermissions = $role->permissions()->get();
         $selectedPermissionIds = $selectedPermissions->pluck('id')->toArray();
 
-        return view('role.edit', ['param' => $role, 'permissions' => $permissions, 'selectedPermissions' => $selectedPermissions, 'selectedPermissionIds' => $selectedPermissionIds]);
+        $data = [
+            'item' => $role, 
+            'feature' => $this->feature, 
+            'permissions' => $permissions,
+            'selectedPermissions' => $selectedPermissions,
+            'selectedPermissionIds' => $selectedPermissionIds,
+        ];
+
+        return view($this->feature . '.edit', $data);
     }
 
     /**
@@ -110,9 +138,9 @@ class RoleController extends Controller
         $permissions = $request->input('permission_ids');
         $role->syncPermissions($permissions);
 
-        \Session::flash('success', 'Role Updated');
+        \Session::flash('success', ucfirst($this->feature) . ' Updated');
 
-        return redirect('role');
+        return redirect($this->feature);
     }
 
     /**
@@ -127,8 +155,8 @@ class RoleController extends Controller
 
         $role->delete();
 
-        \Session::flash('success', 'Role Deleted');
+        \Session::flash('success', ucfirst($this->feature) . ' Deleted');
 
-        return redirect('role');
+        return redirect($this->feature);
     }
 }

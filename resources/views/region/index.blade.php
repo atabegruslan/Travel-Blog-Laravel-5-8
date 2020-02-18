@@ -1,17 +1,15 @@
 @extends('layouts.app')
 
 @section('title')
-    Regions
+    {{ ucfirst($feature) }}
 @endsection
 
 @section('content')
 
-	@include('parts/menu/_region_crud_nav')
+	@include('parts/menu/_crud_nav')
 	
-	{{-- @include('parts/msg/_success') --}}
+	@include('parts/msg/_success')
 
-	{{-- @include('parts/_region_archive') --}}
-	
     <div class="vuepart">
         <Regions region-route="{{ PUB_URL }}region"></Regions>
     </div>

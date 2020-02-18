@@ -1,49 +1,23 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ ucfirst($feature) }}
+@endsection
+
 @section('content')
 
+    @include('parts/menu/_crud_nav')
 
-@include('parts/menu/_entry_crud_nav')
+    @include('parts/msg/_error')
 
-@include('parts/msg/_error')
+    <div class="row" >
 
-<div class="row" >
-    {!! Form::open(array('url' => 'entry','enctype' => 'multipart/form-data','class'=>'form')) !!}
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
 
-        {{ Form::hidden('user_id',Auth::user()->id) }}
+        @include('parts/entry/form')
 
-        <div class="form-group">
-            <label for="place">Place: </label>
-            {{ Form::text('place',null,array('placeholder'=>'Place','class'=>'form-control','id'=>'place')) }}
         </div>
-
-        <div class="form-group">
-            <label for="comments">Comments: </label>
-            {{ Form::textarea('comments',null,array('placeholder'=>'Comments','class'=>'form-control','id'=>'comments','rows'=>5)) }}
-        </div>
-
-        <div class="form-group">
-            <label for="region_ids">Regions: </label>
-            <select name="region_ids[]" id="region_ids" class="form-control" multiple>
-                 @foreach($regions as $region)
-                     <option value="{{ $region->id }}">
-                         {{ $region->name }}
-                     </option>
-                 @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="image">Image: </label>
-            {!! Form::file('image',array('class'=>'img-thumbnail form-control-file','id'=>'image')) !!}
-        </div>
-
-        {{ Form::token() }}
         
-        {!! Form::submit('Add a new entry', array('class'=>'btn btn-default')) !!}
-
-    {!! Form::close() !!}
-</div>
-
+    </div>
 
 @endsection

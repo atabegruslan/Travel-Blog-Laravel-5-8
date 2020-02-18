@@ -1,9 +1,21 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ ucfirst($feature) }}
+@endsection
+
 @section('content')
 
-@include('parts/menu/_user_crud_nav')
+	@include('parts/menu/_crud_nav')
 
-@include('parts/_user_single')
+    <div class="row">
+            
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+
+        @include('parts/user/item')
+
+        </div>
+            
+    </div>
 
 @endsection

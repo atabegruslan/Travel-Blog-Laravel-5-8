@@ -1,97 +1,37 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ ucfirst($feature) }}
+@endsection
+
 @section('content')
 
-@include('parts/menu/_entry_crud_nav')
+    @include('parts/menu/_crud_nav')
 
-@include('parts/msg/_error')
+    @include('parts/msg/_error')
 
-<div class="row">        
+    <div class="row">        
 
-    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
 
-        {!! Form::model($param, array('url' => 'entry/'.$param['id'],'enctype' => 'multipart/form-data','class'=>'form')) !!}
+        @include('parts/entry/form')
 
-            {{ Form::hidden('user_id',Auth::user()->id) }}
-
-            <div class="form-group">
-                <label for="place">Place: </label>
-                {{ Form::text('place',$param->place,array('placeholder'=>'Place','class'=>'form-control','id'=>'place')) }}
-            </div>
-
-            <div class="form-group">
-                <label for="comments">Comments: </label>
-                {{ Form::textarea('comments',$param->comments,array('placeholder'=>'Comments','class'=>'form-control','id'=>'comments','rows'=>10)) }}
-            </div>
-
-            <div class="form-group">
-                <label for="region_ids">Regions: </label>
-                <select name="region_ids[]" id="region_ids" class="form-control" multiple>
-                     @foreach($regions as $region)
-                        @if(in_array($region->id, $selectedRegionIds))
-                         <option value="{{ $region->id }}" selected>
-                        @else
-                         <option value="{{ $region->id }}">
-                        @endif
-                             {{ $region->name }}
-                         </option>
-                     @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="image">Image: </label>
-                {!! Form::file('image',array('class'=>'img-thumbnail form-control-file','id'=>'image')) !!}
-            </div>
-
-            {{ Form::hidden('_method','PUT') }}
-
-            {!! Form::submit('update', array('class'=>'btn btn-default')) !!}
+        </div>
             
-        {!! Form::close() !!} 
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    
+        @include('parts/entry/item')
 
-    </div>
-        
-    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                
-        <img src="{{ $param->img_url }}" class="img-responsive medium" alt="{{ $param->place }}">
+        </div>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Place: </th>
-                    <th>{{ $param->place }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Region: </strong></td>
-                    <td>
-                        @foreach($param->regions as $region)
-                            {!! $region->name !!}<br>
-                        @endforeach
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>By: </strong></td>
-                    <td>{{ $param->user->name }}</td>
-                </tr>
-                <tr>
-                    <td><strong>Modified: </strong></td>
-                    <td>{{ $param->time }}</td>
-                </tr>
-            </tbody>
-        </table>     
-
-        <div>
-            <p><strong>Comments: </strong></p>
-            <p>{{ $param->comments }}</p>
-        </div>   
+        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <img src="{{ $item->img_url }}" class="img-responsive medium" alt="{{ $item->place }}">
+        </div>
 
     </div>
 
-</div>
+    <hr/>
 
-@include('parts/_entry_comments')
+    @include('parts/_entry_comments')
 
 @endsection

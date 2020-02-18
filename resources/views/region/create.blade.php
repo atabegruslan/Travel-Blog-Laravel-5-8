@@ -1,28 +1,23 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ ucfirst($feature) }}
+@endsection
+
 @section('content')
 
+	@include('parts/menu/_crud_nav')
 
-@include('parts/menu/_region_crud_nav')
+	@include('parts/msg/_error')
 
-@include('parts/msg/_error')
+	<div class="row" >
 
-<div class="row" >
-    {!! Form::open(array('url' => 'region','enctype' => 'multipart/form-data','class'=>'form')) !!}
+	    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
 
-        {{ Form::hidden('user_id',Auth::user()->id) }}
+	    @include('parts/region/form')
 
-        <div class="form-group">
-            <label for="place">Name: </label>
-            {{ Form::text('name',null,array('placeholder'=>'Region\'s name','class'=>'form-control','id'=>'name')) }}
-        </div>
-
-        {{ Form::token() }}
-        
-        {!! Form::submit('Add a new region', array('class'=>'btn btn-default')) !!}
-
-    {!! Form::close() !!}
-</div>
-
+	    </div>
+	    
+	</div>
 
 @endsection

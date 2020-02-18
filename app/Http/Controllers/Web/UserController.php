@@ -9,6 +9,8 @@ use App\Models\Role;
 
 class UserController extends Controller
 {
+    private $feature = 'user';
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index');
+        $data = ['feature' => $this->feature];
+
+        return view('user.index', $data);
     }
 
     /**
@@ -49,8 +53,17 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+        $selectedRoles = $user->roles()->get();
 
-        return view('user.show', ['param' => (object) $user->getAttributes(), 'roles' => $user->roles]);
+        $data = [
+            'item' => $user, 
+            'feature' => $this->feature, 
+            'roles' => [],
+            'selectedRoles' => $selectedRoles,
+            'selectedRoleIds' => [],
+        ];
+
+        return view($this->feature . '.show', $data);
     }
 
     /**
@@ -66,7 +79,15 @@ class UserController extends Controller
         $selectedRoles = $user->roles()->get();
         $selectedRoleIds = $selectedRoles->pluck('id')->toArray();
 
-        return view('user.edit', ['param' => (object) $user->getAttributes(), 'roles' => $roles, 'selectedRoles' => $selectedRoles, 'selectedRoleIds' => $selectedRoleIds]);
+        $data = [
+            'item' => $user, 
+            'feature' => $this->feature, 
+            'roles' => $roles,
+            'selectedRoles' => $selectedRoles,
+            'selectedRoleIds' => $selectedRoleIds,
+        ];
+
+        return view($this->feature . '.edit', $data);
     }
 
     /**
@@ -83,9 +104,9 @@ class UserController extends Controller
         $roles = $request->input('role_ids');
         $user->syncRoles($roles);
 
-        \Session::flash('success', 'User roles Updated');
+        \Session::flash('success', ucfirst($this->feature) . ' Roles Updated');
 
-        return redirect('user');
+        return redirect($this->feature);
     }
 
     /**
