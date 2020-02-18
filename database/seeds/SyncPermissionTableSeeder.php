@@ -22,30 +22,34 @@ class SyncPermissionTableSeeder extends Seeder
         // Create permissions.
         $permissions = config('permission.features');
 
-        foreach ($permissions as $feature => $permissionList) 
+        foreach (['web'/*, 'api'*/] as $guard) 
         {
-            $hasChild = array_filter($permissionList, 'is_array');
+            foreach ($permissions as $feature => $permissionList) 
+            {
+                $hasChild = array_filter($permissionList, 'is_array');
 
-            if (count($hasChild)) {
-                foreach ($permissionList as $child => $permissionListChild) 
+                if (count($hasChild)) 
                 {
-                    $this->insertPermissions($permissionListChild);
+                    foreach ($permissionList as $child => $permissionListChild) 
+                    {
+                        $this->insertPermissions($permissionListChild, $guard);
+                    }
+
+                    continue;
                 }
 
-                continue;
+                $this->insertPermissions($permissionList, $guard);
             }
-
-            $this->insertPermissions($permissionList);
         }
     }
 
-    protected function insertPermissions($data)
+    protected function insertPermissions($data, $guard)
     {
-        $insertData = collect($data)->transform(function ($item) 
+        $insertData = collect($data)->transform(function ($item) use ($guard) 
         {
             return [
                 'name'       => $item,
-                'guard_name' => 'api',
+                'guard_name' => $guard,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

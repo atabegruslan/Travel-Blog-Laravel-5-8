@@ -12,6 +12,7 @@
 			{{ link_to_route('region.index', 'Regions', [], ['class' => 'btn btn-link'] ) }}
 		</li>
 
+		@if (auth()->user()->hasRole('Admin'))
 		<li>
 			{{ link_to_route('user.index', 'Users', [], ['class' => 'btn btn-link'] ) }}
 		</li>
@@ -23,6 +24,7 @@
 		<li>
 			<a class="btn btn-link" href="{{ url('/log') }}">Logs</a>
 		</li>
+		@endif
 
 		<li>
 			<a class="btn btn-link" href="{{ url('android') }}">Android</a>

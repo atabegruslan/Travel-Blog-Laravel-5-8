@@ -15,6 +15,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // if (!auth()->user()->can('user.read')) 
+        // {
+        //     abort(403);
+        // }
+
         try
         {
             //$params = $request->only('per_page', 'page');

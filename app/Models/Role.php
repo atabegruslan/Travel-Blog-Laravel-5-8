@@ -6,7 +6,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 class Role extends SpatieRole
 {
-    public $guard_name = 'api';
+    public $guard_name = 'web';
 
     protected $appends = [
         'permissions'

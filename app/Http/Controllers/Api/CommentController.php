@@ -36,6 +36,11 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        // if (!auth()->user()->can('entry.create')) 
+        // {
+        //     abort(403);
+        // }
+
         try
         {
             $comment               = new Comment;
@@ -73,6 +78,11 @@ class CommentController extends Controller
      */
     public function show($id)
     {
+        // if (!auth()->user()->can('entry.read')) 
+        // {
+        //     abort(403);
+        // }
+
         try
         {
             $response = Comment::with('commentor')->where('entry_id', $id)->get();

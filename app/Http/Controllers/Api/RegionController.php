@@ -16,6 +16,11 @@ class RegionController extends Controller
      */
     public function index()
     {
+        // if (!auth()->user()->can('region.read')) 
+        // {
+        //     abort(403);
+        // }
+
         try
         {
             $regions = Region::all();
@@ -150,6 +155,11 @@ class RegionController extends Controller
 
     public function rearrange(Request $request)
     {
+        // if (!auth()->user()->can('region.create')) 
+        // {
+        //     abort(403);
+        // }
+
         $inputs = $request->all();
 
         DB::table('region_tree')->truncate();

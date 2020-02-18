@@ -18,6 +18,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $data = ['feature' => $this->feature];
 
         return view('user.index', $data);
@@ -52,6 +57,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $user = User::find($id);
         $selectedRoles = $user->roles()->get();
 
@@ -74,6 +84,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $user = User::find($id);
         $roles = Role::all();
         $selectedRoles = $user->roles()->get();
@@ -99,6 +114,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $user = User::where('id', $id)->first();
 
         $roles = $request->input('role_ids');

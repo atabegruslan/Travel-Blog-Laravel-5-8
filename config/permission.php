@@ -126,7 +126,7 @@ return [
 
         'store' => 'default',
     ],
-    
+
     'features' => [
         'log' => [
             'log.read',
@@ -135,17 +135,31 @@ return [
             'log.delete',
         ],
         'places' => [
-            'destination' => [
-                'destination.read',
-                'destination.create',
-                'destination.update',
-                'destination.delete',
+            'entry' => [
+                'entry.read',
+                'entry.create',
+                'entry.update',
+                'entry.delete',
             ],
             'region' => [
                 'region.read',
                 'region.create',
                 'region.update',
                 'region.delete',
+            ],
+        ],
+        'users' => [
+            'user' => [
+                'user.read',
+                'user.create',
+                'user.update',
+                'user.delete',
+            ],
+            'role' => [
+                'role.read',
+                'role.create',
+                'role.update',
+                'role.delete',
             ],
         ],
     ],    

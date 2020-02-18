@@ -22,6 +22,11 @@ class EntryController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $entries = Entry::orderBy('time', 'DESC')->paginate(PAG);
 
         $data = ['items' => $entries, 'feature' => $this->feature];
@@ -36,6 +41,11 @@ class EntryController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can($this->feature . '.create')) 
+        {
+            abort(403);
+        }
+
         $regions = Region::all();
 
         $data = [
@@ -57,6 +67,11 @@ class EntryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can($this->feature . '.create')) 
+        {
+            abort(403);
+        }
+
         $this->validate($request, [
             'place'    => 'required|max:15',
             'comments' => 'required|max:50',
@@ -104,6 +119,11 @@ class EntryController extends Controller
      */
     public function show($id)
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $entry   = Entry::where('id', $id)->first();
         $selectedRegions = $entry->regions()->get();
 
@@ -126,6 +146,11 @@ class EntryController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $entry   = Entry::where('id', $id)->first();
         $regions = Region::all();
         $selectedRegions = $entry->regions()->get();
@@ -151,6 +176,11 @@ class EntryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $this->validate($request, [
             'place'    => 'required|max:15',
             'comments' => 'required|max:50',
@@ -191,6 +221,11 @@ class EntryController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can($this->feature . '.delete')) 
+        {
+            abort(403);
+        }
+
         $entry = Entry::where('id', $id)->first();
 
         $this->deleteImage($entry->img_url);

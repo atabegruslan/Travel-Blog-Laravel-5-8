@@ -13,6 +13,11 @@ class ActionLogController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->can('log.read')) 
+        {
+            abort(403);
+        }
+
         $logs = ActionLog::orderBy('time', 'ASC')->get()->all();
 
         foreach($logs as $log)
@@ -25,6 +30,11 @@ class ActionLogController extends Controller
 
     public function restore(Request $request)
     {
+        if (!auth()->user()->hasRole('Admin')) 
+        {
+            abort(403);
+        }
+
         $logId         = $request->input('log_id');
         $log           = ActionLog::where('id', $logId)->first()->getAttributes();
         $log['params'] = unserialize($log['params']);

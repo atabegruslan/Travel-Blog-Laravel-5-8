@@ -19,6 +19,11 @@ class RegionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $regions = Region::all();
 
         $data = ['items' => $regions, 'feature' => $this->feature];
@@ -33,6 +38,11 @@ class RegionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can($this->feature . '.create')) 
+        {
+            abort(403);
+        }
+
         $data = ['item' => null, 'feature' => $this->feature];
 
         return view($this->feature . '.create', $data);
@@ -46,6 +56,11 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can($this->feature . '.create')) 
+        {
+            abort(403);
+        }
+
         $this->validate($request, [
             'name' => 'required',
         ]); 
@@ -70,6 +85,11 @@ class RegionController extends Controller
      */
     public function show($id)
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $region = Region::where('id', $id)->first();
 
         $data = ['item' => $region, 'feature' => $this->feature];
@@ -85,6 +105,11 @@ class RegionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $region = Region::where('id', $id)->first();
 
         $data = ['item' => $region, 'feature' => $this->feature];
@@ -101,6 +126,11 @@ class RegionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $this->validate($request, [
             'name' => 'required',
         ]); 
@@ -124,6 +154,11 @@ class RegionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can($this->feature . '.delete')) 
+        {
+            abort(403);
+        }
+
         $region = Region::where('id', $id)->first();
 
         $region->delete();

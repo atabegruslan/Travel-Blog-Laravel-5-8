@@ -18,6 +18,11 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $roles = Role::all();
         
         $data = ['items' => $roles, 'feature' => $this->feature];
@@ -32,6 +37,11 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can($this->feature . '.create')) 
+        {
+            abort(403);
+        }
+
         $permissions = Permission::all();
         
         $data = [
@@ -53,6 +63,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can($this->feature . '.create')) 
+        {
+            abort(403);
+        }
+
         $this->validate($request, [
             'name' => 'required',
         ]); 
@@ -78,6 +93,11 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+        if (!auth()->user()->can($this->feature . '.read')) 
+        {
+            abort(403);
+        }
+
         $role = Role::where('id', $id)->first();
         $selectedPermissions = $role->permissions()->get();
 
@@ -100,6 +120,11 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $role = Role::where('id', $id)->first();
         $permissions = Permission::all();
         $selectedPermissions = $role->permissions()->get();
@@ -125,6 +150,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can($this->feature . '.update')) 
+        {
+            abort(403);
+        }
+
         $this->validate($request, [
             'name' => 'required',
         ]); 
@@ -151,6 +181,11 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can($this->feature . '.delete')) 
+        {
+            abort(403);
+        }
+
         $role = Role::where('id', $id)->first();
 
         $role->delete();

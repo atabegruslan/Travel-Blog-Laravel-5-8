@@ -2353,7 +2353,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.fetchUsers();
@@ -38370,9 +38369,7 @@ var render = function() {
                 _c("p", [
                   _c(
                     "a",
-                    {
-                      attrs: { href: _vm.link_route("api.user.show", user.id) }
-                    },
+                    { attrs: { href: _vm.link_route("user.show", user.id) } },
                     [_vm._v(_vm._s(user.name))]
                   )
                 ])

@@ -13,7 +13,7 @@
                 <tr v-for="user in users" v-bind:key="user.id">
                     <td>
                         <p>
-                            <a :href="link_route('api.user.show', user.id)">{{ user.name }}</a>
+                            <a :href="link_route('user.show', user.id)">{{ user.name }}</a>
                         </p>
                     </td>
                     <td>
