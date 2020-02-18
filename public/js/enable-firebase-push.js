@@ -111,30 +111,67 @@ function saveToken(fcmToken)
     });
 }
 
-// If you want the service worker's setBackgroundMessageHandler to be called, then below is not necessary.
-// messaging.onMessage(function(payload) {
+messaging.onMessage(function(payload) {
+    
+// POST https://fcm.googleapis.com/fcm/send
 
-// 	console.log({payload});
+// 'Authorization: key={LEGACY_API_KEY}'
+// 'Content-Type: application/json'
 
-// 	var options = {
-// 		icon   : payload.data.icon,
-// 		body   : payload.data.body,
-// 		data   : payload.data.data,
-// 		dir    : payload.data.dir,
-// 		image  : payload.data.image,
-// 		lang   : payload.data.lang,
-// 		tag    : payload.data.tag,
-// 		//actions: $.parseJSON(payload.data.actions), // Don't use actions here. Otherwise you will get: TypeError: Failed to construct 'Notification': Actions are only supported for persistent notifications shown using ServiceWorkerRegistration.showNotification().
-// 		vibrate: payload.data.vibrate
-// 	};
+// {
+//     "to": "TOKEN",
+//     "data" : {
+//         "notification" : {
+//             "title": "Xxx",
+//             "body" : "xxx xxx",
+//             "data": {
+//                 "entry_url": "https://www.bla.com/",
+//                 "base_url": "https://www.whatever.com/"
+//             },
+//             "actions": [
+//                 {
+//                     "title": "View",
+//                     "action": "view"
+//                 },
+//                 {
+//                     "title": "Close",
+//                     "action": "close"
+//                 }
+//             ],
+//             "icon"   : "http://xxx.jpg",
+//             "image"  : "http://xxx.jpg",
+//             "dir"    : "ltr",
+//             "lang"   : "en-US",
+//             "tag"    : "one",
+//             "vibrate": [100, 50, 100]
+//         }
+//     }
+// }
 
-// 	var notification = new Notification(payload.data.title, options);
+    var msg = JSON.parse(payload.data.notification);
 
-// 	notification.onclick = function(event) {
-// 	  console.log({event});
-// 	};
+	var options = {
+        body   : msg.body,
+        data   : msg.data,
+		icon   : msg.icon,
+		dir    : msg.dir,
+		image  : msg.image,
+		lang   : msg.lang,
+		tag    : msg.tag,
+		//actions: $.parseJSON(msg.actions), // Don't use actions here. Otherwise you will get: TypeError: Failed to construct 'Notification': Actions are only supported for persistent notifications shown using ServiceWorkerRegistration.showNotification().
+		vibrate: msg.vibrate
+	};
 
-// 	notification.onerror = function(event) {
-// 	  console.error(event);
-// 	};
-// });
+    var notification = new Notification(msg.title, options);
+
+	notification.onclick = function(event) {
+
+        event.preventDefault();
+        window.open(event.target.data.base_url, '_blank');
+        event.target.close();
+	};
+
+	notification.onerror = function(event) {
+        console.error(event);
+	};
+});

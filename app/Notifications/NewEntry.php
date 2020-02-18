@@ -100,9 +100,9 @@ class NewEntry extends Notification
         ];
 
         $message = [    
-            'title'   => 'New Travel Blog entry!', 
-            'icon'    => url('/images/sys/favicon-1.png'),   
+            'title'   => 'New Travel Blog entry!',    
             'body'    => 'A new Travel Blog entry about ' . $this->name . ' was added',   
+            'icon'    => url('/images/sys/favicon-1.png'),
             'data'    => $data,   
             'dir'     => 'ltr',
             'image'   => $this->img_url, 

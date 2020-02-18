@@ -39,7 +39,7 @@
 	                    </td>
 	                    <td>{!! $v->comments !!}</td>
 	                    <td>{!! $v->user->name !!}</td>
-	                    <td>{!! date('Y-m-d h:i:s', strtotime($v->time) ) !!}</td>
+	                    <td>{!! date('Y-m-d h:i:s', strtotime($v->updated_at) ) !!}</td>
 	    	    	</tr>
 	    	    @endforeach
 	        </tbody>

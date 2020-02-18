@@ -22,8 +22,8 @@ class FirebaseChannel
         $curl = curl_init();    
 
         $header = [ 
-            'Authorization: Key=' . env('SERVER_API_KEY'), // This should be the legacy key from Firebase console, because 'https://fcm.googleapis.com/fcm/send' is used.
-            'Content-Type: Application/json',   
+            'Authorization: key=' . env('SERVER_API_KEY'), // This should be the legacy key from Firebase console, because 'https://fcm.googleapis.com/fcm/send' is used.
+            'Content-Type: application/json',   
         ];
 
         $tokens = DB::table('fcm_tokens')
@@ -33,7 +33,6 @@ class FirebaseChannel
         $payload = [    
             'registration_ids' => $tokens,  
             'data'             => ['notification' => $message], // If you want the service worker's setBackgroundMessageHandler to be called, then structure your message like so. https://stackoverflow.com/questions/47973215/web-push-messaging-setbackgroundmessagehandler-not-working
-            //'data'             => $message, 
         ];  
 
         curl_setopt_array($curl, array( 

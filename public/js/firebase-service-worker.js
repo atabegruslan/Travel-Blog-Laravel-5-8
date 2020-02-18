@@ -7,12 +7,20 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
-	console.log('[firebase-messaging-sw.js] Received background message ', payload);
-	// Customize notification here
-	const notificationTitle = 'Background Message Title';
+	
+    var msg = JSON.parse(payload.data.notification);
+
+	const notificationTitle   = msg.title;
 	const notificationOptions = {
-		body: 'Background Message body.',
-		icon: '/firebase-logo.png'
+		body   : msg.body,
+        actions: msg.actions,
+        data   : msg.data,
+        icon   : msg.icon,
+        dir    : msg.dir,
+        image  : msg.image,
+        lang   : msg.lang,
+        tag    : msg.tag,
+        vibrate: msg.vibrate
 	};
 
 	return self.registration.showNotification(notificationTitle, notificationOptions);
@@ -20,36 +28,33 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
 self.addEventListener('notificationclick', function(event) {
 	
-    console.log({event});
+    var notification = event.notification;
+    var data         = notification.data;
+    var action       = event.action;
 
-    // var notification = event.notification;
-    // var data         = notification.data;
-    // var action       = event.action;
+    if (action === 'close')
+    {
+        notification.close();
+    }
+    else if (action === 'view')
+    {
+        event.waitUntil(
+            clients.openWindow(data.entry_url)
+        );
+    }
+    else
+    {
+        event.waitUntil(
+            clients.openWindow(data.base_url)
+        );
+    }
 
-    // if (action === 'close')
-    // {
-    //     notification.close();
-    // }
-    // else if (action === 'view')
-    // {
-    //     event.waitUntil(
-    //         clients.openWindow(data.entry_url)
-    //     );
-    // }
-    // else
-    // {
-    //     event.waitUntil(
-    //         clients.openWindow(data.base_url)
-    //     );
-    // }
 }, false);
 
 self.addEventListener('notificationclose', function(event) {
 
-    console.log({event});
+    var notification   = event.notification;
+    var notificationId = notification.tag;
 
-    // var notification   = event.notification;
-    // var notificationId = notification.tag;
-
-    // console.log(`Closed notification: ${notificationId}`);
+    console.log(`Closed notification: ${notificationId}`);
 });

@@ -27,7 +27,7 @@ class EntryController extends Controller
             abort(403);
         }
 
-        $entries = Entry::orderBy('time', 'DESC')->paginate(PAG);
+        $entries = Entry::orderBy('updated_at', 'DESC')->paginate(PAG);
 
         $data = ['items' => $entries, 'feature' => $this->feature];
 

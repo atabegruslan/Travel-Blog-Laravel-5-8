@@ -811,6 +811,10 @@ and complete `toWebPush` function.
         - https://www.youtube.com/watch?v=PPP9zyEPaCw  <sup>Android</sup>
         - https://www.youtube.com/watch?v=XijS62iP1Xo  <sup>Android</sup>
         - https://medium.com/@ThatJenPerson/authenticating-firebase-cloud-messaging-http-v1-api-requests-e9af3e0827b8
+    - https://firebase.google.com/docs/cloud-messaging/js/receive
+        - https://github.com/firebase/quickstart-js/blob/master/messaging/README.md
+    - https://medium.com/android-school/test-fcm-notification-with-postman-f91ba08aacc3
+    - https://stackoverflow.com/questions/37711082/how-to-handle-notification-when-app-in-background-in-firebase
     - https://www.youtube.com/playlist?list=PLGVwFLT24VFq3ZTcakcpByFhe1ex1BPuN <sup>Node</sup>
     - https://www.youtube.com/playlist?list=PLUVqY59GNZQOU-bDlBKy7KPBg-czqy5bF <sup>Node</sup>
     - https://www.youtube.com/playlist?list=PLk7v1Z2rk4hjxP_CHAhjXQN3zrcEhluF_  <sup>Android</sup>
@@ -953,6 +957,16 @@ auth()->user()->can($permission);
 - https://docs.spatie.be/laravel-permission/v3/installation-laravel/
 - https://docs.spatie.be/laravel-permission/v3/basic-usage/basic-usage/
 - https://docs.spatie.be/laravel-permission/v3/basic-usage/role-permissions/
+
+## Route (Ziggy library)
+
+### Tutorials
+
+- https://github.com/tightenco/ziggy
+- https://www.youtube.com/watch?v=rs7_X47wYBs
+- https://github.com/tightenco/ziggy/issues/217
+- https://github.com/tightenco/ziggy/issues/265
+- https://github.com/tightenco/ziggy/issues/70
 
 ---
 
@@ -1448,9 +1462,6 @@ Pass the `pagination` object into the view.
     - https://swagger.io/blog/api-development/swaggerhub-101-ondemand-tutorial/
     - https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-1-introduction/
     - https://www.youtube.com/watch?v=xggucT_xl5U
-- Permission
-- Only admin can view log
-- Make all features use log 
 - Better if notifications are triggered by events (and event listeners)
 - Fix FCM
     - Notification shouldn't should be send to the same person as many times as the number of users.
@@ -1459,11 +1470,3 @@ Pass the `pagination` object into the view.
             - Maybe more code needed
                 - User model should use Trait `NotificationChannels\WebPush\HasPushSubscriptions`
                 - Add firebase code to `Illuminate\Notifications\RoutesNotifications::routeNotificationFor`
-- Use Vue Pagination wherever possible 
-- Make use of timestamps and soft deletes wherever possible 
-- Route
-    - https://github.com/tightenco/ziggy
-    - https://www.youtube.com/watch?v=rs7_X47wYBs
-    - https://github.com/tightenco/ziggy/issues/217
-    - https://github.com/tightenco/ziggy/issues/265
-    - https://github.com/tightenco/ziggy/issues/70

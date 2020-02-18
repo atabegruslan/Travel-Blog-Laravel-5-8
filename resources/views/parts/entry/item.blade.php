@@ -13,7 +13,7 @@
         </tr>
         <tr>
             <td><strong>Modified: </strong></td>
-            <td>{{ $item->time }}</td>
+            <td>{{ $item->updated_at }}</td>
         </tr>
         <tr>
             <td><strong>Review: </strong></td>
