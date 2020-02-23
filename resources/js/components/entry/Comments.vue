@@ -41,6 +41,7 @@
 
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import Promise from 'bluebird';
 
     export default {
     	props: [
@@ -81,6 +82,15 @@
         methods: {
 			fetchComments ()
 			{
+// Just a dummy test to see whether bluebird works in Vue. @todo Finish properly
+Promise.coroutine(function* () {
+    var an = yield axios.get('https://jsonplaceholder.typicode.com/todos/1');
+    var bn = yield axios.get('https://jsonplaceholder.typicode.com/todos/1');
+    console.log(an);
+    console.log(bn);
+})().catch(function(errs){
+    console.log(errs);
+});
                 axios.get(this.baseUrl + 'api/comment/' + this.entryId)
                     .then(res => {
                         this.comments = res.data;

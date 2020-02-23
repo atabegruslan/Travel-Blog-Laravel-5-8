@@ -1470,3 +1470,4 @@ Pass the `pagination` object into the view.
             - Maybe more code needed
                 - User model should use Trait `NotificationChannels\WebPush\HasPushSubscriptions`
                 - Add firebase code to `Illuminate\Notifications\RoutesNotifications::routeNotificationFor`
+- Don't put access token into HTML meta tag to assist Axios AJAX requests to protected API routes. Use JS to get token first then access protected routes. Use generators to make code tidier.
