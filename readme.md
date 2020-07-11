@@ -1305,6 +1305,19 @@ Laravel best fits the ADR pattern.
 - public/index.php: rectify all relevant paths
 - import .sql to server's database, rectify database-name, username & password in the .env file
 
+### Or the lazy way
+
+- Load the entire folder as it is.
+- To rid the `/public/` segment of the URL, put the following into the root folder's `.htaccess`.
+```
+<IfModule mod_rewrite.c>
+   RewriteEngine On 
+   RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+```
+https://stackoverflow.com/questions/4823870/simply-remove-a-url-segment-with-htaccess
+
+
 ## Different ways of writting things
 
 In Blade
