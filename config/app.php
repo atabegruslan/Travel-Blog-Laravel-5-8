@@ -184,6 +184,8 @@ return [
 
         Felixkiss\UniqueWithValidator\ServiceProvider::class,
 
+        App\Providers\BladeFiltersServiceProvider::class,
+        App\Providers\TranslateServiceProvider::class,
     ],
 
     /*

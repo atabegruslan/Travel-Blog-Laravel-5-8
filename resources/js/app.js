@@ -33,6 +33,25 @@ Vue.component('vue-pagination', require('./components/common/Pagination.vue').de
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.filter('to_3dp', function (value) {
+	if (isNaN(value) || value === '' || value === true || value === null || value === undefined)
+	{
+		return 0.00;
+	}
+	else if (parseFloat(value) % 1 === 0)
+	{
+		return parseFloat(value);
+	}
+	else
+	{
+		var match = value.toString().match(/^-?\d+(?:\.\d{0,3})?/g); // ndp = 3
+
+		return match
+			? match[0] 
+			: parseFloat(value);
+	}
+})
+
 const app = new Vue({
     //el: '#app',
     el: '.vuepart',

@@ -1271,6 +1271,30 @@ ClassicEditor
 
 ---
 
+# How to filter in view:
+
+## In Blade
+
+- https://pineco.de/laravel-blade-filters/
+- Unfortunately that library doesn't work in the newest versions of Laravel. But, we can still imitate it:
+
+1. Make provider: `php artisan make:provider BladeFiltersServiceProvider` , https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Providers/BladeFiltersServiceProvider.php
+2. Make service: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Services/BladeFiltersCompiler.php
+3. Make custom provider: `php artisan make:provider TranslateServiceProvider` , https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/app/Providers/TranslateServiceProvider.php
+4. Register in `config/app.php` : https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/config/app.php#L187-188
+5. Use it in Blade: `{{ $blablah | translate:'vn' }}`
+
+## In Vue
+
+- https://vuejs.org/v2/guide/filters.html
+- https://v1.vuejs.org/guide/custom-filter.html
+
+1. In `resources\js\app.js` write your filter: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/resources/js/app.js
+2. In Vue, use it like: `{{ blahblah | to_3dp }}`
+3. run `npm run dev`
+
+---
+
 # Notes about Laravel
 
 ## Service Provider
