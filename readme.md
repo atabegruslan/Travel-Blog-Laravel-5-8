@@ -1275,6 +1275,8 @@ ClassicEditor
 
 ## In Blade
 
+- https://codecourse.com/watch/filtering-in-laravel-blade  
+
 - https://pineco.de/laravel-blade-filters/
 - Unfortunately that library doesn't work in the newest versions of Laravel. But, we can still imitate it:
 
@@ -1288,10 +1290,18 @@ ClassicEditor
 
 - https://vuejs.org/v2/guide/filters.html
 - https://v1.vuejs.org/guide/custom-filter.html
+- https://stackoverflow.com/questions/54744877/vue-filters-for-input-v-model
+- https://scotch.io/tutorials/how-to-create-filters-in-vuejs-with-examples#toc-defining-and-using-filters
 
 1. In `resources\js\app.js` write your filter: https://github.com/atabegruslan/Travel-Blog-Laravel-5-8/blob/master/resources/js/app.js
 2. In Vue, use it like: `{{ blahblah | to_3dp }}`
 3. run `npm run dev`
+
+---
+
+# Globally available functions and constants
+
+Use mixins: https://v1.vuejs.org/guide/mixins.html
 
 ---
 
