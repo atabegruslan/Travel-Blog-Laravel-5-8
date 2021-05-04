@@ -223,6 +223,18 @@ Or add this to route
 
 See entry and user migrations.
 
+### Eloquent ORM
+
+ORM is slower. But easier when changing DB, eg from MySQL to PostgreSQL
+
+- https://stackoverflow.com/questions/38391710/laravel-eloquent-vs-query-builder-why-use-eloquent-to-decrease-performance
+
+#### N+1 problem 
+
+EG: Post with many Comments. It's bad to retrieve the POST from the DB, then retrieve its Comments from the DB one at a time. Overcome this in Laravel by using the `with` function.
+
+- https://github.com/atabegruslan/Others/blob/master/DB/db.md#eager-vs-lazy-load
+
 ## Text and Image MultiPart Upload Form
 
 composer.json:
@@ -857,6 +869,8 @@ SSLCertificateKeyFile "conf/ssl.key/server.key"
 
 - https://laravel.com/docs/5.8/scheduling
 - https://www.youtube.com/watch?v=fUqrE9ZBH_Q
+- https://freek.dev/1689-a-package-to-run-the-laravel-scheduler-without-relying-on-cron
+- https://www.positronx.io/laravel-cron-job-task-scheduling-tutorial-with-example/
 
 1. Add a command: `php artisan make:command minutely`
 2. Do `app/Console/Commands/minutely.php`
@@ -1321,6 +1335,11 @@ Use mixins: https://v1.vuejs.org/guide/mixins.html
     - https://www.youtube.com/watch?v=pIWDFVWQXMQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=33&t=19m35s
     - https://www.youtube.com/watch?v=hy0oieokjtQ&list=PL_HVsP_TO8z7aey-lCMe64BIx3VEfvPdn&index=35
 
+### Advantages
+
+Better dependency management
+- https://christoph-rumpel.com/2019/8/4-ways-the-laravel-service-container-helps-us-managing-our-dependencies
+
 ## Architectural Patterns
 
 Laravel best fits the ADR pattern.
@@ -1496,6 +1515,12 @@ Pass the `pagination` object into the view.
 - https://vuejsexamples.com/tag/pagination/
 - https://github.com/gilbitron/laravel-vue-pagination/blob/master/README.md
 - https://github.com/matfish2/vue-pagination-2/blob/master/README.md
+
+---
+
+# More notes
+
+https://github.com/Ruslan-Aliyev/laravel_notes/
 
 ---
 
