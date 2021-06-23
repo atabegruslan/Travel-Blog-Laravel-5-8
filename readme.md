@@ -869,7 +869,7 @@ SSLCertificateKeyFile "conf/ssl.key/server.key"
 
 - https://laravel.com/docs/5.8/scheduling
 - https://www.youtube.com/watch?v=fUqrE9ZBH_Q
-- https://freek.dev/1689-a-package-to-run-the-laravel-scheduler-without-relying-on-cron
+- ReactPHP Loop: https://freek.dev/1689-a-package-to-run-the-laravel-scheduler-without-relying-on-cron
 - https://www.positronx.io/laravel-cron-job-task-scheduling-tutorial-with-example/
 
 1. Add a command: `php artisan make:command minutely`
